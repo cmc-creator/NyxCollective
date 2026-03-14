@@ -212,6 +212,14 @@
 
         /* Star fill */
         .star-fill { fill: #a855f7; }
+
+        /* Ensure logo img never picks up any background fill */
+        .nav-logo {
+            background: none !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            display: block;
+        }
     </style>
 </head>
 <body class="cosmic-bg bg-black">
@@ -221,7 +229,7 @@
         <div class="flex justify-between items-center">
             <!-- Logo -->
             <a href="#" class="flex items-center gap-3 no-underline">
-                <img src="ncnbg.png" alt="NyxCollective" class="h-10 w-auto logo-pulse" style="background: transparent;">
+                <img src="ncnbg.png" alt="NyxCollective" class="h-10 w-auto nav-logo">
                 <span class="text-2xl font-bold tracking-tighter chrome-text uppercase">NYXCOLLECTIVE</span>
             </a>
 
