@@ -910,7 +910,7 @@
                 icon: 'users',
                 tag: 'CRM',
                 tagline: 'A CRM that works the way your team actually does.',
-                description: 'Aegis is a modern CRM that puts relationships first. Track contacts, manage pipelines, and close deals inside a system designed for clarity and speed. No bloat, no overwhelming dashboards — just the tools you need.',
+                description: 'Aegis is a modern CRM that puts relationships first. Track contacts, manage pipelines, and close deals inside a system designed for clarity and speed. No bloat, no overwhelming dashboards, and nothing that does not earn its place.',
                 features: ['Contact and Company Management', 'Visual Sales Pipeline', 'Activity and Note Logging', 'Email Sequence Automation', 'Deal Stage Tracking', 'Custom Fields and Tags']
             },
             academy: {
@@ -991,7 +991,7 @@
             }
         });
 
-        // Contact form — Formspree submission
+        // Contact form - Formspree submission
         // IMPORTANT: Replace YOUR_FORM_ID in the form action with your Formspree ID.
         // Sign up free at formspree.io, create a form, and paste the ID.
         const form = document.getElementById('contact-form');
@@ -1037,10 +1037,10 @@
                     document.getElementById('form-success').classList.remove('hidden');
                     setTimeout(() => document.getElementById('form-success').classList.add('hidden'), 6000);
                 } else {
-                    btn.textContent = 'Error — Try Again';
+                    btn.textContent = 'Error. Please Try Again';
                 }
             } catch (err) {
-                btn.textContent = 'Error — Try Again';
+                btn.textContent = 'Error. Please Try Again';
             } finally {
                 btn.disabled = false;
                 if (btn.textContent === 'Sending...') btn.textContent = 'Launch Project';
