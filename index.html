@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NyxCollective LLC | Designer Software. Transparent Pricing.</title>
-    <meta name="description" content="NyxCollective LLC is a luxury modular software company offering elite digital products you can license as-is or receive as a fully customized white-label build. Transparent pricing. Zero bloat.">
+    <meta name="description" content="NyxCollective LLC is a luxury modular software company offering elite digital products you can license as-is or receive a fully customized white-label build. Transparent pricing. Zero bloat.">
+    <link rel="icon" type="image/png" href="nclogo%20nobg.png">
+    <meta property="og:title" content="NyxCollective LLC | Designer Software. Transparent Pricing.">
+    <meta property="og:description" content="A luxury modular software company. License elite digital products as-is or receive a fully customized white-label build. Transparent pricing. Zero bloat.">
+    <meta property="og:url" content="https://nyxcollectivellc.com">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://nyxcollectivellc.com/nclogo%20nobg.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NyxCollective LLC | Designer Software. Transparent Pricing.">
+    <meta name="twitter:description" content="A luxury modular software company. License elite products as-is or receive a fully customized white-label build.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -139,6 +148,70 @@
             background: rgba(147, 51, 234, 0.08);
             border: 1px solid rgba(147, 51, 234, 0.2);
         }
+
+        /* Modal overlay */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal-box {
+            background: #080808;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 2.5rem;
+            max-width: 620px;
+            width: 100%;
+            max-height: 88vh;
+            overflow-y: auto;
+            transform: translateY(24px);
+            transition: transform 0.35s ease;
+            scrollbar-width: none;
+        }
+        .modal-box::-webkit-scrollbar { display: none; }
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        /* Sticky mobile CTA */
+        .sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            padding: 1rem 1.5rem 1.75rem;
+            background: linear-gradient(to top, rgba(0,0,0,1) 70%, transparent);
+        }
+
+        /* Pricing featured card */
+        .pricing-featured {
+            border-color: rgba(147, 51, 234, 0.35) !important;
+        }
+
+        /* Step connector line */
+        .step-connector {
+            width: 64px;
+            height: 1px;
+            background: linear-gradient(to right, rgba(147,51,234,0.4), rgba(147,51,234,0.08));
+            flex-shrink: 0;
+        }
+
+        /* Star fill */
+        .star-fill { fill: #a855f7; }
     </style>
 </head>
 <body class="cosmic-bg">
@@ -148,9 +221,7 @@
         <div class="flex justify-between items-center">
             <!-- Logo -->
             <a href="#" class="flex items-center gap-3 no-underline">
-                <div class="w-10 h-10 rounded-full border border-purple-500/40 flex items-center justify-center bg-black logo-pulse">
-                    <div class="w-4 h-4 rounded-sm bg-purple-500 rotate-45"></div>
-                </div>
+                <img src="nclogo%20nobg.png" alt="NyxCollective" class="h-10 w-auto logo-pulse">
                 <span class="text-2xl font-bold tracking-tighter chrome-text uppercase">NYXCOLLECTIVE</span>
             </a>
 
@@ -158,6 +229,7 @@
             <div class="hidden md:flex gap-10 text-[10px] font-bold tracking-[0.2em] uppercase opacity-40">
                 <a href="#delivery" class="hover:text-purple-400 hover:opacity-100 transition">Delivery Models</a>
                 <a href="#lineage" class="hover:text-purple-400 hover:opacity-100 transition">Products</a>
+                <a href="#pricing" class="hover:text-purple-400 hover:opacity-100 transition">Pricing</a>
                 <a href="#contact" class="hover:text-purple-400 hover:opacity-100 transition">Contact</a>
             </div>
 
@@ -179,6 +251,7 @@
             <div class="pt-6 pb-4 flex flex-col gap-5 text-[11px] font-bold tracking-[0.2em] uppercase border-t border-white/5 mt-4">
                 <a href="#delivery" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Delivery Models</a>
                 <a href="#lineage" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Products</a>
+                <a href="#pricing" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Pricing</a>
                 <a href="#contact" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Contact</a>
                 <a href="#contact" class="w-full text-center py-3 glass rounded-full hover:bg-white hover:text-black transition border border-white/10" onclick="closeMobileMenu()">Start A Project</a>
             </div>
@@ -232,6 +305,44 @@
             <div class="flex items-center gap-3">
                 <i data-lucide="award" class="text-purple-500 w-5 h-5"></i>
                 <span class="text-[11px] uppercase tracking-[0.2em] font-black">Insured</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-28 px-6 bg-black border-t border-white/5" id="process">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400 block mb-4">The Process</span>
+                <h2 class="text-4xl md:text-5xl hero-text chrome-text">From Idea to Infrastructure</h2>
+            </div>
+            <div class="flex flex-col md:flex-row items-center justify-center">
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center text-center px-10 py-8 md:py-0 flex-1">
+                    <div class="w-16 h-16 rounded-full glass border border-purple-500/30 flex items-center justify-center mb-6">
+                        <span class="text-2xl font-black text-purple-400">01</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-3">Discover</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">We learn your goals, your stack, and your timeline. No templates, no assumptions.</p>
+                </div>
+                <div class="hidden md:block step-connector"></div>
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center text-center px-10 py-8 md:py-0 flex-1">
+                    <div class="w-16 h-16 rounded-full glass border border-purple-500/30 flex items-center justify-center mb-6">
+                        <span class="text-2xl font-black text-purple-400">02</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-3">Architect</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Our team designs your exact blueprint, whether licensing an existing product or building from our core.</p>
+                </div>
+                <div class="hidden md:block step-connector"></div>
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center text-center px-10 py-8 md:py-0 flex-1">
+                    <div class="w-16 h-16 rounded-full glass border border-purple-500/30 flex items-center justify-center mb-6">
+                        <span class="text-2xl font-black text-purple-400">03</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-3">Deploy</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Your product goes live, tested and polished. We stay engaged until you are fully satisfied.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -344,7 +455,7 @@
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Pulse -->
-                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('pulse')">
                     <div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 mb-8 group-hover:bg-purple-500/20 transition">
                         <i data-lucide="activity" class="text-purple-500 w-7 h-7"></i>
                     </div>
@@ -357,7 +468,7 @@
                 </div>
 
                 <!-- Shift -->
-                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('shift')">
                     <div class="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 mb-8 group-hover:bg-blue-500/20 transition">
                         <i data-lucide="shuffle" class="text-blue-500 w-7 h-7"></i>
                     </div>
@@ -370,7 +481,7 @@
                 </div>
 
                 <!-- Titan -->
-                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('titan')">
                     <div class="w-14 h-14 rounded-2xl bg-slate-500/10 flex items-center justify-center border border-slate-500/20 mb-8 group-hover:bg-slate-500/20 transition">
                         <i data-lucide="mountain" class="text-slate-400 w-7 h-7"></i>
                     </div>
@@ -383,7 +494,7 @@
                 </div>
 
                 <!-- Grid -->
-                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('grid')">
                     <div class="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20 mb-8 group-hover:bg-amber-500/20 transition">
                         <i data-lucide="calendar" class="text-amber-400 w-7 h-7"></i>
                     </div>
@@ -396,7 +507,7 @@
                 </div>
 
                 <!-- Aegis -->
-                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('aegis')">
                     <div class="w-14 h-14 rounded-2xl bg-rose-500/10 flex items-center justify-center border border-rose-500/20 mb-8 group-hover:bg-rose-500/20 transition">
                         <i data-lucide="users" class="text-rose-400 w-7 h-7"></i>
                     </div>
@@ -409,7 +520,7 @@
                 </div>
 
                 <!-- Academy -->
-                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('academy')">
                     <div class="w-14 h-14 rounded-2xl bg-yellow-500/10 flex items-center justify-center border border-yellow-500/20 mb-8 group-hover:bg-yellow-500/20 transition">
                         <i data-lucide="book-open" class="text-yellow-400 w-7 h-7"></i>
                     </div>
@@ -422,7 +533,7 @@
                 </div>
 
                 <!-- Citadel -->
-                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('citadel')">
                     <div class="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20 mb-8 group-hover:bg-red-500/20 transition">
                         <i data-lucide="shield" class="text-red-400 w-7 h-7"></i>
                     </div>
@@ -474,6 +585,140 @@
         </div>
     </section>
 
+    <!-- Pricing -->
+    <section id="pricing" class="py-32 px-6 bg-black border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400 block mb-4">Transparent Pricing</span>
+                <h2 class="text-4xl md:text-5xl hero-text chrome-text mb-6">No Surprises. Ever.</h2>
+                <p class="text-gray-600 max-w-xl mx-auto text-lg">You see the price before we write a single line.<br>What you see is exactly what you pay.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 items-start">
+                <!-- License Single -->
+                <div class="glass p-10 rounded-[2.5rem] border border-white/5 glow-hover transition-all">
+                    <span class="text-[9px] font-black tracking-[0.3em] uppercase text-gray-600 block mb-6">License / Single</span>
+                    <div class="mb-8">
+                        <span class="text-5xl font-black text-white">$99</span>
+                        <span class="text-gray-600 text-sm ml-2">/ month</span>
+                        <p class="text-gray-600 text-xs mt-2">per product</p>
+                    </div>
+                    <ul class="space-y-4 mb-10">
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> 1 NyxCollective Product</li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Managed Hosting Included</li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Automatic Updates</li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Email Support</li>
+                    </ul>
+                    <a href="#contact" class="block w-full py-4 glass text-white font-bold rounded-xl hover:bg-white hover:text-black transition uppercase tracking-widest text-xs text-center border border-white/10">Get Started</a>
+                </div>
+                <!-- License Bundle (featured) -->
+                <div class="glass p-10 rounded-[2.5rem] border pricing-featured glow-hover transition-all relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-purple-600 text-white text-[9px] font-black tracking-widest uppercase px-4 py-2 rounded-bl-2xl rounded-tr-[2.5rem]">Most Popular</div>
+                    <span class="text-[9px] font-black tracking-[0.3em] uppercase text-purple-400 block mb-6">License / Bundle</span>
+                    <div class="mb-8">
+                        <span class="text-5xl font-black text-white">$249</span>
+                        <span class="text-gray-600 text-sm ml-2">/ month</span>
+                        <p class="text-gray-600 text-xs mt-2">any 3 products</p>
+                    </div>
+                    <ul class="space-y-4 mb-10">
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Any 3 NyxCollective Products</li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Managed Hosting Included</li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Priority Support</li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Custom Subdomain</li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Monthly Strategy Review</li>
+                    </ul>
+                    <a href="#contact" class="block w-full py-4 bg-purple-600 text-white font-bold rounded-xl hover:bg-purple-500 transition uppercase tracking-widest text-xs text-center">Get Started</a>
+                </div>
+                <!-- White-Label -->
+                <div class="glass p-10 rounded-[2.5rem] border border-white/5 glow-hover transition-all">
+                    <span class="text-[9px] font-black tracking-[0.3em] uppercase text-gray-600 block mb-6">White-Label Build</span>
+                    <div class="mb-8">
+                        <span class="text-5xl font-black text-white">$2,500</span>
+                        <span class="text-gray-600 text-sm ml-1">starting at</span>
+                        <p class="text-gray-600 text-xs mt-2">one-time. you own it outright</p>
+                    </div>
+                    <ul class="space-y-4 mb-10">
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Full Brand Customization</li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Custom Feature Injection</li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Private Deployment</li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Source Code Delivery</li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400"><i data-lucide="check" class="w-4 h-4 text-purple-500 shrink-0"></i> Dedicated Support Channel</li>
+                    </ul>
+                    <a href="#contact" class="block w-full py-4 glass text-white font-bold rounded-xl hover:bg-white hover:text-black transition uppercase tracking-widest text-xs text-center border border-white/10">Get a Quote</a>
+                </div>
+            </div>
+            <p class="text-center text-gray-700 text-xs mt-10 tracking-widest uppercase">Need the full suite? <a href="#contact" class="text-purple-500 hover:text-purple-400 transition">Contact us for enterprise pricing.</a></p>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="py-32 px-6 bg-black border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400 block mb-4">Client Voices</span>
+                <h2 class="text-4xl hero-text chrome-text">Built on Trust</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass p-10 rounded-[2.5rem] border border-white/5 glow-hover transition-all">
+                    <div class="flex gap-1 mb-6">
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 italic">"The Aegis deployment transformed how our team manages client relationships. Clean, fast, and exactly what we asked for."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center shrink-0">
+                            <span class="text-purple-400 font-black text-sm">J</span>
+                        </div>
+                        <div>
+                            <p class="text-white font-bold text-sm">Jordan M.</p>
+                            <p class="text-gray-600 text-xs uppercase tracking-widest">Operations Director</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass p-10 rounded-[2.5rem] border border-white/5 glow-hover transition-all">
+                    <div class="flex gap-1 mb-6">
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 italic">"We white-labeled Shift for our internal ops team. The process was seamless, the timeline was hit, and the quality is elite."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center shrink-0">
+                            <span class="text-blue-400 font-black text-sm">S</span>
+                        </div>
+                        <div>
+                            <p class="text-white font-bold text-sm">Samir T.</p>
+                            <p class="text-gray-600 text-xs uppercase tracking-widest">Founder, TechCo</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass p-10 rounded-[2.5rem] border border-white/5 glow-hover transition-all">
+                    <div class="flex gap-1 mb-6">
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-purple-400 star-fill"></i>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 italic">"Transparent pricing was the deciding factor. No agency games, no scope creep. NyxCollective delivered exactly what they promised."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                            <span class="text-emerald-400 font-black text-sm">A</span>
+                        </div>
+                        <div>
+                            <p class="text-white font-bold text-sm">Alexis R.</p>
+                            <p class="text-gray-600 text-xs uppercase tracking-widest">CEO, Venture Studio</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer / Contact -->
     <footer id="contact" class="py-32 px-6 border-t border-white/5 bg-black">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-24">
@@ -508,7 +753,7 @@
                 <h4 class="text-2xl font-bold mb-2 text-white uppercase tracking-tighter">Start the Conversation</h4>
                 <p class="text-gray-600 text-sm mb-8">Tell us about your project and we will be in touch within 24 hours.</p>
 
-                <form id="contact-form" class="space-y-5" novalidate>
+                <form id="contact-form" class="space-y-5" method="POST" action="https://formspree.io/f/YOUR_FORM_ID" novalidate>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <input type="text" id="form-name" name="name" placeholder="Name" required
@@ -562,6 +807,20 @@
         </div>
     </footer>
 
+    <!-- Sticky Mobile CTA -->
+    <div class="sticky-cta sm:hidden">
+        <a href="#contact" class="block w-full py-4 bg-purple-600 text-white font-black rounded-2xl text-center uppercase tracking-widest text-xs active:scale-95 transition shadow-lg shadow-purple-900/30">
+            Start a Build
+        </a>
+    </div>
+
+    <!-- Product Modals -->
+    <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-box p-10" id="modal-box">
+            <!-- Modal content injected by JS -->
+        </div>
+    </div>
+
     <script>
         // Init Lucide icons
         lucide.createIcons();
@@ -607,9 +866,136 @@
         }, { threshold: 0.2 });
         statCards.forEach(card => observer.observe(card));
 
-        // Contact form validation + submit
+        // Product modal data
+        const products = {
+            pulse: {
+                name: 'Pulse',
+                color: 'purple',
+                icon: 'activity',
+                tag: 'Monitoring',
+                tagline: 'The heartbeat of your data infrastructure.',
+                description: 'Pulse delivers real-time operational monitoring and health dashboards designed for teams that need clarity and instant action. Track uptime, performance metrics, error rates, and system health all from a single, clean interface.',
+                features: ['Real-Time Health Dashboards', 'Custom Alert Thresholds', 'Multi-Service Monitoring', 'Incident Log and History', 'API and Webhook Support', 'Role-Based Access Control']
+            },
+            shift: {
+                name: 'Shift',
+                color: 'blue',
+                icon: 'shuffle',
+                tag: 'Workflow',
+                tagline: 'Orchestrate every operation without friction.',
+                description: 'Shift is a dynamic workflow management system built for teams that need intelligent process orchestration at scale. Design, automate, and monitor multi-step workflows with a visual builder that requires zero engineering overhead.',
+                features: ['Visual Workflow Builder', 'Conditional Logic and Branching', 'Team Task Assignment', 'Deadline and Priority Tracking', 'Audit Trail and Change Log', 'Integration-Ready Architecture']
+            },
+            titan: {
+                name: 'Titan',
+                color: 'slate',
+                icon: 'mountain',
+                tag: 'Infrastructure',
+                tagline: 'Enterprise-grade architecture built to endure.',
+                description: 'Titan provides heavyweight data architecture for massive scale. Designed for organizations that cannot afford downtime or data fragility, Titan delivers enterprise-grade storage, redundancy, and performance on a transparent pricing model.',
+                features: ['High-Availability Storage', 'Automated Backup and Recovery', 'Multi-Region Redundancy', 'Query Optimization Layer', 'Data Encryption at Rest', 'Compliance-Ready Logging']
+            },
+            grid: {
+                name: 'Grid',
+                color: 'amber',
+                icon: 'calendar',
+                tag: 'Scheduling',
+                tagline: 'Scheduling that moves at the speed of your team.',
+                description: 'Grid is a clean, intuitive scheduling platform built for modern teams. Manage appointments, resources, and time blocks without the bloat of legacy calendar tools. Simple to deploy, elegant to use.',
+                features: ['Drag-and-Drop Calendar Interface', 'Resource and Room Booking', 'Recurring Event Management', 'Client Booking Portal', 'Calendar Sync (Google, Outlook)', 'SMS and Email Reminders']
+            },
+            aegis: {
+                name: 'Aegis',
+                color: 'rose',
+                icon: 'users',
+                tag: 'CRM',
+                tagline: 'A CRM that works the way your team actually does.',
+                description: 'Aegis is a modern CRM that puts relationships first. Track contacts, manage pipelines, and close deals inside a system designed for clarity and speed. No bloat, no overwhelming dashboards — just the tools you need.',
+                features: ['Contact and Company Management', 'Visual Sales Pipeline', 'Activity and Note Logging', 'Email Sequence Automation', 'Deal Stage Tracking', 'Custom Fields and Tags']
+            },
+            academy: {
+                name: 'Academy',
+                color: 'yellow',
+                icon: 'book-open',
+                tag: 'Training',
+                tagline: 'Build a culture of continuous learning.',
+                description: 'Academy is an internal employee training lab built for modern organizations. Create structured courses, track completion, assess knowledge, and build a culture where continuous development is the baseline.',
+                features: ['Course and Module Builder', 'Video and Document Support', 'Progress and Completion Tracking', 'Quizzes and Assessments', 'Certification Issuance', 'Onboarding Track Templates']
+            },
+            citadel: {
+                name: 'Citadel',
+                color: 'red',
+                icon: 'shield',
+                tag: 'Risk / Compliance',
+                tagline: 'Precision protection for your business.',
+                description: 'Citadel is risk management and compliance infrastructure for organizations that cannot afford to be caught off guard. Stay audit-ready, track incidents, enforce policy, and keep every stakeholder informed with structured oversight tools.',
+                features: ['Risk Register and Scoring', 'Incident Reporting and Routing', 'Policy Document Management', 'Audit Trail and Evidence Storage', 'Compliance Checklist Engine', 'Stakeholder Notification System']
+            }
+        };
+
+        const colorMap = {
+            purple: { text: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20', btn: 'bg-purple-600 hover:bg-purple-500' },
+            blue:   { text: 'text-blue-400',   bg: 'bg-blue-500/10',   border: 'border-blue-500/20',   btn: 'bg-blue-600 hover:bg-blue-500' },
+            slate:  { text: 'text-slate-400',  bg: 'bg-slate-500/10',  border: 'border-slate-500/20',  btn: 'bg-slate-600 hover:bg-slate-500' },
+            amber:  { text: 'text-amber-400',  bg: 'bg-amber-500/10',  border: 'border-amber-500/20',  btn: 'bg-amber-600 hover:bg-amber-500' },
+            rose:   { text: 'text-rose-400',   bg: 'bg-rose-500/10',   border: 'border-rose-500/20',   btn: 'bg-rose-600 hover:bg-rose-500' },
+            yellow: { text: 'text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/20', btn: 'bg-yellow-600 hover:bg-yellow-500' },
+            red:    { text: 'text-red-400',    bg: 'bg-red-500/10',    border: 'border-red-500/20',    btn: 'bg-red-600 hover:bg-red-500' }
+        };
+
+        function openModal(key) {
+            const p = products[key];
+            const c = colorMap[p.color];
+            const featuresHtml = p.features.map(f =>
+                `<li class="flex items-center gap-3 text-sm text-gray-400"><span class="w-1.5 h-1.5 rounded-full ${c.bg.replace('/10', '')} shrink-0 inline-block"></span>${f}</li>`
+            ).join('');
+            document.getElementById('modal-box').innerHTML = `
+                <div class="flex justify-between items-start mb-8">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl ${c.bg} flex items-center justify-center border ${c.border}">
+                            <i data-lucide="${p.icon}" class="${c.text} w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <span class="text-[9px] font-black tracking-[0.3em] uppercase ${c.text} block mb-1">${p.tag}</span>
+                            <h3 class="text-3xl font-black text-white">${p.name}</h3>
+                        </div>
+                    </div>
+                    <button onclick="closeModal()" class="w-10 h-10 glass rounded-full flex items-center justify-center border border-white/10 hover:border-white/30 transition text-gray-500 hover:text-white shrink-0">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <p class="text-sm ${c.text} font-semibold mb-4 tracking-wide">${p.tagline}</p>
+                <p class="text-gray-500 text-sm leading-relaxed mb-8">${p.description}</p>
+                <h4 class="text-[10px] font-black tracking-[0.3em] uppercase text-gray-600 mb-5">Key Features</h4>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">${featuresHtml}</ul>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#contact" onclick="closeModal()" class="flex-1 py-4 ${c.btn} text-white font-black rounded-xl transition uppercase tracking-widest text-xs text-center">License ${p.name}</a>
+                    <a href="#contact" onclick="closeModal()" class="flex-1 py-4 glass text-white font-bold rounded-xl hover:bg-white/10 transition uppercase tracking-widest text-xs text-center border border-white/10">White-Label Clone</a>
+                </div>
+            `;
+            document.getElementById('modal-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closeModal(e) {
+            if (e && e.target !== document.getElementById('modal-overlay')) return;
+            document.getElementById('modal-overlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('modal-overlay').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Contact form — Formspree submission
+        // IMPORTANT: Replace YOUR_FORM_ID in the form action with your Formspree ID.
+        // Sign up free at formspree.io, create a form, and paste the ID.
         const form = document.getElementById('contact-form');
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             let valid = true;
 
@@ -617,7 +1003,6 @@
             const email = document.getElementById('form-email');
             const message = document.getElementById('form-message');
 
-            // Reset errors
             ['name', 'email', 'message'].forEach(f => {
                 document.getElementById('error-' + f).classList.add('hidden');
             });
@@ -635,20 +1020,30 @@
                 valid = false;
             }
 
-            if (valid) {
-                const btn = document.getElementById('submit-btn');
-                btn.textContent = 'Sending...';
-                btn.disabled = true;
-                // Simulate async submission
-                setTimeout(() => {
+            if (!valid) return;
+
+            const btn = document.getElementById('submit-btn');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
                     form.reset();
-                    btn.textContent = 'Launch Project';
-                    btn.disabled = false;
                     document.getElementById('form-success').classList.remove('hidden');
-                    setTimeout(() => {
-                        document.getElementById('form-success').classList.add('hidden');
-                    }, 5000);
-                }, 1200);
+                    setTimeout(() => document.getElementById('form-success').classList.add('hidden'), 6000);
+                } else {
+                    btn.textContent = 'Error — Try Again';
+                }
+            } catch (err) {
+                btn.textContent = 'Error — Try Again';
+            } finally {
+                btn.disabled = false;
+                if (btn.textContent === 'Sending...') btn.textContent = 'Launch Project';
             }
         });
     </script>
