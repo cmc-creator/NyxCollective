@@ -487,7 +487,7 @@
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Pulse -->
-                <a href="https://nyxpulse.com" target="_blank" rel="noopener" class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group block">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('pulse')">
                     <div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 mb-8 group-hover:bg-purple-500/20 transition">
                         <i data-lucide="activity" class="text-purple-500 w-7 h-7"></i>
                     </div>
@@ -496,11 +496,14 @@
                         <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">Live</span>
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">Real-time operational monitoring and health dashboards. The heartbeat of your data infrastructure, built for clarity and instant action.</p>
-                    <span class="inline-block text-[9px] font-bold tracking-[0.3em] uppercase text-purple-500/60 group-hover:text-purple-400 transition">Explore Pulse →</span>
-                </a>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-purple-500/60 group-hover:text-purple-400 transition">Learn More →</span>
+                        <a href="https://nyxpulse.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-purple-500/30 text-purple-400 hover:bg-purple-500/10 transition">Visit Site ↗</a>
+                    </div>
+                </div>
 
                 <!-- Shift -->
-                <a href="https://nyxshift.com" target="_blank" rel="noopener" class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group block">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('shift')">
                     <div class="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 mb-8 group-hover:bg-blue-500/20 transition">
                         <i data-lucide="shuffle" class="text-blue-500 w-7 h-7"></i>
                     </div>
@@ -509,11 +512,14 @@
                         <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">Live</span>
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">Dynamic workflow management and intelligent process orchestration. Scale your operations without adding overhead or complexity.</p>
-                    <span class="inline-block text-[9px] font-bold tracking-[0.3em] uppercase text-blue-500/60 group-hover:text-blue-400 transition">Explore Shift →</span>
-                </a>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-blue-500/60 group-hover:text-blue-400 transition">Learn More →</span>
+                        <a href="https://nyxshift.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-blue-500/30 text-blue-400 hover:bg-blue-500/10 transition">Visit Site ↗</a>
+                    </div>
+                </div>
 
                 <!-- Titan -->
-                <a href="https://nyxtitan.com" target="_blank" rel="noopener" class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group block">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('titan')">
                     <div class="w-14 h-14 rounded-2xl bg-slate-500/10 flex items-center justify-center border border-slate-500/20 mb-8 group-hover:bg-slate-500/20 transition">
                         <i data-lucide="mountain" class="text-slate-400 w-7 h-7"></i>
                     </div>
@@ -522,11 +528,14 @@
                         <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-slate-500/10 text-slate-400 border border-slate-500/20">Live</span>
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">Heavyweight data architecture for massive scale. Enterprise-grade storage and infrastructure with an uncompromising performance baseline.</p>
-                    <span class="inline-block text-[9px] font-bold tracking-[0.3em] uppercase text-slate-400/60 group-hover:text-slate-300 transition">Explore Titan →</span>
-                </a>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-slate-400/60 group-hover:text-slate-300 transition">Learn More →</span>
+                        <a href="https://nyxtitan.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-slate-500/30 text-slate-400 hover:bg-slate-500/10 transition">Visit Site ↗</a>
+                    </div>
+                </div>
 
                 <!-- Grid -->
-                <a href="https://nyxgrid.org" target="_blank" rel="noopener" class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group block">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('grid')">
                     <div class="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20 mb-8 group-hover:bg-amber-500/20 transition">
                         <i data-lucide="calendar" class="text-amber-400 w-7 h-7"></i>
                     </div>
@@ -535,11 +544,14 @@
                         <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Live</span>
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">Clean, intuitive scheduling built for teams that move fast. Manage time, resources, and appointments without the bloat of legacy calendar tools.</p>
-                    <span class="inline-block text-[9px] font-bold tracking-[0.3em] uppercase text-amber-400/60 group-hover:text-amber-400 transition">Explore Grid →</span>
-                </a>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-amber-400/60 group-hover:text-amber-400 transition">Learn More →</span>
+                        <a href="https://nyxgrid.org" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-amber-500/30 text-amber-400 hover:bg-amber-500/10 transition">Visit Site ↗</a>
+                    </div>
+                </div>
 
                 <!-- Aegis -->
-                <a href="https://nyxaegis.com" target="_blank" rel="noopener" class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group block">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('aegis')">
                     <div class="w-14 h-14 rounded-2xl bg-rose-500/10 flex items-center justify-center border border-rose-500/20 mb-8 group-hover:bg-rose-500/20 transition">
                         <i data-lucide="users" class="text-rose-400 w-7 h-7"></i>
                     </div>
@@ -548,11 +560,14 @@
                         <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">Live</span>
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">A modern CRM that puts relationships first. Track contacts, manage pipelines, and close deals inside a system that actually works the way you do.</p>
-                    <span class="inline-block text-[9px] font-bold tracking-[0.3em] uppercase text-rose-400/60 group-hover:text-rose-400 transition">Explore Aegis →</span>
-                </a>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-rose-400/60 group-hover:text-rose-400 transition">Learn More →</span>
+                        <a href="https://nyxaegis.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-rose-500/30 text-rose-400 hover:bg-rose-500/10 transition">Visit Site ↗</a>
+                    </div>
+                </div>
 
                 <!-- Academy -->
-                <a href="#contact" class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group block">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('academy')">
                     <div class="w-14 h-14 rounded-2xl bg-yellow-500/10 flex items-center justify-center border border-yellow-500/20 mb-8 group-hover:bg-yellow-500/20 transition">
                         <i data-lucide="book-open" class="text-yellow-400 w-7 h-7"></i>
                     </div>
@@ -561,11 +576,13 @@
                         <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">Live</span>
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">An internal training lab built for modern teams. Create courses, track progress, and build a culture of continuous learning across your organization.</p>
-                    <span class="inline-block text-[9px] font-bold tracking-[0.3em] uppercase text-yellow-400/60 group-hover:text-yellow-400 transition">Explore Academy →</span>
-                </a>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-yellow-400/60 group-hover:text-yellow-400 transition">Learn More →</span>
+                    </div>
+                </div>
 
                 <!-- Citadel -->
-                <a href="https://nyxcitadel.com" target="_blank" rel="noopener" class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group block">
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('citadel')">
                     <div class="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20 mb-8 group-hover:bg-red-500/20 transition">
                         <i data-lucide="shield" class="text-red-400 w-7 h-7"></i>
                     </div>
@@ -574,8 +591,11 @@
                         <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">Live</span>
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">Risk management and compliance infrastructure that keeps your business protected and audit-ready. Built for precision, not paperwork.</p>
-                    <span class="inline-block text-[9px] font-bold tracking-[0.3em] uppercase text-red-400/60 group-hover:text-red-400 transition">Explore Citadel →</span>
-                </a>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-red-400/60 group-hover:text-red-400 transition">Learn More →</span>
+                        <a href="https://nyxcitadel.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-red-500/30 text-red-400 hover:bg-red-500/10 transition">Visit Site ↗</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
