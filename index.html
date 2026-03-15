@@ -213,6 +213,11 @@
         /* Star fill */
         .star-fill { fill: #a855f7; }
 
+        /* Mobile: tighten How It Works step padding */
+        @media (max-width: 767px) {
+            #process .flex-1 { padding-left: 1rem; padding-right: 1rem; }
+        }
+
         /* Ensure logo img never picks up any background fill */
         .nav-logo {
             background: none !important;
@@ -280,7 +285,7 @@
                 <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400">Modular Software Architecture</span>
             </div>
 
-            <h1 class="hero-text text-6xl md:text-[7rem] lg:text-[8.5rem] mb-10 chrome-text leading-[0.9] tracking-tighter uppercase">
+            <h1 class="hero-text text-5xl md:text-[7rem] lg:text-[8.5rem] mb-10 chrome-text leading-[0.9] tracking-tighter uppercase">
                 IT ALL BEGINS<br>WITH A VISION
             </h1>
 
@@ -366,7 +371,7 @@
 
             <div class="grid md:grid-cols-2 gap-12">
                 <!-- Path 1: License -->
-                <div class="glass p-12 rounded-[3rem] border border-white/10 hover:border-purple-500/30 transition-all duration-300 group">
+                <div class="glass p-8 md:p-12 rounded-[3rem] border border-white/10 hover:border-purple-500/30 transition-all duration-300 group">
                     <div class="flex justify-between items-start mb-10">
                         <div class="w-16 h-16 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 group-hover:bg-purple-500 group-hover:text-black group-hover:border-purple-500 transition-all duration-300">
                             <i data-lucide="key" class="w-8 h-8 text-purple-400 group-hover:text-black transition-colors duration-300"></i>
@@ -395,7 +400,7 @@
                 </div>
 
                 <!-- Path 2: White Label -->
-                <div class="glass p-12 rounded-[3rem] border border-white/10 hover:border-purple-500/30 transition-all duration-300 group relative overflow-hidden">
+                <div class="glass p-8 md:p-12 rounded-[3rem] border border-white/10 hover:border-purple-500/30 transition-all duration-300 group relative overflow-hidden">
                     <div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/5 blur-3xl pointer-events-none"></div>
                     <div class="flex justify-between items-start mb-10">
                         <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-white group-hover:border-white group-hover:text-black transition-all duration-300">
@@ -429,20 +434,20 @@
 
     <!-- Stats Grid -->
     <section class="py-24 bg-black">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="glass p-10 rounded-[2.5rem] border border-white/5 border-b-2 border-b-purple-600/20 glow-hover transition-all bg-black/40 text-center stat-card">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div class="glass p-6 md:p-10 rounded-[2.5rem] border border-white/5 border-b-2 border-b-purple-600/20 glow-hover transition-all bg-black/40 text-center stat-card">
                 <span class="text-5xl font-black mb-4 block text-white">100%</span>
                 <span class="text-[10px] uppercase tracking-widest text-gray-600 font-bold">Bespoke Logic</span>
             </div>
-            <div class="glass p-10 rounded-[2.5rem] border border-white/5 border-b-2 border-b-blue-600/20 glow-hover transition-all bg-black/40 text-center stat-card">
+            <div class="glass p-6 md:p-10 rounded-[2.5rem] border border-white/5 border-b-2 border-b-blue-600/20 glow-hover transition-all bg-black/40 text-center stat-card">
                 <span class="text-5xl font-black mb-4 block text-white">48h</span>
                 <span class="text-[10px] uppercase tracking-widest text-gray-600 font-bold">Base Deployment</span>
             </div>
-            <div class="glass p-10 rounded-[2.5rem] border border-white/5 border-b-2 border-b-emerald-600/20 glow-hover transition-all bg-black/40 text-center stat-card">
+            <div class="glass p-6 md:p-10 rounded-[2.5rem] border border-white/5 border-b-2 border-b-emerald-600/20 glow-hover transition-all bg-black/40 text-center stat-card">
                 <span class="text-5xl font-black mb-4 block text-white">Zero</span>
                 <span class="text-[10px] uppercase tracking-widest text-gray-600 font-bold">Bloatware</span>
             </div>
-            <div class="glass p-10 rounded-[2.5rem] border border-white/5 border-b-2 border-b-slate-600/20 glow-hover transition-all bg-black/40 text-center stat-card">
+            <div class="glass p-6 md:p-10 rounded-[2.5rem] border border-white/5 border-b-2 border-b-slate-600/20 glow-hover transition-all bg-black/40 text-center stat-card">
                 <span class="text-5xl font-black mb-4 block text-white">3W</span>
                 <span class="text-[10px] uppercase tracking-widest text-gray-600 font-bold">Strategy Hub</span>
             </div>
@@ -706,7 +711,7 @@
 
     <!-- Footer / Contact -->
     <footer id="contact" class="py-32 px-6 border-t border-white/5 bg-black">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-24">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-24">
             <!-- Left: Brand -->
             <div>
                 <h2 class="text-4xl hero-text chrome-text mb-10 uppercase leading-tight">Your Vision.<br>Our Architecture.</h2>
