@@ -23,8 +23,23 @@
             --nebula-purple: #9333ea;
         }
 
-        html, body {
-            background-color: #070707 !important;
+        html {
+            background-color: #080808;
+            background-image:
+                linear-gradient(112deg, transparent 27.8%, rgba(255,255,255,0.06) 28.2%, rgba(200,200,200,0.03) 28.9%, transparent 29.6%),
+                linear-gradient(112deg, transparent 44.6%, rgba(180,180,180,0.04) 45.0%, transparent 45.6%),
+                linear-gradient(128deg, transparent 14.5%, rgba(220,220,220,0.05) 14.9%, rgba(160,160,160,0.02) 15.6%, transparent 16.4%),
+                linear-gradient(98deg, transparent 61.6%, rgba(255,255,255,0.05) 62.0%, rgba(200,200,200,0.02) 62.5%, transparent 63.2%),
+                linear-gradient(118deg, transparent 72%, rgba(180,180,180,0.03) 72.3%, transparent 73%),
+                radial-gradient(ellipse 65% 45% at 12% 65%, rgba(55,55,55,0.5), transparent),
+                radial-gradient(ellipse 55% 55% at 88% 25%, rgba(40,40,40,0.4), transparent),
+                radial-gradient(ellipse 90% 70% at 50% 50%, rgba(20,20,20,0.6), transparent),
+                radial-gradient(circle at 8% 18%, rgba(147,51,234,0.04), transparent 35%);
+            min-height: 100%;
+        }
+
+        body {
+            background-color: transparent !important;
             color: #e2e8f0;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
@@ -57,34 +72,11 @@
         }
 
         .cosmic-bg::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background:
-                /* Marble vein 1 — main diagonal sweep */
-                linear-gradient(112deg, transparent 27.8%, rgba(255,255,255,0.022) 28.2%, rgba(200,200,200,0.010) 28.9%, transparent 29.6%),
-                /* Marble vein 2 — parallel finer vein */
-                linear-gradient(112deg, transparent 44.6%, rgba(180,180,180,0.014) 45.0%, transparent 45.6%),
-                /* Marble vein 3 — crossing angle */
-                linear-gradient(128deg, transparent 14.5%, rgba(220,220,220,0.016) 14.9%, rgba(160,160,160,0.007) 15.6%, transparent 16.4%),
-                /* Marble vein 4 — subtle accent */
-                linear-gradient(98deg, transparent 61.6%, rgba(255,255,255,0.018) 62.0%, rgba(200,200,200,0.008) 62.5%, transparent 63.2%),
-                /* Marble vein 5 — whisper vein */
-                linear-gradient(118deg, transparent 72%, rgba(180,180,180,0.010) 72.3%, transparent 73%),
-                /* Deep grey cloud — lower left */
-                radial-gradient(ellipse 65% 45% at 12% 65%, rgba(65,65,65,0.14), transparent),
-                /* Deep grey cloud — upper right */
-                radial-gradient(ellipse 55% 55% at 88% 25%, rgba(50,50,50,0.11), transparent),
-                /* Centre depth */
-                radial-gradient(ellipse 90% 70% at 50% 50%, rgba(25,25,25,0.25), transparent),
-                /* Subtle purple ghost — brand accent */
-                radial-gradient(circle at 8% 18%, rgba(147,51,234,0.025), transparent 35%);
-            z-index: -1;
-            pointer-events: none;
+            display: none;
         }
 
         /* Marble bleed-through on sections */
-        section, footer { background-color: rgba(5,5,5,0.93) !important; }
+        section, footer { background-color: rgba(8,8,8,0.82) !important; }
 
         .hero-gradient-overlay {
             background: linear-gradient(to bottom, transparent 10%, #000000 95%);
@@ -291,7 +283,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex flex-col justify-center items-center px-6 pt-32 pb-40 text-center bg-black" id="home">
+    <section class="relative min-h-screen flex flex-col justify-center items-center px-6 pt-32 pb-40 text-center" id="home">
         <!-- Cosmic Background Image -->
         <div class="absolute inset-0 z-0 opacity-[0.08]">
             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920')] bg-cover bg-center mix-blend-screen grayscale"></div>
@@ -342,7 +334,7 @@
     </section>
 
     <!-- How It Works -->
-    <section class="py-28 px-6 bg-black border-t border-white/5" id="process">
+    <section class="py-28 px-6 border-t border-white/5" id="process">
         <div class="max-w-5xl mx-auto">
             <div class="text-center mb-20">
                 <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400 block mb-4">The Process</span>
@@ -380,7 +372,7 @@
     </section>
 
     <!-- Delivery Models Section -->
-    <section id="delivery" class="py-32 px-6 md:px-12 relative overflow-hidden bg-black border-y border-white/5">
+    <section id="delivery" class="py-32 px-6 md:px-12 relative overflow-hidden border-y border-white/5">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-24">
                 <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400 block mb-4">How We Work</span>
@@ -452,7 +444,7 @@
     </section>
 
     <!-- Stats Grid -->
-    <section class="py-24 bg-black">
+    <section class="py-24">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <div class="glass p-6 md:p-10 rounded-[2.5rem] border border-white/5 border-b-2 border-b-purple-600/20 glow-hover transition-all bg-black/40 text-center stat-card">
                 <span class="text-5xl font-black mb-4 block text-white">100%</span>
@@ -474,7 +466,7 @@
     </section>
 
     <!-- Product Lineage -->
-    <section id="lineage" class="py-32 bg-black">
+    <section id="lineage" class="py-32">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
                 <div class="max-w-2xl">
@@ -581,10 +573,7 @@
     </section>
 
     <!-- Why NyxCollective (Value Proposition) -->
-    <section class="py-32 px-6 bg-black border-t border-white/5">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20">
-                <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400 block mb-4">Why Us</span>
+    <section class="py-32 px-6 border-t border-white/5" id="why">
                 <h2 class="text-4xl md:text-5xl hero-text chrome-text mb-6">Luxury. Affordable. Transparent.</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto text-lg">Designer software does not have to come with designer price tags.<br>Every business deserves elite digital infrastructure<br>built to last, priced to be real.</p>
             </div>
@@ -618,7 +607,7 @@
     </section>
 
     <!-- Pricing -->
-    <section id="pricing" class="py-32 px-6 bg-black border-t border-white/5">
+    <section id="pricing" class="py-32 px-6 border-t border-white/5">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-20">
                 <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400 block mb-4">Transparent Pricing</span>
@@ -660,10 +649,7 @@
     </section>
 
     <!-- Social Proof -->
-    <section class="py-32 px-6 bg-black border-t border-white/5">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20">
-                <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400 block mb-4">Client Voices</span>
+    <section class="py-32 px-6 border-t border-white/5" id="social-proof">
                 <h2 class="text-4xl hero-text chrome-text">Built on Trust</h2>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
@@ -729,7 +715,7 @@
     </section>
 
     <!-- Footer / Contact -->
-    <footer id="contact" class="py-32 px-6 border-t border-white/5 bg-black">
+    <footer id="contact" class="py-32 px-6 border-t border-white/5">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-24">
             <!-- Left: Brand -->
             <div>
