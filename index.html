@@ -57,7 +57,7 @@
         }
 
         /* Marble bleed-through on sections */
-        section, footer { background-color: rgba(10,10,10,0.72) !important; }
+        section, footer { background-color: rgba(10,10,10,0.60) !important; }
 
         .hero-gradient-overlay {
             background: linear-gradient(to bottom, transparent 10%, rgba(13,13,13,0.95) 95%);
@@ -227,13 +227,13 @@
          preserveAspectRatio="xMidYMid slice">
         <defs>
             <filter id="mf" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-                <feTurbulence type="turbulence" baseFrequency="0.012 0.003" numOctaves="7" seed="11" result="noise"/>
-                <!-- amplify contrast: values below ~0.36 → black; above → light grey/white veins; 55% opacity overlay -->
+                <feTurbulence type="turbulence" baseFrequency="0.013 0.003" numOctaves="8" seed="11" result="noise"/>
+                <!-- high-contrast vein amp: threshold ~0.43; bright veins on charcoal; 80% opacity -->
                 <feColorMatrix in="noise" type="matrix"
-                    values="2.8 0 0 0 -1.0
-                            2.8 0 0 0 -1.0
-                            2.8 0 0 0 -1.0
-                            0   0 0 0  0.55"/>
+                    values="7   0 0 0 -3.0
+                            7   0 0 0 -3.0
+                            7.5 0 0 0 -3.0
+                            0   0 0 0  0.80"/>
             </filter>
         </defs>
         <!-- base charcoal -->
@@ -262,6 +262,7 @@
                 <a href="#delivery" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Delivery Models</a>
                 <a href="#lineage" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Products</a>
                 <a href="#pricing" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Pricing</a>
+                <a href="#blog" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Blog</a>
                 <a href="#contact" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Contact</a>
             </div>
 
@@ -284,6 +285,7 @@
                 <a href="#delivery" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Delivery Models</a>
                 <a href="#lineage" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Products</a>
                 <a href="#pricing" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Pricing</a>
+                <a href="#blog" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Blog</a>
                 <a href="#contact" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Contact</a>
                 <a href="#contact" class="w-full text-center py-3 glass rounded-full hover:bg-white hover:text-black transition border border-white/10" onclick="closeMobileMenu()">Start A Project</a>
             </div>
@@ -399,7 +401,7 @@
                     </div>
                     <h3 class="text-3xl font-bold mb-6 text-white">Elite Ecosystem Licensing</h3>
                     <p class="text-gray-500 mb-8 leading-relaxed">
-                        Access our battle-tested software foundations through a streamlined license. Ideal for businesses that need high-fidelity tools like Pulse, Shift, Titan, Grid, Aegis, Academy, or Citadel, deployed immediately within our proven infrastructure.
+                        Access our battle-tested software foundations through a streamlined license. Ideal for businesses that need high-fidelity tools like Pulse, Shift, Titan, Grid, Aegis, Codex, or Citadel, deployed immediately within our proven infrastructure.
                     </p>
                     <ul class="space-y-4 mb-10">
                         <li class="flex items-center gap-3 text-sm text-gray-400">
@@ -566,18 +568,19 @@
                     </div>
                 </div>
 
-                <!-- Academy -->
-                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('academy')">
+                <!-- Codex -->
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('codex')">
                     <div class="w-14 h-14 rounded-2xl bg-yellow-500/10 flex items-center justify-center border border-yellow-500/20 mb-8 group-hover:bg-yellow-500/20 transition">
                         <i data-lucide="book-open" class="text-yellow-400 w-7 h-7"></i>
                     </div>
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-2xl font-bold text-gray-100">Academy</h3>
+                        <h3 class="text-2xl font-bold text-gray-100">Codex</h3>
                         <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">Live</span>
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">An internal training lab built for modern teams. Create courses, track progress, and build a culture of continuous learning across your organization.</p>
                     <div class="flex items-center justify-between">
                         <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-yellow-400/60 group-hover:text-yellow-400 transition">Learn More →</span>
+                        <a href="https://nyxcodex.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10 transition">Visit Site ↗</a>
                     </div>
                 </div>
 
@@ -748,6 +751,48 @@
         </div>
     </section>
 
+    <!-- Blog -->
+    <section id="blog" class="py-32 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                <div>
+                    <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400 block mb-4">The Journal</span>
+                    <h2 class="text-5xl hero-text chrome-text">Insights &amp; Updates</h2>
+                </div>
+                <span class="text-xs font-black tracking-[0.3em] uppercase text-purple-400/30 whitespace-nowrap">More Posts Coming Soon</span>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass p-10 rounded-[3rem] border border-white/5 glow-hover transition-all flex flex-col">
+                    <span class="text-[9px] font-black tracking-widest uppercase text-purple-400 mb-6 block">Architecture</span>
+                    <h3 class="text-xl font-bold text-white mb-4 leading-snug">Why Modular Software Architecture Is the Future of Business Infrastructure</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed flex-1 mb-8">The era of monolithic platforms is over. Businesses that invest in modular, composable infrastructure today are the ones that will scale without friction tomorrow.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-600 text-xs uppercase tracking-widest">Mar 2026</span>
+                        <span class="text-[9px] font-black tracking-widest uppercase text-purple-400/40">Coming Soon</span>
+                    </div>
+                </div>
+                <div class="glass p-10 rounded-[3rem] border border-white/5 glow-hover transition-all flex flex-col">
+                    <span class="text-[9px] font-black tracking-widest uppercase text-blue-400 mb-6 block">Strategy</span>
+                    <h3 class="text-xl font-bold text-white mb-4 leading-snug">License vs. White-Label: Which Delivery Model Is Right for Your Business?</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed flex-1 mb-8">Two paths to the same elite software. One gives you speed and proven infrastructure. The other gives you complete ownership and a product that is entirely yours.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-600 text-xs uppercase tracking-widest">Mar 2026</span>
+                        <span class="text-[9px] font-black tracking-widest uppercase text-blue-400/40">Coming Soon</span>
+                    </div>
+                </div>
+                <div class="glass p-10 rounded-[3rem] border border-white/5 glow-hover transition-all flex flex-col">
+                    <span class="text-[9px] font-black tracking-widest uppercase text-yellow-400 mb-6 block">Product</span>
+                    <h3 class="text-xl font-bold text-white mb-4 leading-snug">Introducing NyxCodex: A Training Platform Built for High-Performance Teams</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed flex-1 mb-8">Continuous learning is not a perk. It is infrastructure. NyxCodex turns employee development into a structured, trackable, measurable system that compounds over time.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-600 text-xs uppercase tracking-widest">Mar 2026</span>
+                        <span class="text-[9px] font-black tracking-widest uppercase text-yellow-400/40">Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer / Contact -->
     <footer id="contact" class="py-32 px-6 border-t border-white/5">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-24">
@@ -762,9 +807,6 @@
 
                 <!-- Social / Contact Links -->
                 <div class="flex gap-4">
-                    <a href="https://twitter.com/nyxcollectivellc" target="_blank" rel="noopener" class="w-10 h-10 glass rounded-full flex items-center justify-center border border-white/10 hover:border-purple-500/40 hover:bg-purple-500/10 transition group" aria-label="Twitter">
-                        <i data-lucide="twitter" class="w-4 h-4 text-gray-400 group-hover:text-purple-400 transition"></i>
-                    </a>
                     <a href="https://facebook.com/NyxCollectiveLLC" target="_blank" rel="noopener" class="w-10 h-10 glass rounded-full flex items-center justify-center border border-white/10 hover:border-purple-500/40 hover:bg-purple-500/10 transition group" aria-label="Facebook">
                         <i data-lucide="facebook" class="w-4 h-4 text-gray-400 group-hover:text-purple-400 transition"></i>
                     </a>
@@ -943,12 +985,12 @@
                 features: ['Contact and Company Management', 'Visual Sales Pipeline', 'Activity and Note Logging', 'Email Sequence Automation', 'Deal Stage Tracking', 'Custom Fields and Tags']
             },
             academy: {
-                name: 'Academy',
+                name: 'Codex',
                 color: 'yellow',
                 icon: 'book-open',
                 tag: 'Training',
                 tagline: 'Build a culture of continuous learning.',
-                description: 'Academy is an internal employee training lab built for modern organizations. Create structured courses, track completion, assess knowledge, and build a culture where continuous development is the baseline.',
+                description: 'Codex is an internal employee training lab built for modern organizations. Create structured courses, track completion, assess knowledge, and build a culture where continuous development is the baseline.',
                 features: ['Course and Module Builder', 'Video and Document Support', 'Progress and Completion Tracking', 'Quizzes and Assessments', 'Certification Issuance', 'Onboarding Track Templates']
             },
             citadel: {
