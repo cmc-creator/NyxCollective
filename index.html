@@ -57,7 +57,7 @@
         }
 
         /* Marble bleed-through on sections */
-        section, footer { background-color: rgba(10,10,10,0.60) !important; }
+        section, footer { background-color: rgba(8,8,8,0.55) !important; }
 
         .hero-gradient-overlay {
             background: linear-gradient(to bottom, transparent 10%, rgba(13,13,13,0.95) 95%);
@@ -221,32 +221,24 @@
 </head>
 <body class="cosmic-bg">
 
-    <!-- Marble background — SVG feTurbulence generates real vein patterns -->
-    <svg id="marble-bg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-         style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;"
-         preserveAspectRatio="xMidYMid slice">
-        <defs>
-            <filter id="mf" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-                <feTurbulence type="turbulence" baseFrequency="0.013 0.003" numOctaves="8" seed="11" result="noise"/>
-                <!-- high-contrast vein amp: threshold ~0.43; bright veins on charcoal; 80% opacity -->
-                <feColorMatrix in="noise" type="matrix"
-                    values="7   0 0 0 -3.0
-                            7   0 0 0 -3.0
-                            7.5 0 0 0 -3.0
-                            0   0 0 0  0.80"/>
-            </filter>
-        </defs>
-        <!-- base charcoal -->
-        <rect width="100%" height="100%" fill="#0d0d0d"/>
-        <!-- marble vein overlay -->
-        <rect width="100%" height="100%" filter="url(#mf)"/>
-        <!-- subtle purple tint in corner -->
-        <radialGradient id="ptint" cx="5%" cy="10%" r="40%">
-            <stop offset="0%" stop-color="#9333ea" stop-opacity="0.06"/>
-            <stop offset="100%" stop-color="#9333ea" stop-opacity="0"/>
-        </radialGradient>
-        <rect width="100%" height="100%" fill="url(#ptint)"/>
-    </svg>
+    <!-- Marble background: real photograph, fixed behind all content -->
+    <div aria-hidden="true" style="
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1920&q=80');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.55;
+    "></div>
+    <!-- Dark vignette overlay to deepen edges -->
+    <div aria-hidden="true" style="
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.6) 100%);
+        pointer-events: none;
+    "></div>
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 glass py-5 px-6 md:px-12 transition-all duration-300 border-b border-white/5" id="navbar">
@@ -401,7 +393,7 @@
                     </div>
                     <h3 class="text-3xl font-bold mb-6 text-white">Elite Ecosystem Licensing</h3>
                     <p class="text-gray-500 mb-8 leading-relaxed">
-                        Access our battle-tested software foundations through a streamlined license. Ideal for businesses that need high-fidelity tools like Pulse, Shift, Titan, Grid, Aegis, Codex, or Citadel, deployed immediately within our proven infrastructure.
+                        Access our battle-tested software foundations through a streamlined license. Ideal for businesses that need high-fidelity tools like Pulse, Shift, Titan, Grid, Aegis, Codex, Citadel, or Strata, deployed immediately within our proven infrastructure.
                     </p>
                     <ul class="space-y-4 mb-10">
                         <li class="flex items-center gap-3 text-sm text-gray-400">
@@ -597,6 +589,22 @@
                     <div class="flex items-center justify-between">
                         <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-red-400/60 group-hover:text-red-400 transition">Learn More →</span>
                         <a href="https://nyxcitadel.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-red-500/30 text-red-400 hover:bg-red-500/10 transition">Visit Site ↗</a>
+                    </div>
+                </div>
+
+                <!-- Strata -->
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('strata')">
+                    <div class="w-14 h-14 rounded-2xl bg-teal-500/10 flex items-center justify-center border border-teal-500/20 mb-8 group-hover:bg-teal-500/20 transition">
+                        <i data-lucide="layers" class="text-teal-400 w-7 h-7"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-gray-100">Strata</h3>
+                        <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/20">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">Layered data intelligence and analytics infrastructure. Understand every tier of your business in a unified, structured view built for decision-makers.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-teal-400/60 group-hover:text-teal-400 transition">Learn More →</span>
+                        <a href="https://nyxstrata.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-teal-500/30 text-teal-400 hover:bg-teal-500/10 transition">Visit Site ↗</a>
                     </div>
                 </div>
             </div>
@@ -1001,6 +1009,15 @@
                 tagline: 'Precision protection for your business.',
                 description: 'Citadel is risk management and compliance infrastructure for organizations that cannot afford to be caught off guard. Stay audit-ready, track incidents, enforce policy, and keep every stakeholder informed with structured oversight tools.',
                 features: ['Risk Register and Scoring', 'Incident Reporting and Routing', 'Policy Document Management', 'Audit Trail and Evidence Storage', 'Compliance Checklist Engine', 'Stakeholder Notification System']
+            },
+            strata: {
+                name: 'Strata',
+                color: 'teal',
+                icon: 'layers',
+                tag: 'Analytics',
+                tagline: 'Every layer of your business, finally visible.',
+                description: 'Strata is layered data intelligence and analytics infrastructure built for decision-makers who need clarity at every level of their operation. Unify disparate data sources into structured, actionable intelligence without the complexity of enterprise BI tools.',
+                features: ['Multi-Source Data Ingestion', 'Layered Dashboard Views', 'Custom KPI Builder', 'Trend and Anomaly Detection', 'Executive Summary Reports', 'Role-Based Data Access']
             }
         };
 
@@ -1010,6 +1027,7 @@
             slate:  { text: 'text-slate-400',  bg: 'bg-slate-500/10',  border: 'border-slate-500/20',  btn: 'bg-slate-600 hover:bg-slate-500' },
             amber:  { text: 'text-amber-400',  bg: 'bg-amber-500/10',  border: 'border-amber-500/20',  btn: 'bg-amber-600 hover:bg-amber-500' },
             rose:   { text: 'text-rose-400',   bg: 'bg-rose-500/10',   border: 'border-rose-500/20',   btn: 'bg-rose-600 hover:bg-rose-500' },
+            teal:   { text: 'text-teal-400',   bg: 'bg-teal-500/10',   border: 'border-teal-500/20',   btn: 'bg-teal-600 hover:bg-teal-500' },
             yellow: { text: 'text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/20', btn: 'bg-yellow-600 hover:bg-yellow-500' },
             red:    { text: 'text-red-400',    bg: 'bg-red-500/10',    border: 'border-red-500/20',    btn: 'bg-red-600 hover:bg-red-500' }
         };
