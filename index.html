@@ -831,34 +831,34 @@
                     <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400 block mb-4">The Journal</span>
                     <h2 class="text-5xl hero-text chrome-text">Insights &amp; Updates</h2>
                 </div>
-                <span class="text-xs font-black tracking-[0.3em] uppercase text-purple-400/30 whitespace-nowrap">More Posts Coming Soon</span>
+                <span class="text-xs font-black tracking-[0.3em] uppercase text-purple-400/30 whitespace-nowrap">Apr 2026</span>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass p-10 rounded-[3rem] border border-white/5 glow-hover transition-all flex flex-col">
+                <div class="glass p-10 rounded-[3rem] border border-white/5 glow-hover transition-all flex flex-col cursor-pointer product-card" onclick="openBlogModal('modular')">
                     <span class="text-[9px] font-black tracking-widest uppercase text-purple-400 mb-6 block">Architecture</span>
                     <h3 class="text-xl font-bold text-white mb-4 leading-snug">Why Modular Software Architecture Is the Future of Business Infrastructure</h3>
                     <p class="text-gray-600 text-sm leading-relaxed flex-1 mb-8">The era of monolithic platforms is over. Businesses that invest in modular, composable infrastructure today are the ones that will scale without friction tomorrow.</p>
                     <div class="flex items-center justify-between">
                         <span class="text-gray-600 text-xs uppercase tracking-widest">Apr 2026</span>
-                        <span class="text-[9px] font-black tracking-widest uppercase text-purple-400/40">Coming Soon</span>
+                        <span class="text-[9px] font-black tracking-widest uppercase text-purple-400 hover:text-purple-300 transition">Read Article →</span>
                     </div>
                 </div>
-                <div class="glass p-10 rounded-[3rem] border border-white/5 glow-hover transition-all flex flex-col">
+                <div class="glass p-10 rounded-[3rem] border border-white/5 glow-hover transition-all flex flex-col cursor-pointer product-card" onclick="openBlogModal('delivery')">
                     <span class="text-[9px] font-black tracking-widest uppercase text-blue-400 mb-6 block">Strategy</span>
                     <h3 class="text-xl font-bold text-white mb-4 leading-snug">License vs. White-Label: Which Delivery Model Is Right for Your Business?</h3>
                     <p class="text-gray-600 text-sm leading-relaxed flex-1 mb-8">Two paths to the same elite software. One gives you speed and proven infrastructure. The other gives you complete ownership and a product that is entirely yours.</p>
                     <div class="flex items-center justify-between">
                         <span class="text-gray-600 text-xs uppercase tracking-widest">Apr 2026</span>
-                        <span class="text-[9px] font-black tracking-widest uppercase text-blue-400/40">Coming Soon</span>
+                        <span class="text-[9px] font-black tracking-widest uppercase text-blue-400 hover:text-blue-300 transition">Read Article →</span>
                     </div>
                 </div>
-                <div class="glass p-10 rounded-[3rem] border border-white/5 glow-hover transition-all flex flex-col">
+                <div class="glass p-10 rounded-[3rem] border border-white/5 glow-hover transition-all flex flex-col cursor-pointer product-card" onclick="openBlogModal('codex')">
                     <span class="text-[9px] font-black tracking-widest uppercase text-yellow-400 mb-6 block">Product</span>
                     <h3 class="text-xl font-bold text-white mb-4 leading-snug">Introducing NyxCodex: A Training Platform Built for High-Performance Teams</h3>
                     <p class="text-gray-600 text-sm leading-relaxed flex-1 mb-8">Continuous learning is not a perk. It is infrastructure. NyxCodex turns employee development into a structured, trackable, measurable system that compounds over time.</p>
                     <div class="flex items-center justify-between">
                         <span class="text-gray-600 text-xs uppercase tracking-widest">Apr 2026</span>
-                        <span class="text-[9px] font-black tracking-widest uppercase text-yellow-400/40">Coming Soon</span>
+                        <span class="text-[9px] font-black tracking-widest uppercase text-yellow-400 hover:text-yellow-300 transition">Read Article →</span>
                     </div>
                 </div>
             </div>
@@ -1183,6 +1183,108 @@
                 document.body.style.overflow = '';
             }
         });
+
+        // Blog posts
+        const blogPosts = {
+            modular: {
+                category: 'Architecture',
+                categoryColor: 'text-purple-400',
+                date: 'Apr 2026',
+                title: 'Why Modular Software Architecture Is the Future of Business Infrastructure',
+                content: `
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">The era of the all-in-one platform is over. Not because those platforms stopped working, but because the businesses using them outgrew them before they ever got a chance to scale.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Monolithic software is designed to do everything. The problem is that when you need it to do something new, you are at the mercy of a vendor's roadmap, a migration project, or a painful integration layer that costs more to maintain than the software itself.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">Modular architecture is the opposite. You build your stack piece by piece, connecting systems that are purpose-built for exactly one job. Each module is lean, testable, and replaceable without touching anything else.</p>
+                    <h4 class="text-white font-bold text-base mb-4">Why It Matters Now</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">The businesses winning right now are not the ones with the most software. They are the ones with the right software, connected cleanly, running without drag. A CRM that talks to your scheduling system. A monitoring dashboard that surfaces what matters. A training platform that ties directly to compliance records. That is composable infrastructure, and it is not a trend - it is the direction everything is moving.</p>
+                    <h4 class="text-white font-bold text-base mb-4">The Hidden Cost of Monolithic Platforms</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">When you buy into a single-vendor, all-in-one platform, you are not buying software. You are buying dependency. The moment one module underperforms, you are stuck with it because ripping it out means ripping out everything around it.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">Modular systems solve this entirely. If your CRM is underperforming, you swap it. The rest of your stack stays intact.</p>
+                    <h4 class="text-white font-bold text-base mb-4">What This Means for Your Business</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">The shift to modular architecture is not just a technical decision. It is a strategic one. Businesses that build on modular foundations today will have the flexibility to adapt, integrate new tools, and scale without the friction that kills growth at exactly the wrong moment.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">At NyxCollective, every product in our lineage is designed to work standalone or as part of a connected suite. You start where you need to and build from there. No lock-in. No bloat. No ceiling.</p>
+                `
+            },
+            delivery: {
+                category: 'Strategy',
+                categoryColor: 'text-blue-400',
+                date: 'Apr 2026',
+                title: 'License vs. White-Label: Which Delivery Model Is Right for Your Business?',
+                content: `
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">When a business comes to NyxCollective, the first decision is not which product they need. It is how they want to receive it. We deliver every product in our lineage two ways: as a license, or as a fully customized white-label build. Same foundation. Very different outcomes.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">Here is how to know which one is right for you.</p>
+                    <h4 class="text-white font-bold text-base mb-4">The Licensed Model: Speed and Infrastructure</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Licensing gives you immediate access to a battle-tested product. The architecture is already built, secured, and running. You get it deployed, configured for your environment, and operational fast - typically within 48 hours of kickoff.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-2">This is the right choice when:</p>
+                    <ul class="text-gray-500 text-sm space-y-2 mb-6 pl-4">
+                        <li>- You need a working solution now, not in six months</li>
+                        <li>- Your requirements match what the product already does well</li>
+                        <li>- You want a flat, predictable monthly cost with no development overhead</li>
+                        <li>- You plan to scale usage rather than build custom functionality</li>
+                    </ul>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">The licensed model is not a compromise. Every product in our lineage is production-grade and built to the same standard as a custom build. You are not getting a lesser version - you are getting the proven one.</p>
+                    <h4 class="text-white font-bold text-base mb-4">The White-Label Model: Ownership and Identity</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">White-label is for businesses that need more than software. They need their software. A product built under their brand, configured to their logic, and owned outright after delivery.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">We clone our core architecture - which means you inherit years of engineering work - and then rebuild the surface layer entirely around your brand identity, your workflows, and your business rules. You own the result. No recurring fees unless you want managed hosting.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-2">This is the right choice when:</p>
+                    <ul class="text-gray-500 text-sm space-y-2 mb-8 pl-4">
+                        <li>- Your brand requires a proprietary experience</li>
+                        <li>- Your workflows or compliance requirements need custom logic</li>
+                        <li>- You want to offer the software as a product to your own clients</li>
+                        <li>- Long-term total cost of ownership matters more than speed to market</li>
+                    </ul>
+                    <h4 class="text-white font-bold text-base mb-4">How to Decide</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">If you need it running this week and your use case fits the product as it stands - license it.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">If the product is going to carry your name, serve your clients, or need to behave in ways specific to how your business operates - white-label it. Both paths start with the same conversation. Tell us what you need and we will tell you honestly which model makes sense.</p>
+                `
+            },
+            codex: {
+                category: 'Product',
+                categoryColor: 'text-yellow-400',
+                date: 'Apr 2026',
+                title: 'Introducing NyxCodex: A Training Platform Built for High-Performance Teams',
+                content: `
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Most employee training fails before the first module ends.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">Not because the content is bad. Because the platform it lives on makes learning feel like a compliance checkbox rather than something worth doing. Clunky interfaces, zero visibility into progress, and no way to measure whether any of it is actually sticking. NyxCodex was built to fix that.</p>
+                    <h4 class="text-white font-bold text-base mb-4">Training Is Infrastructure</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">The way most businesses think about employee training - as a one-time onboarding event or an annual requirement - is the same way they used to think about software. Something to tolerate, not invest in.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">That framing is expensive. The teams that compound fastest are the ones where learning is continuous, structured, and tied to real business outcomes. That requires a system, not a shared folder full of PDFs.</p>
+                    <h4 class="text-white font-bold text-base mb-4">What Codex Does</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Codex is an internal training and development platform that gives organizations full control over what their teams learn and how that learning is tracked.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">You build courses using a clean module editor that supports video, documents, and structured lessons. Assign them to individuals, teams, or entire departments. Set completion requirements. Issue certifications. Track everything from a single manager dashboard that shows exactly where each person is and whether they are on track. It is not a legacy LMS. It is a performance infrastructure tool that happens to deliver learning.</p>
+                    <h4 class="text-white font-bold text-base mb-4">Who It Is For</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Codex is built for organizations that take development seriously. Healthcare teams building compliance training pipelines. Professional services firms onboarding new hires at scale. Operators who need to document that their people have been trained, assessed, and certified - and prove it on demand.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">If your answer to "how do we train people?" is still a mix of shadow files, in-person walkthroughs, and hope - Codex is built for you.</p>
+                    <h4 class="text-white font-bold text-base mb-4">What Is Next</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">NyxCodex is live and available to license today. If you want to explore a white-label build for your organization, we can talk through what that looks like. The foundation is already there. What we build on top of it is up to you.</p>
+                `
+            }
+        };
+
+        function openBlogModal(key) {
+            const post = blogPosts[key];
+            document.getElementById('modal-box').innerHTML = `
+                <div class="flex justify-between items-start mb-8">
+                    <div>
+                        <span class="text-[9px] font-black tracking-[0.3em] uppercase ${post.categoryColor} block mb-2">${post.category} &nbsp;·&nbsp; ${post.date}</span>
+                        <h3 class="text-2xl font-black text-white leading-snug max-w-lg">${post.title}</h3>
+                    </div>
+                    <button onclick="closeModal()" class="w-10 h-10 glass rounded-full flex items-center justify-center border border-white/10 hover:border-white/30 transition text-gray-500 hover:text-white shrink-0 ml-6">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <div class="border-t border-white/5 pt-8 mb-10">
+                    ${post.content}
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#contact" onclick="closeModal()" class="flex-1 py-4 bg-purple-600 hover:bg-purple-500 text-white font-black rounded-xl transition uppercase tracking-widest text-xs text-center">Start a Project</a>
+                    <a href="#lineage" onclick="closeModal()" class="flex-1 py-4 glass text-white font-bold rounded-xl hover:bg-white/10 transition uppercase tracking-widest text-xs text-center border border-white/10">Explore Products</a>
+                </div>
+            `;
+            document.getElementById('modal-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
 
         // Contact form - Formspree submission
         // IMPORTANT: Replace YOUR_FORM_ID in the form action with your Formspree ID.
