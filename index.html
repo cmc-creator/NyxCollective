@@ -639,6 +639,38 @@
                         <a href="https://nyxarete.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-violet-500/30 text-violet-400 hover:bg-violet-500/10 transition">Visit Site ↗</a>
                     </div>
                 </div>
+
+                <!-- Ledger -->
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('ledger')">
+                    <div class="w-14 h-14 rounded-2xl bg-lime-500/10 flex items-center justify-center border border-lime-500/20 mb-8 group-hover:bg-lime-500/20 transition">
+                        <i data-lucide="receipt" class="text-lime-400 w-7 h-7"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-gray-100">Ledger</h3>
+                        <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-lime-500/10 text-lime-400 border border-lime-500/20">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">Invoicing, payment tracking, and financial reporting built for modern businesses. Close the gap between your CRM and your cash flow.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-lime-400/60 group-hover:text-lime-400 transition">Learn More →</span>
+                        <a href="https://nyxledger.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-lime-500/30 text-lime-400 hover:bg-lime-500/10 transition">Visit Site ↗</a>
+                    </div>
+                </div>
+
+                <!-- Scribe -->
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('scribe')">
+                    <div class="w-14 h-14 rounded-2xl bg-sky-500/10 flex items-center justify-center border border-sky-500/20 mb-8 group-hover:bg-sky-500/20 transition">
+                        <i data-lucide="file-signature" class="text-sky-400 w-7 h-7"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-gray-100">Scribe</h3>
+                        <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">Document management and e-signatures built for organizations that run on compliance. Store, version, and get sign-off in one clean system.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-sky-400/60 group-hover:text-sky-400 transition">Learn More →</span>
+                        <a href="https://nyxscribe.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-sky-500/30 text-sky-400 hover:bg-sky-500/10 transition">Visit Site ↗</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1068,6 +1100,24 @@
                 tagline: 'Excellence is not an event. It is a standard.',
                 description: 'Arete is a staff training platform built around Service Excellence and Code of Conduct principles. It gives organizations the tools to define, teach, track, and reinforce the behavioral standards that separate good teams from exceptional ones.',
                 features: ['Service Excellence Curriculum', 'Code of Conduct Training Modules', 'Acknowledgment and Sign-Off Tracking', 'Behavioral Competency Assessments', 'Manager Reporting Dashboard', 'Policy Version Control']
+            },
+            ledger: {
+                name: 'Ledger',
+                color: 'lime',
+                icon: 'receipt',
+                tag: 'Finance',
+                tagline: 'From invoice to income, all in one place.',
+                description: 'Ledger is a financial operations platform built for businesses that need clean invoicing, payment tracking, and reporting without the complexity of enterprise accounting software. Pairs natively with Aegis to close the gap between your sales pipeline and your cash flow.',
+                features: ['Invoice Creation and Delivery', 'Payment Status Tracking', 'Recurring Billing Support', 'Expense Logging', 'Revenue and Cash Flow Reports', 'Aegis CRM Integration']
+            },
+            scribe: {
+                name: 'Scribe',
+                color: 'sky',
+                icon: 'file-signature',
+                tag: 'Documents',
+                tagline: 'Every document. Signed, stored, controlled.',
+                description: 'Scribe is a document management and e-signature platform built for compliance-driven organizations. Create, distribute, version, and collect sign-off on any document in a single auditable system. Pairs with Citadel for airtight compliance coverage.',
+                features: ['Document Upload and Organization', 'E-Signature Collection', 'Version Control and History', 'Expiry and Renewal Alerts', 'Bulk Distribution and Tracking', 'Citadel Compliance Integration']
             }
         };
 
@@ -1081,7 +1131,9 @@
             yellow:  { text: 'text-yellow-400',  bg: 'bg-yellow-500/10',  border: 'border-yellow-500/20',  btn: 'bg-yellow-600 hover:bg-yellow-500' },
             red:     { text: 'text-red-400',     bg: 'bg-red-500/10',     border: 'border-red-500/20',     btn: 'bg-red-600 hover:bg-red-500' },
             emerald: { text: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', btn: 'bg-emerald-600 hover:bg-emerald-500' },
-            violet:  { text: 'text-violet-400',  bg: 'bg-violet-500/10',  border: 'border-violet-500/20',  btn: 'bg-violet-600 hover:bg-violet-500' }
+            violet:  { text: 'text-violet-400',  bg: 'bg-violet-500/10',  border: 'border-violet-500/20',  btn: 'bg-violet-600 hover:bg-violet-500' },
+            lime:    { text: 'text-lime-400',    bg: 'bg-lime-500/10',    border: 'border-lime-500/20',    btn: 'bg-lime-600 hover:bg-lime-500' },
+            sky:     { text: 'text-sky-400',     bg: 'bg-sky-500/10',     border: 'border-sky-500/20',     btn: 'bg-sky-600 hover:bg-sky-500' }
         };
 
         function openModal(key) {
