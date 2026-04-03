@@ -607,6 +607,38 @@
                         <a href="https://nyxstrata.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-teal-500/30 text-teal-400 hover:bg-teal-500/10 transition">Visit Site ↗</a>
                     </div>
                 </div>
+
+                <!-- HICSlab -->
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('hicslab')">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 mb-8 group-hover:bg-emerald-500/20 transition">
+                        <i data-lucide="alert-triangle" class="text-emerald-400 w-7 h-7"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-gray-100">HICSlab</h3>
+                        <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Live</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">Training for the Hospital Incident Command System for Emergency Management. Equip your team to lead and respond with confidence in any crisis.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-emerald-400/60 group-hover:text-emerald-400 transition">Learn More →</span>
+                        <a href="https://nyxhicslab.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 transition">Visit Site ↗</a>
+                    </div>
+                </div>
+
+                <!-- Arete -->
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('arete')">
+                    <div class="w-14 h-14 rounded-2xl bg-violet-500/10 flex items-center justify-center border border-violet-500/20 mb-8 group-hover:bg-violet-500/20 transition">
+                        <i data-lucide="award" class="text-violet-400 w-7 h-7"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-gray-100">Arete</h3>
+                        <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-violet-500/10 text-violet-400 border border-violet-500/20">Live</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">Training for Service Excellence and Code of Conduct for staff. Build a culture where exceptional standards are the baseline, not the exception.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-violet-400/60 group-hover:text-violet-400 transition">Learn More →</span>
+                        <a href="https://nyxarete.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-violet-500/30 text-violet-400 hover:bg-violet-500/10 transition">Visit Site ↗</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1018,18 +1050,38 @@
                 tagline: 'Every layer of your business, finally visible.',
                 description: 'Strata is layered data intelligence and analytics infrastructure built for decision-makers who need clarity at every level of their operation. Unify disparate data sources into structured, actionable intelligence without the complexity of enterprise BI tools.',
                 features: ['Multi-Source Data Ingestion', 'Layered Dashboard Views', 'Custom KPI Builder', 'Trend and Anomaly Detection', 'Executive Summary Reports', 'Role-Based Data Access']
+            },
+            hicslab: {
+                name: 'HICSlab',
+                color: 'emerald',
+                icon: 'alert-triangle',
+                tag: 'Emergency Training',
+                tagline: 'Command ready when it matters most.',
+                description: 'HICSlab is a structured training platform for the Hospital Incident Command System (HICS). Designed for emergency management teams, it prepares staff at every level to activate, lead, and coordinate a confident, compliant response to any incident.',
+                features: ['HICS Role-Based Training Modules', 'Incident Activation Walkthroughs', 'Scenario-Based Exercises', 'Competency Assessments', 'Certification and Completion Tracking', 'Hospital Command Center Simulations']
+            },
+            arete: {
+                name: 'Arete',
+                color: 'violet',
+                icon: 'award',
+                tag: 'Staff Excellence',
+                tagline: 'Excellence is not an event. It is a standard.',
+                description: 'Arete is a staff training platform built around Service Excellence and Code of Conduct principles. It gives organizations the tools to define, teach, track, and reinforce the behavioral standards that separate good teams from exceptional ones.',
+                features: ['Service Excellence Curriculum', 'Code of Conduct Training Modules', 'Acknowledgment and Sign-Off Tracking', 'Behavioral Competency Assessments', 'Manager Reporting Dashboard', 'Policy Version Control']
             }
         };
 
         const colorMap = {
-            purple: { text: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20', btn: 'bg-purple-600 hover:bg-purple-500' },
-            blue:   { text: 'text-blue-400',   bg: 'bg-blue-500/10',   border: 'border-blue-500/20',   btn: 'bg-blue-600 hover:bg-blue-500' },
-            slate:  { text: 'text-slate-400',  bg: 'bg-slate-500/10',  border: 'border-slate-500/20',  btn: 'bg-slate-600 hover:bg-slate-500' },
-            amber:  { text: 'text-amber-400',  bg: 'bg-amber-500/10',  border: 'border-amber-500/20',  btn: 'bg-amber-600 hover:bg-amber-500' },
-            rose:   { text: 'text-rose-400',   bg: 'bg-rose-500/10',   border: 'border-rose-500/20',   btn: 'bg-rose-600 hover:bg-rose-500' },
-            teal:   { text: 'text-teal-400',   bg: 'bg-teal-500/10',   border: 'border-teal-500/20',   btn: 'bg-teal-600 hover:bg-teal-500' },
-            yellow: { text: 'text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/20', btn: 'bg-yellow-600 hover:bg-yellow-500' },
-            red:    { text: 'text-red-400',    bg: 'bg-red-500/10',    border: 'border-red-500/20',    btn: 'bg-red-600 hover:bg-red-500' }
+            purple:  { text: 'text-purple-400',  bg: 'bg-purple-500/10',  border: 'border-purple-500/20',  btn: 'bg-purple-600 hover:bg-purple-500' },
+            blue:    { text: 'text-blue-400',    bg: 'bg-blue-500/10',    border: 'border-blue-500/20',    btn: 'bg-blue-600 hover:bg-blue-500' },
+            slate:   { text: 'text-slate-400',   bg: 'bg-slate-500/10',   border: 'border-slate-500/20',   btn: 'bg-slate-600 hover:bg-slate-500' },
+            amber:   { text: 'text-amber-400',   bg: 'bg-amber-500/10',   border: 'border-amber-500/20',   btn: 'bg-amber-600 hover:bg-amber-500' },
+            rose:    { text: 'text-rose-400',    bg: 'bg-rose-500/10',    border: 'border-rose-500/20',    btn: 'bg-rose-600 hover:bg-rose-500' },
+            teal:    { text: 'text-teal-400',    bg: 'bg-teal-500/10',    border: 'border-teal-500/20',    btn: 'bg-teal-600 hover:bg-teal-500' },
+            yellow:  { text: 'text-yellow-400',  bg: 'bg-yellow-500/10',  border: 'border-yellow-500/20',  btn: 'bg-yellow-600 hover:bg-yellow-500' },
+            red:     { text: 'text-red-400',     bg: 'bg-red-500/10',     border: 'border-red-500/20',     btn: 'bg-red-600 hover:bg-red-500' },
+            emerald: { text: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', btn: 'bg-emerald-600 hover:bg-emerald-500' },
+            violet:  { text: 'text-violet-400',  bg: 'bg-violet-500/10',  border: 'border-violet-500/20',  btn: 'bg-violet-600 hover:bg-violet-500' }
         };
 
         function openModal(key) {
