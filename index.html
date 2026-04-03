@@ -265,6 +265,11 @@
             background-color: transparent !important;
             box-shadow: none !important;
             display: block;
+            filter: drop-shadow(0 0 8px rgba(220,220,230,0.55)) drop-shadow(0 0 22px rgba(200,210,220,0.3));
+            transition: filter 0.3s ease;
+        }
+        .nav-logo:hover {
+            filter: drop-shadow(0 0 12px rgba(220,220,230,0.85)) drop-shadow(0 0 32px rgba(200,210,220,0.45));
         }
     </style>
 </head>
@@ -294,7 +299,7 @@
         <div class="flex justify-between items-center">
             <!-- Logo -->
             <a href="#" class="flex items-center gap-3 no-underline">
-                <img src="nclogo nobg.png" alt="NyxCollective" class="h-16 w-auto nav-logo">
+                <img src="nclogo nobg.png" alt="NyxCollective" class="h-20 w-auto nav-logo">
                 <span class="text-2xl font-bold tracking-tighter chrome-text uppercase">NYXCOLLECTIVE</span>
             </a>
 
