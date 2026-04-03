@@ -14,6 +14,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="NyxCollective LLC | Designer Software. Transparent Pricing.">
     <meta name="twitter:description" content="NyxCollective LLC builds 12 elite modular software products available to license as-is or as a fully customized white-label build. Transparent pricing. Zero bloat.">
+    <meta name="twitter:image" content="https://nyxcollectivellc.com/nclogo%20nobg.png">
+    <script defer data-domain="nyxcollectivellc.com" src="https://plausible.io/js/script.js"></script>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -1036,7 +1038,7 @@
     </div>
 
     <!-- Product Modals -->
-    <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
         <div class="modal-box p-10" id="modal-box">
             <!-- Modal content injected by JS -->
         </div>
@@ -1067,10 +1069,13 @@
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobile-menu');
         hamburger.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
+            const isOpen = mobileMenu.classList.toggle('open');
+            hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         });
+        hamburger.setAttribute('aria-expanded', 'false');
         function closeMobileMenu() {
             mobileMenu.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', 'false');
         }
 
         // Intersection observer: fade-up stats on scroll
@@ -1231,7 +1236,7 @@
                             <h3 class="text-3xl font-black text-white">${p.name}</h3>
                         </div>
                     </div>
-                    <button onclick="closeModal()" class="w-10 h-10 glass rounded-full flex items-center justify-center border border-white/10 hover:border-white/30 transition text-gray-500 hover:text-white shrink-0">
+                    <button onclick="closeModal()" aria-label="Close dialog" class="w-10 h-10 glass rounded-full flex items-center justify-center border border-white/10 hover:border-white/30 transition text-gray-500 hover:text-white shrink-0">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -1247,18 +1252,48 @@
             document.getElementById('modal-overlay').classList.add('active');
             document.body.style.overflow = 'hidden';
             lucide.createIcons();
+            _openModal_activate();
+        }
+
+        let _lastFocus = null;
+
+        function _openModal_activate() {
+            const overlay = document.getElementById('modal-overlay');
+            const box = document.getElementById('modal-box');
+            _lastFocus = document.activeElement;
+            const focusable = box.querySelectorAll('a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])');
+            if (focusable.length) focusable[0].focus();
+            overlay._trapHandler = function(e) {
+                if (e.key !== 'Tab') return;
+                const all = Array.from(box.querySelectorAll('a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])'));
+                const first = all[0], last = all[all.length - 1];
+                if (e.shiftKey) {
+                    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+                } else {
+                    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+                }
+            };
+            overlay.addEventListener('keydown', overlay._trapHandler);
         }
 
         function closeModal(e) {
             if (e && e.target !== document.getElementById('modal-overlay')) return;
-            document.getElementById('modal-overlay').classList.remove('active');
+            const overlay = document.getElementById('modal-overlay');
+            overlay.classList.remove('active');
             document.body.style.overflow = '';
+            if (overlay._trapHandler) { overlay.removeEventListener('keydown', overlay._trapHandler); overlay._trapHandler = null; }
+            if (_lastFocus) { _lastFocus.focus(); _lastFocus = null; }
         }
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                document.getElementById('modal-overlay').classList.remove('active');
-                document.body.style.overflow = '';
+                const overlay = document.getElementById('modal-overlay');
+                if (overlay.classList.contains('active')) {
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                    if (overlay._trapHandler) { overlay.removeEventListener('keydown', overlay._trapHandler); overlay._trapHandler = null; }
+                    if (_lastFocus) { _lastFocus.focus(); _lastFocus = null; }
+                }
             }
         });
 
@@ -1387,7 +1422,7 @@
                         <span class="text-[9px] font-black tracking-[0.3em] uppercase ${post.categoryColor} block mb-2">${post.category} &nbsp;·&nbsp; ${post.date}</span>
                         <h3 class="text-2xl font-black text-white leading-snug max-w-lg">${post.title}</h3>
                     </div>
-                    <button onclick="closeModal()" class="w-10 h-10 glass rounded-full flex items-center justify-center border border-white/10 hover:border-white/30 transition text-gray-500 hover:text-white shrink-0 ml-6">
+                    <button onclick="closeModal()" aria-label="Close dialog" class="w-10 h-10 glass rounded-full flex items-center justify-center border border-white/10 hover:border-white/30 transition text-gray-500 hover:text-white shrink-0 ml-6">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -1402,6 +1437,7 @@
             document.getElementById('modal-overlay').classList.add('active');
             document.body.style.overflow = 'hidden';
             lucide.createIcons();
+            _openModal_activate();
         }
 
         async function notifySubmit(e, form, product) {
