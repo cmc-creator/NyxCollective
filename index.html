@@ -13,7 +13,47 @@
     <meta property="og:image" content="https://nyxcollectivellc.com/nclogo%20nobg.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="NyxCollective LLC | Designer Software. Transparent Pricing.">
-    <meta name="twitter:description" content="A luxury modular software company. License elite products as-is or receive a fully customized white-label build.">
+    <meta name="twitter:description" content="NyxCollective LLC builds 12 elite modular software products available to license as-is or as a fully customized white-label build. Transparent pricing. Zero bloat.">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": ["Organization", "LocalBusiness"],
+        "name": "NyxCollective LLC",
+        "url": "https://nyxcollectivellc.com",
+        "logo": "https://nyxcollectivellc.com/nclogo%20nobg.png",
+        "image": "https://nyxcollectivellc.com/nclogo%20nobg.png",
+        "description": "NyxCollective LLC is a luxury modular software company offering 12 elite digital products available to license as-is or receive a fully customized white-label build.",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Surprise",
+            "addressRegion": "AZ",
+            "addressCountry": "US"
+        },
+        "sameAs": [
+            "https://facebook.com/NyxCollectiveLLC",
+            "https://instagram.com/NyxCollectiveLLC",
+            "https://linkedin.com/company/NyxCollectiveLLC"
+        ],
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "NyxCollective Software Lineage",
+            "itemListElement": [
+                {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "NyxPulse", "applicationCategory": "BusinessApplication"}},
+                {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "NyxShift", "applicationCategory": "BusinessApplication"}},
+                {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "NyxTitan", "applicationCategory": "BusinessApplication"}},
+                {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "NyxGrid", "applicationCategory": "BusinessApplication"}},
+                {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "NyxAegis", "applicationCategory": "BusinessApplication"}},
+                {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "NyxCodex", "applicationCategory": "BusinessApplication"}},
+                {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "NyxCitadel", "applicationCategory": "BusinessApplication"}},
+                {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "NyxStrata", "applicationCategory": "BusinessApplication"}},
+                {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "NyxHICSlab", "applicationCategory": "BusinessApplication"}},
+                {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "NyxArete", "applicationCategory": "BusinessApplication"}},
+                {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "NyxLedger", "applicationCategory": "BusinessApplication"}},
+                {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "NyxScribe", "applicationCategory": "BusinessApplication"}}
+            ]
+        }
+    }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -602,10 +642,11 @@
                         <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/20">Coming Soon</span>
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">Layered data intelligence and analytics infrastructure. Understand every tier of your business in a unified, structured view built for decision-makers.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-teal-400/60 group-hover:text-teal-400 transition">Learn More →</span>
-                        <a href="https://nyxstrata.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-teal-500/30 text-teal-400 hover:bg-teal-500/10 transition">Visit Site ↗</a>
-                    </div>
+                    <form class="flex gap-2 mt-auto" onclick="event.stopPropagation()" onsubmit="notifySubmit(event, this, 'NyxStrata')">
+                        <input type="email" placeholder="Get notified" required class="flex-1 bg-black border border-teal-500/20 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-teal-500 transition placeholder-gray-600">
+                        <button type="submit" class="px-3 py-2 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-black hover:bg-teal-500/20 transition whitespace-nowrap">→</button>
+                    </form>
+                    <p class="notify-thanks text-[10px] text-teal-400 mt-2 hidden">You're on the list.</p>
                 </div>
 
                 <!-- HICSlab -->
@@ -650,10 +691,11 @@
                         <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-lime-500/10 text-lime-400 border border-lime-500/20">Coming Soon</span>
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">Invoicing, payment tracking, and financial reporting built for modern businesses. Close the gap between your CRM and your cash flow.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-lime-400/60 group-hover:text-lime-400 transition">Learn More →</span>
-                        <a href="https://nyxledger.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-lime-500/30 text-lime-400 hover:bg-lime-500/10 transition">Visit Site ↗</a>
-                    </div>
+                    <form class="flex gap-2 mt-auto" onclick="event.stopPropagation()" onsubmit="notifySubmit(event, this, 'NyxLedger')">
+                        <input type="email" placeholder="Get notified" required class="flex-1 bg-black border border-lime-500/20 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-lime-500 transition placeholder-gray-600">
+                        <button type="submit" class="px-3 py-2 rounded-xl bg-lime-500/10 border border-lime-500/20 text-lime-400 text-xs font-black hover:bg-lime-500/20 transition whitespace-nowrap">→</button>
+                    </form>
+                    <p class="notify-thanks text-[10px] text-lime-400 mt-2 hidden">You're on the list.</p>
                 </div>
 
                 <!-- Scribe -->
@@ -666,10 +708,11 @@
                         <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20">Coming Soon</span>
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6">Document management and e-signatures built for organizations that run on compliance. Store, version, and get sign-off in one clean system.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-sky-400/60 group-hover:text-sky-400 transition">Learn More →</span>
-                        <a href="https://nyxscribe.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-[9px] font-bold tracking-[0.3em] uppercase px-3 py-1.5 rounded-lg border border-sky-500/30 text-sky-400 hover:bg-sky-500/10 transition">Visit Site ↗</a>
-                    </div>
+                    <form class="flex gap-2 mt-auto" onclick="event.stopPropagation()" onsubmit="notifySubmit(event, this, 'NyxScribe')">
+                        <input type="email" placeholder="Get notified" required class="flex-1 bg-black border border-sky-500/20 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-sky-500 transition placeholder-gray-600">
+                        <button type="submit" class="px-3 py-2 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-black hover:bg-sky-500/20 transition whitespace-nowrap">→</button>
+                    </form>
+                    <p class="notify-thanks text-[10px] text-sky-400 mt-2 hidden">You're on the list.</p>
                 </div>
             </div>
         </div>
@@ -861,6 +904,24 @@
                         <span class="text-[9px] font-black tracking-widest uppercase text-yellow-400 hover:text-yellow-300 transition">Read Article →</span>
                     </div>
                 </div>
+                <div class="glass p-10 rounded-[3rem] border border-white/5 glow-hover transition-all flex flex-col cursor-pointer product-card" onclick="openBlogModal('compliance')">
+                    <span class="text-[9px] font-black tracking-widest uppercase text-emerald-400 mb-6 block">Compliance</span>
+                    <h3 class="text-xl font-bold text-white mb-4 leading-snug">Why Compliance Training Fails and What High-Performing Healthcare Teams Do Differently</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed flex-1 mb-8">Most compliance training is designed to check a box, not build a team. Here is what it looks like when organizations treat it as infrastructure instead of obligation.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-600 text-xs uppercase tracking-widest">Apr 2026</span>
+                        <span class="text-[9px] font-black tracking-widest uppercase text-emerald-400 hover:text-emerald-300 transition">Read Article →</span>
+                    </div>
+                </div>
+                <div class="glass p-10 rounded-[3rem] border border-white/5 glow-hover transition-all flex flex-col cursor-pointer product-card" onclick="openBlogModal('financegap')">
+                    <span class="text-[9px] font-black tracking-widest uppercase text-lime-400 mb-6 block">Finance</span>
+                    <h3 class="text-xl font-bold text-white mb-4 leading-snug">The Gap Between Your CRM and Your Cash Flow Is Costing You More Than You Think</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed flex-1 mb-8">Most businesses track their pipeline in one place and their invoices in another. That gap is not just an inconvenience - it is a revenue leak hiding in plain sight.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-600 text-xs uppercase tracking-widest">Apr 2026</span>
+                        <span class="text-[9px] font-black tracking-widest uppercase text-lime-400 hover:text-lime-300 transition">Read Article →</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -915,11 +976,28 @@
                     <div class="relative">
                         <select id="form-service" name="service"
                             class="w-full bg-black border border-white/10 rounded-2xl p-4 outline-none focus:border-purple-500 text-sm text-gray-400 appearance-none cursor-pointer transition pr-10">
-                            <option value="white-label">White-Label Custom Build</option>
-                            <option value="licensing">License an Existing Product</option>
-                            <option value="partnership">Strategic Partnership</option>
-                            <option value="demo">Request a Product Demo</option>
-                            <option value="other">General Inquiry</option>
+                            <option value="" disabled selected hidden>What can we help with?</option>
+                            <optgroup label="── License a Product">
+                                <option value="license-pulse">License NyxPulse</option>
+                                <option value="license-shift">License NyxShift</option>
+                                <option value="license-titan">License NyxTitan</option>
+                                <option value="license-grid">License NyxGrid</option>
+                                <option value="license-aegis">License NyxAegis</option>
+                                <option value="license-codex">License NyxCodex</option>
+                                <option value="license-citadel">License NyxCitadel</option>
+                                <option value="license-strata">License NyxStrata</option>
+                                <option value="license-hicslab">License NyxHICSlab</option>
+                                <option value="license-arete">License NyxArete</option>
+                                <option value="license-ledger">License NyxLedger</option>
+                                <option value="license-scribe">License NyxScribe</option>
+                            </optgroup>
+                            <optgroup label="── Other">
+                                <option value="white-label">White-Label Custom Build</option>
+                                <option value="bundle">Bundle Licensing</option>
+                                <option value="partnership">Strategic Partnership</option>
+                                <option value="demo">Request a Product Demo</option>
+                                <option value="other">General Inquiry</option>
+                            </optgroup>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center">
                             <i data-lucide="chevron-down" class="w-4 h-4 text-gray-600"></i>
@@ -1258,6 +1336,46 @@
                     <h4 class="text-white font-bold text-base mb-4">What Is Next</h4>
                     <p class="text-gray-400 text-sm leading-relaxed">NyxCodex is live and available to license today. If you want to explore a white-label build for your organization, we can talk through what that looks like. The foundation is already there. What we build on top of it is up to you.</p>
                 `
+            },
+            compliance: {
+                category: 'Compliance',
+                categoryColor: 'text-emerald-400',
+                date: 'Apr 2026',
+                title: 'Why Compliance Training Fails and What High-Performing Healthcare Teams Do Differently',
+                content: `
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Every healthcare organization has a compliance training program. Most of them are not working.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">Not because the content is wrong, but because the delivery treats compliance as a hurdle rather than a capability. Staff click through slides to get a checkmark. Managers have no visibility into who actually absorbed anything. And when a real incident occurs, the documentation is incomplete, the evidence is scattered, and the organization is exposed.</p>
+                    <h4 class="text-white font-bold text-base mb-4">The Checkbox Problem</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Most compliance training is designed around one goal: completion. Did the employee finish the module? Check. Did they pass the quiz? Check. Move on.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">That approach satisfies regulators on paper while doing almost nothing to prepare your team for what actually happens in the field. Compliance is not a destination you arrive at once a year. It is a posture your organization either maintains or does not.</p>
+                    <h4 class="text-white font-bold text-base mb-4">What High-Performing Teams Do Differently</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">The organizations that handle incidents well - that respond calmly, coordinate effectively, and document accurately - have one thing in common. They trained for it before it happened.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">They use scenario-based exercises, not just slide decks. They track role-specific competencies, not just general completion rates. They have clear activation protocols that every relevant staff member can recall under pressure. And they maintain a continuous training cycle that keeps those skills current rather than refreshing them once every twelve months.</p>
+                    <h4 class="text-white font-bold text-base mb-4">The HICS Gap</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">The Hospital Incident Command System is the standard framework for healthcare emergency response across the United States. Most hospitals have an HICS plan. Far fewer have staff who have actually trained against it in a structured, documented way.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">The gap between having the plan and having a team that can execute it is where most organizations are exposed. HICSlab was built specifically to close that gap - with role-based modules, command center simulations, and a certification system that creates the paper trail you need when it matters most.</p>
+                    <h4 class="text-white font-bold text-base mb-4">Making It Stick</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Compliance training compounds over time when it is structured correctly. Each training cycle should reinforce the last, fill identified gaps, and expand the team's readiness. That requires a platform built for it - not a generic LMS repurposed for healthcare, and not a shared folder full of PDFs. If your organization is ready to treat compliance training as infrastructure rather than obligation, that is exactly the conversation we want to have.</p>
+                `
+            },
+            financegap: {
+                category: 'Finance',
+                categoryColor: 'text-lime-400',
+                date: 'Apr 2026',
+                title: 'The Gap Between Your CRM and Your Cash Flow Is Costing You More Than You Think',
+                content: `
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">There is a moment in almost every service business where a deal closes and something quietly goes wrong.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">Not in the sale itself - in what happens next. The CRM marks the opportunity as won and stops. Someone manually creates an invoice in a separate system. Or they forget. Or the invoice goes out late. Or the follow-up on a missed payment happens three weeks after it should have. The deal was closed. The revenue was not captured.</p>
+                    <h4 class="text-white font-bold text-base mb-4">The Hidden Cost of Manual Handoffs</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Most growing businesses run their pipeline in one tool and their billing in another. Those two systems rarely talk to each other, and the gap between them is filled by human effort - copying data, chasing invoices, reconciling records that should never have been separate in the first place.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">The cost is not just the time spent on that manual work. It is the invoices that go out late because no one was watching the handoff. It is the payments that slip past due because the follow-up process lives in someone's inbox and not in a system. It is the reporting that requires you to pull from two separate platforms and hope the numbers agree.</p>
+                    <h4 class="text-white font-bold text-base mb-4">What Connected Infrastructure Looks Like</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">When your CRM and your billing tool share the same foundation, the handoff disappears. A deal marks as closed and an invoice is ready to send. Payment status is visible alongside every contact record. Recurring billing runs without anyone touching it. Overdue accounts surface in the same dashboard where your team is tracking the relationship.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">That is not a luxury. For any business billing more than a handful of clients a month, it is the difference between a predictable cash flow and a constant fire drill.</p>
+                    <h4 class="text-white font-bold text-base mb-4">Why We Built Ledger</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Ledger was designed to sit alongside Aegis, our CRM platform, and solve exactly this problem. Not by replicating full enterprise accounting software - most businesses do not need that - but by covering the operational layer that most CRMs ignore entirely.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Invoice creation, payment tracking, recurring billing, and financial reporting in a system that already knows your clients, your deals, and your team. If your business is ready to close the gap between pipeline and payment, Ledger is built for it. It is coming soon - and you can get notified the moment it launches.</p>
+                `
             }
         };
 
@@ -1284,6 +1402,21 @@
             document.getElementById('modal-overlay').classList.add('active');
             document.body.style.overflow = 'hidden';
             lucide.createIcons();
+        }
+
+        async function notifySubmit(e, form, product) {
+            e.preventDefault();
+            e.stopPropagation();
+            const email = form.querySelector('input[type="email"]').value;
+            try {
+                await fetch('https://formspree.io/f/xqeydzrb', {
+                    method: 'POST',
+                    body: JSON.stringify({ email, product, _subject: 'Notify me: ' + product }),
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+                });
+            } catch(err) {}
+            form.style.display = 'none';
+            form.nextElementSibling.classList.remove('hidden');
         }
 
         // Contact form - Formspree submission
