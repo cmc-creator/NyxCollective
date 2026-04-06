@@ -9,7 +9,7 @@
     <link rel="canonical" href="https://nyxcollectivellc.com/">
     <meta property="og:title" content="NyxCollective LLC | Designer Software. Transparent Pricing.">
     <meta property="og:description" content="A luxury modular software company. 17 elite digital products available to license as-is or receive a fully customized white-label build. Transparent pricing. Zero bloat.">
-    <meta property="og:url" content="https://nyxcollectivellc.com">
+    <meta property="og:url" content="https://nyxcollectivellc.com/">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://nyxcollectivellc.com/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -306,7 +306,7 @@
     <nav class="fixed w-full z-50 glass py-5 px-6 md:px-12 transition-all duration-300 border-b border-white/5" id="navbar">
         <div class="flex justify-between items-center">
             <!-- Logo -->
-            <a href="#" class="flex items-center no-underline">
+            <a href="https://nyxcollectivellc.com" class="flex items-center no-underline">
                 <img src="nclogo nobg.png" alt="NyxCollective" class="h-16 md:h-28 w-auto nav-logo">
             </a>
 
@@ -361,7 +361,7 @@
                 <div class="relative">
                     <!-- Radial bloom -->
                     <div class="absolute inset-0 -z-10 scale-150 blur-3xl" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.45) 0%, rgba(109,40,217,0.2) 45%, transparent 70%);"></div>
-                    <img src="og-image.png" alt="NyxCollective" class="relative w-full max-w-lg rounded-2xl">
+                    <img src="og-image.png" alt="NyxCollective" class="relative w-full max-w-lg rounded-2xl" width="1200" height="630">
                 </div>
             </div>
 
@@ -1213,7 +1213,7 @@
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-6">
-                        <span class="text-[9px] font-bold tracking-widests uppercase px-2 py-1 glass rounded-full border border-violet-500/20 text-violet-400">Aegis</span>
+                        <span class="text-[9px] font-bold tracking-widest uppercase px-2 py-1 glass rounded-full border border-violet-500/20 text-violet-400">Aegis</span>
                         <span class="text-[9px] font-bold tracking-widest uppercase px-2 py-1 glass rounded-full border border-white/10 text-gray-500">Forge</span>
                         <span class="text-[9px] font-bold tracking-widest uppercase px-2 py-1 glass rounded-full border border-white/10 text-gray-500">Citadel</span>
                     </div>
@@ -2047,5 +2047,14 @@
     <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" class="fixed bottom-6 right-6 z-[250] w-12 h-12 glass rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition" style="opacity:0;pointer-events:none">
         <i data-lucide="chevron-up" class="w-5 h-5"></i>
     </button>
+    <script>
+        document.querySelectorAll('.product-card').forEach(function(el) {
+            el.setAttribute('role', 'button');
+            el.setAttribute('tabindex', '0');
+            el.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+            });
+        });
+    </script>
 </body>
 </html>

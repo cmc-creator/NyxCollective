@@ -12,17 +12,19 @@
     <meta property="og:image" content="https://nyxcollectivellc.com/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:url" id="og-url" content="https://nyxcollectivellc.com/product.html">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="NyxCollective | 17 Elite Software Products">
-    <meta name="twitter:description" content="Explore 17 elite modular software products from NyxCollective LLC. License as-is or receive a fully customized white-label build. Transparent pricing.">
+    <meta id="tw-title" name="twitter:title" content="NyxCollective | 17 Elite Software Products">
+    <meta id="tw-desc" name="twitter:description" content="Explore 17 elite modular software products from NyxCollective LLC. License as-is or receive a fully customized white-label build. Transparent pricing.">
     <meta name="twitter:image" content="https://nyxcollectivellc.com/og-image.png">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRQHNQY6QH"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MRQHNQY6QH');</script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
         * { font-family: 'Inter', sans-serif; }
         body { background: #000; }
         .hero-text { font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
@@ -84,9 +86,9 @@
                 <!-- Breadcrumb -->
                 <nav class="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-10" aria-label="Breadcrumb">
                     <a href="https://nyxcollectivellc.com" class="hover:text-gray-400 transition">Home</a>
-                    <span>/</span>
+                    <span aria-hidden="true">/</span>
                     <a href="https://nyxcollectivellc.com/#lineage" class="hover:text-gray-400 transition">Products</a>
-                    <span>/</span>
+                    <span aria-hidden="true">/</span>
                     <span id="breadcrumb-name" class="text-white"></span>
                 </nav>
 
@@ -253,6 +255,7 @@
             document.getElementById('canonical').href = 'https://nyxcollectivellc.com/product.html?p=' + key;
             document.getElementById('og-title').content = 'Nyx' + p.name + ' | NyxCollective';
             document.getElementById('og-desc').content = p.tagline;
+            document.getElementById('og-url').content = 'https://nyxcollectivellc.com/product.html?p=' + key;
             document.getElementById('tw-title').content = 'Nyx' + p.name + ' | NyxCollective';
             document.getElementById('tw-desc').content = p.tagline;
 
