@@ -40,6 +40,11 @@
         section, footer { background-color: rgba(8,8,8,0.55) !important; }
         .glow-hover:hover { box-shadow: 0 0 40px rgba(147,51,234,0.15); border-color: rgba(147,51,234,0.3) !important; }
         .featured-card { border-color: rgba(147,51,234,0.35) !important; }
+        #pricing-mobile-menu {
+            transition: max-height 0.4s ease, opacity 0.4s ease;
+            max-height: 0; opacity: 0; overflow: hidden;
+        }
+        #pricing-mobile-menu.open { max-height: 300px; opacity: 1; }
     </style>
 </head>
 <body class="text-white antialiased min-h-screen">
@@ -49,17 +54,36 @@
     <div aria-hidden="true" style="position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.65) 100%);pointer-events:none;"></div>
 
     <!-- Nav -->
-    <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-5 flex items-center justify-between" style="background:rgba(0,0,0,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.05);">
-        <a href="https://nyxcollectivellc.com" class="flex items-center">
-            <img src="nclogo nobg.png" alt="NyxCollective" class="h-14 md:h-20 w-auto" style="filter:drop-shadow(0 0 8px rgba(220,220,230,0.55)) drop-shadow(0 0 22px rgba(200,210,220,0.3))">
-        </a>
-        <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] uppercase">
-            <a href="https://nyxcollectivellc.com/#lineage" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Products</a>
-            <a href="https://nyxcollectivellc.com/#delivery" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Delivery</a>
-            <a href="https://nyxcollectivellc.com/#blog" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Blog</a>
-            <a href="https://nyxcollectivellc.com/#contact" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Contact</a>
+    <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-5" style="background:rgba(0,0,0,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.05);">
+        <div class="flex items-center justify-between">
+            <a href="https://nyxcollectivellc.com" class="flex items-center">
+                <img src="nclogo nobg.png" alt="NyxCollective" class="h-14 md:h-20 w-auto" style="filter:drop-shadow(0 0 8px rgba(220,220,230,0.55)) drop-shadow(0 0 22px rgba(200,210,220,0.3))">
+            </a>
+            <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] uppercase">
+                <a href="https://nyxcollectivellc.com/#lineage" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Products</a>
+                <a href="https://nyxcollectivellc.com/#delivery" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Delivery</a>
+                <a href="https://nyxcollectivellc.com/#blog" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Blog</a>
+                <a href="https://nyxcollectivellc.com/#contact" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Contact</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://nyxcollectivellc.com/#contact" class="hidden sm:block px-5 py-2.5 glass rounded-full text-[10px] font-black tracking-widest hover:bg-white hover:text-black transition uppercase border border-white/10">Start A Project</a>
+                <button id="pricing-hamburger" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+                    <span class="block w-5 h-px bg-white/60 transition-all"></span>
+                    <span class="block w-5 h-px bg-white/60 transition-all"></span>
+                    <span class="block w-5 h-px bg-white/60 transition-all"></span>
+                </button>
+            </div>
         </div>
-        <a href="https://nyxcollectivellc.com/#contact" class="px-5 py-2.5 glass rounded-full text-[10px] font-black tracking-widest hover:bg-white hover:text-black transition uppercase border border-white/10">Start A Project</a>
+        <!-- Mobile Menu -->
+        <div id="pricing-mobile-menu">
+            <div class="pt-6 pb-4 flex flex-col gap-5 text-[11px] font-bold tracking-[0.2em] uppercase border-t border-white/5 mt-4">
+                <a href="https://nyxcollectivellc.com/#lineage" class="hover:text-purple-400 transition opacity-60 hover:opacity-100">Products</a>
+                <a href="https://nyxcollectivellc.com/#delivery" class="hover:text-purple-400 transition opacity-60 hover:opacity-100">Delivery</a>
+                <a href="https://nyxcollectivellc.com/#blog" class="hover:text-purple-400 transition opacity-60 hover:opacity-100">Blog</a>
+                <a href="https://nyxcollectivellc.com/#contact" class="hover:text-purple-400 transition opacity-60 hover:opacity-100">Contact</a>
+                <a href="https://nyxcollectivellc.com/#contact" class="w-full text-center py-3 glass rounded-full hover:bg-white hover:text-black transition border border-white/10">Start A Project</a>
+            </div>
+        </div>
     </nav>
 
     <!-- Hero -->
@@ -292,6 +316,11 @@
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
         lucide.createIcons();
+        var pricingHamburger = document.getElementById('pricing-hamburger');
+        var pricingMenu = document.getElementById('pricing-mobile-menu');
+        pricingHamburger.addEventListener('click', function() {
+            pricingMenu.classList.toggle('open');
+        });
     </script>
 </body>
 </html>
