@@ -352,7 +352,11 @@
         <div class="relative z-10 max-w-5xl px-4">
             <!-- Hero OG Image -->
             <div class="flex justify-center mb-10 mt-16">
-                <img src="og-image.png" alt="NyxCollective" class="w-full max-w-lg rounded-2xl shadow-[0_0_60px_rgba(139,92,246,0.2),0_0_120px_rgba(139,92,246,0.08)]">
+                <div class="relative">
+                    <!-- Radial bloom -->
+                    <div class="absolute inset-0 -z-10 scale-150 blur-3xl" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.45) 0%, rgba(109,40,217,0.2) 45%, transparent 70%);"></div>
+                    <img src="og-image.png" alt="NyxCollective" class="relative w-full max-w-lg rounded-2xl">
+                </div>
             </div>
 
             <!-- Eyebrow Tag -->
