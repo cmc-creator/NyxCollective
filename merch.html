@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merch | NyxCollective LLC</title>
+    <meta name="description" content="Official NyxCollective LLC merchandise. Wear the brand. Premium apparel and accessories powered by Printful.">
+    <link rel="icon" type="image/png" href="nclogo nobg.png">
+    <meta property="og:title" content="Merch | NyxCollective LLC">
+    <meta property="og:description" content="Official NyxCollective LLC merchandise. Wear the brand.">
+    <meta property="og:url" content="https://nyxcollectivellc.com/merch">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://nyxcollectivellc.com/nclogo%20nobg.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --deep-space: #000000;
+            --nebula-purple: #9333ea;
+        }
+
+        html, body {
+            background-color: #0d0d0d;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        .hero-text {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .chrome-text {
+            background: linear-gradient(to bottom, #ffffff 10%, #666666 50%, #ffffff 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.9));
+        }
+
+        .cosmic-bg {
+            position: relative;
+        }
+
+        section, footer { background-color: rgba(8,8,8,0.55) !important; }
+
+        .glow-hover:hover {
+            box-shadow: 0 0 40px rgba(147, 51, 234, 0.15);
+            border-color: rgba(147, 51, 234, 0.3) !important;
+        }
+
+        .product-card {
+            position: relative;
+            transition: transform 0.5s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(147, 51, 234, 0.1);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(147, 51, 234, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(147, 51, 234, 0.5); }
+        }
+        .logo-pulse {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up {
+            opacity: 0;
+            animation: fadeUp 0.7s ease forwards;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #333; }
+
+        /* Mobile nav */
+        #mobile-menu {
+            transition: max-height 0.4s ease, opacity 0.4s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 320px;
+            opacity: 1;
+        }
+
+        .tag-pill {
+            background: rgba(147, 51, 234, 0.08);
+            border: 1px solid rgba(147, 51, 234, 0.2);
+        }
+
+        /* Product image container */
+        .product-img-wrap {
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+        }
+        .product-img-wrap img {
+            transition: transform 0.5s ease;
+        }
+        .product-card:hover .product-img-wrap img {
+            transform: scale(1.04);
+        }
+
+        /* Coming-soon overlay */
+        .coming-soon-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Sticky mobile CTA */
+        .sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            padding: 1rem 1.5rem 1.75rem;
+            background: linear-gradient(to top, rgba(0,0,0,1) 70%, transparent);
+        }
+
+        .nav-logo {
+            background: none !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            display: block;
+        }
+
+        /* Mobile */
+        @media (max-width: 639px) {
+            .glass.p-10 { padding: 1.5rem !important; }
+            .glass.p-12 { padding: 1.5rem !important; }
+            section.py-32, footer.py-32 { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+            .mt-32 { margin-top: 3rem !important; }
+        }
+    </style>
+</head>
+<body class="cosmic-bg">
+
+    <!-- Marble background -->
+    <div aria-hidden="true" style="
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1920&q=80');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.55;
+    "></div>
+    <div aria-hidden="true" style="
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.6) 100%);
+        pointer-events: none;
+    "></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass py-5 px-6 md:px-12 transition-all duration-300 border-b border-white/5" id="navbar">
+        <div class="flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 no-underline">
+                <img src="nclogo nobg.png" alt="NyxCollective" class="h-10 sm:h-16 w-auto nav-logo">
+                <span class="text-lg sm:text-2xl font-bold tracking-tighter chrome-text uppercase">NYXCOLLECTIVE</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex gap-10 text-[10px] font-bold tracking-[0.2em] uppercase">
+                <a href="index.html#delivery" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Delivery Models</a>
+                <a href="index.html#lineage" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Products</a>
+                <a href="index.html#pricing" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Pricing</a>
+                <a href="index.html#blog" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Blog</a>
+                <a href="merch.html" class="text-purple-400 hover:opacity-100 transition">Merch</a>
+                <a href="index.html#contact" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="#products" class="hidden sm:block px-6 py-2.5 glass rounded-full text-[10px] font-black tracking-widest hover:bg-white hover:text-black transition uppercase cursor-pointer border border-white/10">
+                    View Collection
+                </a>
+                <button id="hamburger" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+                    <span class="block w-5 h-px bg-white/60 transition-all"></span>
+                    <span class="block w-5 h-px bg-white/60 transition-all"></span>
+                    <span class="block w-5 h-px bg-white/60 transition-all"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden">
+            <div class="pt-6 pb-4 flex flex-col gap-5 text-[11px] font-bold tracking-[0.2em] uppercase border-t border-white/5 mt-4">
+                <a href="index.html#delivery" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Delivery Models</a>
+                <a href="index.html#lineage" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Products</a>
+                <a href="index.html#pricing" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Pricing</a>
+                <a href="index.html#blog" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Blog</a>
+                <a href="merch.html" class="text-purple-400 hover:opacity-100" onclick="closeMobileMenu()">Merch</a>
+                <a href="index.html#contact" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Contact</a>
+                <a href="#products" class="w-full text-center py-3 glass rounded-full hover:bg-white hover:text-black transition border border-white/10" onclick="closeMobileMenu()">View Collection</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative min-h-[60vh] flex flex-col justify-center items-center px-6 pt-40 pb-24 text-center">
+        <div class="absolute inset-0 z-0 opacity-[0.06]">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920')] bg-cover bg-center mix-blend-screen grayscale"></div>
+        </div>
+        <div class="relative z-10 max-w-4xl px-4">
+            <div class="inline-block px-4 py-1.5 mb-8 tag-pill rounded-full floating">
+                <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400">Official Merchandise</span>
+            </div>
+            <h1 class="hero-text text-4xl sm:text-6xl md:text-7xl mb-8 chrome-text leading-[0.95] tracking-tighter uppercase">
+                Wear the<br>Brand.
+            </h1>
+            <p class="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                Premium quality. Print-on-demand. Every piece carries the same ethos as the software&thinsp;&mdash;&thinsp;built with intention, designed without compromise.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#products"
+                   class="w-full sm:w-auto px-10 py-4 bg-white text-black font-black rounded-xl hover:scale-105 hover:bg-gray-100 transition shadow-[0_0_50px_rgba(255,255,255,0.05)] uppercase tracking-widest text-sm">
+                    View Collection
+                </a>
+                <a href="#products"
+                   class="w-full sm:w-auto px-10 py-4 glass text-white font-bold rounded-xl hover:bg-white/10 transition uppercase tracking-widest text-sm border border-white/10">
+                    See Products
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section id="products" class="py-32 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400 block mb-4">The Collection</span>
+                <h2 class="text-3xl sm:text-5xl hero-text chrome-text mb-6">NyxCollective Merch</h2>
+                <p class="text-gray-600 max-w-xl mx-auto">All products are fulfilled and shipped via Printful. Premium blanks, print-on-demand, delivered worldwide.</p>
+            </div>
+
+            <!-- Loading skeleton shown while products fetch -->
+            <div id="products-loading" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div class="glass rounded-[2.5rem] border border-white/5 bg-black/20 overflow-hidden animate-pulse">
+                    <div class="aspect-square bg-white/5"></div>
+                    <div class="p-6 space-y-3">
+                        <div class="h-4 bg-white/5 rounded-lg w-3/4"></div>
+                        <div class="h-3 bg-white/5 rounded-lg w-1/2"></div>
+                        <div class="h-8 bg-white/5 rounded-xl mt-4"></div>
+                    </div>
+                </div>
+                <div class="glass rounded-[2.5rem] border border-white/5 bg-black/20 overflow-hidden animate-pulse">
+                    <div class="aspect-square bg-white/5"></div>
+                    <div class="p-6 space-y-3">
+                        <div class="h-4 bg-white/5 rounded-lg w-3/4"></div>
+                        <div class="h-3 bg-white/5 rounded-lg w-1/2"></div>
+                        <div class="h-8 bg-white/5 rounded-xl mt-4"></div>
+                    </div>
+                </div>
+                <div class="glass rounded-[2.5rem] border border-white/5 bg-black/20 overflow-hidden animate-pulse">
+                    <div class="aspect-square bg-white/5"></div>
+                    <div class="p-6 space-y-3">
+                        <div class="h-4 bg-white/5 rounded-lg w-3/4"></div>
+                        <div class="h-3 bg-white/5 rounded-lg w-1/2"></div>
+                        <div class="h-8 bg-white/5 rounded-xl mt-4"></div>
+                    </div>
+                </div>
+                <div class="glass rounded-[2.5rem] border border-white/5 bg-black/20 overflow-hidden animate-pulse">
+                    <div class="aspect-square bg-white/5"></div>
+                    <div class="p-6 space-y-3">
+                        <div class="h-4 bg-white/5 rounded-lg w-3/4"></div>
+                        <div class="h-3 bg-white/5 rounded-lg w-1/2"></div>
+                        <div class="h-8 bg-white/5 rounded-xl mt-4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live products grid (populated by loadProducts() JS) -->
+            <div id="products-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 hidden"></div>
+
+            <!-- Error / empty state -->
+            <div id="products-error" class="hidden text-center py-16">
+                <p class="text-gray-600 text-sm mb-4">Unable to load products right now.</p>
+                <a href="index.html#contact" class="text-purple-400 text-sm hover:text-purple-300 transition">Contact us to place an order &rarr;</a>
+            </div>
+
+        </div>
+    </section>
+    <!-- Info Strip -->
+    <section class="py-20 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="glass p-6 rounded-[2rem] border border-white/5 text-center glow-hover transition-all">
+                <i data-lucide="package" class="w-6 h-6 text-purple-400 mx-auto mb-3"></i>
+                <p class="text-white font-bold text-sm mb-1">Print-on-Demand</p>
+                <p class="text-gray-600 text-xs leading-relaxed">Made when you order. Zero waste.</p>
+            </div>
+            <div class="glass p-6 rounded-[2rem] border border-white/5 text-center glow-hover transition-all">
+                <i data-lucide="globe" class="w-6 h-6 text-blue-400 mx-auto mb-3"></i>
+                <p class="text-white font-bold text-sm mb-1">Ships Worldwide</p>
+                <p class="text-gray-600 text-xs leading-relaxed">Fulfilled globally via Printful.</p>
+            </div>
+            <div class="glass p-6 rounded-[2rem] border border-white/5 text-center glow-hover transition-all">
+                <i data-lucide="shield-check" class="w-6 h-6 text-emerald-400 mx-auto mb-3"></i>
+                <p class="text-white font-bold text-sm mb-1">Quality Guaranteed</p>
+                <p class="text-gray-600 text-xs leading-relaxed">Premium blanks. No cheap substitutes.</p>
+            </div>
+            <div class="glass p-6 rounded-[2rem] border border-white/5 text-center glow-hover transition-all">
+                <i data-lucide="refresh-cw" class="w-6 h-6 text-amber-400 mx-auto mb-3"></i>
+                <p class="text-white font-bold text-sm mb-1">Easy Returns</p>
+                <p class="text-gray-600 text-xs leading-relaxed">Issues with your order? We make it right.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="py-32 px-6 border-t border-white/5">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-purple-400 block mb-4">New Drops Coming</span>
+            <h2 class="text-3xl sm:text-5xl hero-text chrome-text mb-6 uppercase">Want to be first?</h2>
+            <p class="text-gray-600 max-w-xl mx-auto mb-12 text-lg">New products drop regularly. Follow us on social or reach out directly to get notified when new merch is live.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://instagram.com/NyxCollectiveLLC" target="_blank" rel="noopener"
+                   class="w-full sm:w-auto px-10 py-4 bg-white text-black font-black rounded-xl hover:scale-105 hover:bg-gray-100 transition uppercase tracking-widest text-sm flex items-center justify-center gap-3">
+                    <i data-lucide="instagram" class="w-4 h-4"></i> Follow on Instagram
+                </a>
+                <a href="index.html#contact"
+                   class="w-full sm:w-auto px-10 py-4 glass text-white font-bold rounded-xl hover:bg-white/10 transition uppercase tracking-widest text-sm border border-white/10 flex items-center justify-center gap-3">
+                    <i data-lucide="mail" class="w-4 h-4"></i> Get In Touch
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="nclogo nobg.png" alt="NyxCollective" class="h-10 w-auto nav-logo">
+                <span class="text-lg font-bold tracking-tighter chrome-text uppercase">NYXCOLLECTIVE</span>
+            </a>
+            <div class="flex gap-4">
+                <a href="https://facebook.com/NyxCollectiveLLC" target="_blank" rel="noopener" class="w-10 h-10 glass rounded-full flex items-center justify-center border border-white/10 hover:border-purple-500/40 hover:bg-purple-500/10 transition group" aria-label="Facebook">
+                    <i data-lucide="facebook" class="w-4 h-4 text-gray-400 group-hover:text-purple-400 transition"></i>
+                </a>
+                <a href="https://instagram.com/NyxCollectiveLLC" target="_blank" rel="noopener" class="w-10 h-10 glass rounded-full flex items-center justify-center border border-white/10 hover:border-purple-500/40 hover:bg-purple-500/10 transition group" aria-label="Instagram">
+                    <i data-lucide="instagram" class="w-4 h-4 text-gray-400 group-hover:text-purple-400 transition"></i>
+                </a>
+                <a href="https://linkedin.com/company/NyxCollectiveLLC" target="_blank" rel="noopener" class="w-10 h-10 glass rounded-full flex items-center justify-center border border-white/10 hover:border-purple-500/40 hover:bg-purple-500/10 transition group" aria-label="LinkedIn">
+                    <i data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-purple-400 transition"></i>
+                </a>
+            </div>
+        </div>
+        <div class="text-center mt-12 opacity-40 text-[10px] font-bold tracking-[0.5em] uppercase">
+            &copy; <span id="year"></span> NyxCollective LLC &nbsp;//&nbsp; Fulfilled by Printful
+        </div>
+    </footer>
+
+    <!-- Sticky Mobile CTA -->
+    <div class="sticky-cta sm:hidden">
+        <a href="#products"
+           class="block w-full py-4 bg-purple-600 text-white font-black rounded-2xl text-center uppercase tracking-widest text-xs active:scale-95 transition shadow-lg shadow-purple-900/30">
+            View Collection &rarr;
+        </a>
+    </div>
+
+    <script>
+        // XSS-safe text helper
+        function esc(s) {
+            const d = document.createElement('div');
+            d.textContent = s;
+            return d.innerHTML;
+        }
+
+        // Fetch and render products from the Netlify serverless proxy
+        async function loadProducts() {
+            const grid = document.getElementById('products-grid');
+            const loading = document.getElementById('products-loading');
+            const errorEl = document.getElementById('products-error');
+            try {
+                const res = await fetch('/.netlify/functions/products');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const products = await res.json();
+                if (!Array.isArray(products)) throw new Error('Bad response');
+
+                if (!products.length) {
+                    loading.classList.add('hidden');
+                    errorEl.querySelector('p').textContent = 'No products available yet. Check back soon!';
+                    errorEl.classList.remove('hidden');
+                    return;
+                }
+
+                const ctaTile = '<div class="product-card glass rounded-[2.5rem] border border-purple-500/20 bg-purple-500/5 overflow-hidden flex flex-col items-center justify-center p-10 text-center glow-hover transition-all min-h-[300px]">'
+                    + '<div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 mb-6"><i data-lucide="mail" class="text-purple-400 w-6 h-6"></i></div>'
+                    + '<h3 class="text-lg font-bold text-white mb-3">Place an Order</h3>'
+                    + '<p class="text-gray-600 text-xs leading-relaxed mb-8">Ready to order or have questions? Reach out directly.</p>'
+                    + '<a href="index.html#contact" class="block w-full py-3 bg-purple-600 text-white font-black rounded-xl hover:bg-purple-500 transition uppercase tracking-widest text-xs text-center">Contact Us &rarr;</a>'
+                    + '</div>';
+
+                grid.innerHTML = products.map(p => {
+                    const imgHtml = p.thumbnail
+                        ? '<img src="' + esc(p.thumbnail) + '" alt="' + esc(p.name) + '" class="w-full h-full object-cover" loading="lazy">'
+                        : '<div class="w-full h-full flex items-center justify-center bg-black/40"><i data-lucide="shirt" class="w-16 h-16 text-white/10"></i></div>';
+                    const priceHtml = p.minPrice ? 'From $' + esc(p.minPrice) : 'Contact for pricing';
+                    const variantText = p.variants + ' variant' + (p.variants !== 1 ? 's' : '') + ' available';
+                    return '<div class="product-card glass rounded-[2.5rem] border border-white/5 bg-black/20 overflow-hidden">'
+                        + '<div class="product-img-wrap relative aspect-square">'
+                        + imgHtml
+                        + '<span class="absolute top-4 left-4 text-[8px] font-black tracking-widest uppercase px-2.5 py-1 rounded-full bg-purple-500 text-white">Live</span>'
+                        + '</div>'
+                        + '<div class="p-6">'
+                        + '<h3 class="text-base font-bold text-gray-100 mb-1 leading-snug">' + esc(p.name) + '</h3>'
+                        + '<p class="text-gray-600 text-xs mb-4">' + variantText + '</p>'
+                        + '<div class="flex items-center justify-between">'
+                        + '<span class="text-white font-black text-lg">' + priceHtml + '</span>'
+                        + '<a href="index.html#contact" class="text-[9px] font-black tracking-widest uppercase px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-500 transition">Order &rarr;</a>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>';
+                }).join('') + ctaTile;
+
+                loading.classList.add('hidden');
+                grid.classList.remove('hidden');
+                lucide.createIcons();
+
+            } catch {
+                loading.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+            }
+        }
+        loadProducts();
+
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Sticky nav shrink
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(0, 0, 0, 0.97)';
+                nav.classList.add('py-3');
+                nav.classList.remove('py-5');
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.01)';
+                nav.classList.remove('py-3');
+                nav.classList.add('py-5');
+            }
+        });
+
+        // Mobile hamburger
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+        }
+    </script>
+</body>
+</html>
