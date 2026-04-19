@@ -401,9 +401,56 @@
             return d.innerHTML;
         }
 
+        // Static fallback products — shown when the API function isn't available
+        const STATIC_PRODUCTS = [
+            {
+                name: 'Unisex Heavy Blend Zip Hoodie',
+                thumbnail: 'https://files.cdn.printful.com/products/146/product_1581412296.jpg',
+                variants: 8,
+                minPrice: '39.50'
+            }
+        ];
+
+        function renderProducts(products) {
+            const grid = document.getElementById('products-grid');
+            const loading = document.getElementById('products-loading');
+
+            const ctaTile = '<div class="product-card glass rounded-[2.5rem] border border-purple-500/20 bg-purple-500/5 overflow-hidden flex flex-col items-center justify-center p-10 text-center glow-hover transition-all min-h-[300px]">'
+                + '<div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 mb-6"><i data-lucide="mail" class="text-purple-400 w-6 h-6"></i></div>'
+                + '<h3 class="text-lg font-bold text-white mb-3">Place an Order</h3>'
+                + '<p class="text-gray-600 text-xs leading-relaxed mb-8">Ready to order or have questions? Reach out directly.</p>'
+                + '<a href="index.html#contact" class="block w-full py-3 bg-purple-600 text-white font-black rounded-xl hover:bg-purple-500 transition uppercase tracking-widest text-xs text-center">Contact Us &rarr;</a>'
+                + '</div>';
+
+            grid.innerHTML = products.map(p => {
+                const imgHtml = p.thumbnail
+                    ? '<img src="' + esc(p.thumbnail) + '" alt="' + esc(p.name) + '" class="w-full h-full object-cover" loading="lazy">'
+                    : '<div class="w-full h-full flex items-center justify-center bg-black/40"><i data-lucide="shirt" class="w-16 h-16 text-white/10"></i></div>';
+                const priceHtml = p.minPrice ? 'From $' + esc(String(p.minPrice)) : 'Contact for pricing';
+                const variantText = p.variants + ' variant' + (p.variants !== 1 ? 's' : '') + ' available';
+                return '<div class="product-card glass rounded-[2.5rem] border border-white/5 bg-black/20 overflow-hidden">'
+                    + '<div class="product-img-wrap relative aspect-square">'
+                    + imgHtml
+                    + '<span class="absolute top-4 left-4 text-[8px] font-black tracking-widest uppercase px-2.5 py-1 rounded-full bg-purple-500 text-white">Live</span>'
+                    + '</div>'
+                    + '<div class="p-6">'
+                    + '<h3 class="text-base font-bold text-gray-100 mb-1 leading-snug">' + esc(p.name) + '</h3>'
+                    + '<p class="text-gray-600 text-xs mb-4">' + variantText + '</p>'
+                    + '<div class="flex items-center justify-between">'
+                    + '<span class="text-white font-black text-lg">' + priceHtml + '</span>'
+                    + '<a href="index.html#contact" class="text-[9px] font-black tracking-widest uppercase px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-500 transition">Order &rarr;</a>'
+                    + '</div>'
+                    + '</div>'
+                    + '</div>';
+            }).join('') + ctaTile;
+
+            loading.classList.add('hidden');
+            grid.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
         // Fetch and render products from the Netlify serverless proxy
         async function loadProducts() {
-            const grid = document.getElementById('products-grid');
             const loading = document.getElementById('products-loading');
             const errorEl = document.getElementById('products-error');
             try {
@@ -411,50 +458,12 @@
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 const products = await res.json();
                 if (!Array.isArray(products)) throw new Error('Bad response');
-
-                if (!products.length) {
-                    loading.classList.add('hidden');
-                    errorEl.querySelector('p').textContent = 'No products available yet. Check back soon!';
-                    errorEl.classList.remove('hidden');
-                    return;
-                }
-
-                const ctaTile = '<div class="product-card glass rounded-[2.5rem] border border-purple-500/20 bg-purple-500/5 overflow-hidden flex flex-col items-center justify-center p-10 text-center glow-hover transition-all min-h-[300px]">'
-                    + '<div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 mb-6"><i data-lucide="mail" class="text-purple-400 w-6 h-6"></i></div>'
-                    + '<h3 class="text-lg font-bold text-white mb-3">Place an Order</h3>'
-                    + '<p class="text-gray-600 text-xs leading-relaxed mb-8">Ready to order or have questions? Reach out directly.</p>'
-                    + '<a href="index.html#contact" class="block w-full py-3 bg-purple-600 text-white font-black rounded-xl hover:bg-purple-500 transition uppercase tracking-widest text-xs text-center">Contact Us &rarr;</a>'
-                    + '</div>';
-
-                grid.innerHTML = products.map(p => {
-                    const imgHtml = p.thumbnail
-                        ? '<img src="' + esc(p.thumbnail) + '" alt="' + esc(p.name) + '" class="w-full h-full object-cover" loading="lazy">'
-                        : '<div class="w-full h-full flex items-center justify-center bg-black/40"><i data-lucide="shirt" class="w-16 h-16 text-white/10"></i></div>';
-                    const priceHtml = p.minPrice ? 'From $' + esc(p.minPrice) : 'Contact for pricing';
-                    const variantText = p.variants + ' variant' + (p.variants !== 1 ? 's' : '') + ' available';
-                    return '<div class="product-card glass rounded-[2.5rem] border border-white/5 bg-black/20 overflow-hidden">'
-                        + '<div class="product-img-wrap relative aspect-square">'
-                        + imgHtml
-                        + '<span class="absolute top-4 left-4 text-[8px] font-black tracking-widest uppercase px-2.5 py-1 rounded-full bg-purple-500 text-white">Live</span>'
-                        + '</div>'
-                        + '<div class="p-6">'
-                        + '<h3 class="text-base font-bold text-gray-100 mb-1 leading-snug">' + esc(p.name) + '</h3>'
-                        + '<p class="text-gray-600 text-xs mb-4">' + variantText + '</p>'
-                        + '<div class="flex items-center justify-between">'
-                        + '<span class="text-white font-black text-lg">' + priceHtml + '</span>'
-                        + '<a href="index.html#contact" class="text-[9px] font-black tracking-widest uppercase px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-500 transition">Order &rarr;</a>'
-                        + '</div>'
-                        + '</div>'
-                        + '</div>';
-                }).join('') + ctaTile;
-
-                loading.classList.add('hidden');
-                grid.classList.remove('hidden');
-                lucide.createIcons();
-
+                renderProducts(products.length ? products : STATIC_PRODUCTS);
             } catch {
-                loading.classList.add('hidden');
+                // API unavailable — show static products so the page is never empty
+                renderProducts(STATIC_PRODUCTS);
                 errorEl.classList.remove('hidden');
+                errorEl.querySelector('p').textContent = 'Showing current collection. Live sync coming soon.';
             }
         }
         loadProducts();
