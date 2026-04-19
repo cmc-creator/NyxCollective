@@ -1,0 +1,119 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#060606"/>
+      <stop offset="100%" stop-color="#0f0f0f"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#e8d5a0"/>
+      <stop offset="15%"  stop-color="#c9a84c"/>
+      <stop offset="30%"  stop-color="#8a5e10"/>
+      <stop offset="45%"  stop-color="#d4a84a"/>
+      <stop offset="58%"  stop-color="#7a5208"/>
+      <stop offset="72%"  stop-color="#c09238"/>
+      <stop offset="86%"  stop-color="#e2c87a"/>
+      <stop offset="100%" stop-color="#9a6e1a"/>
+    </linearGradient>
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="50%"  stop-color="#888888"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <radialGradient id="purpleGlow" cx="50%" cy="45%" r="40%">
+      <stop offset="0%" stop-color="rgba(147,51,234,0.18)"/>
+      <stop offset="100%" stop-color="rgba(147,51,234,0)"/>
+    </radialGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid lines -->
+  <g stroke="rgba(255,255,255,0.025)" stroke-width="1">
+    <line x1="0" y1="90" x2="1200" y2="90"/>
+    <line x1="0" y1="180" x2="1200" y2="180"/>
+    <line x1="0" y1="270" x2="1200" y2="270"/>
+    <line x1="0" y1="360" x2="1200" y2="360"/>
+    <line x1="0" y1="450" x2="1200" y2="450"/>
+    <line x1="0" y1="540" x2="1200" y2="540"/>
+    <line x1="150" y1="0" x2="150" y2="630"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="450" y1="0" x2="450" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="750" y1="0" x2="750" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+    <line x1="1050" y1="0" x2="1050" y2="630"/>
+  </g>
+
+  <!-- Purple ambient glow -->
+  <rect width="1200" height="630" fill="url(#purpleGlow)"/>
+
+  <!-- Corner accents -->
+  <rect x="0" y="0" width="4" height="80" fill="rgba(147,51,234,0.5)"/>
+  <rect x="0" y="0" width="80" height="4" fill="rgba(147,51,234,0.5)"/>
+  <rect x="1196" y="0" width="4" height="80" fill="rgba(147,51,234,0.5)"/>
+  <rect x="1120" y="0" width="80" height="4" fill="rgba(147,51,234,0.5)"/>
+  <rect x="0" y="626" width="4" height="80" fill="rgba(147,51,234,0.3)"/>
+  <rect x="0" y="626" width="80" height="4" fill="rgba(147,51,234,0.3)"/>
+  <rect x="1196" y="546" width="4" height="84" fill="rgba(147,51,234,0.3)"/>
+  <rect x="1120" y="626" width="80" height="4" fill="rgba(147,51,234,0.3)"/>
+
+  <!-- NYX wordmark -->
+  <text
+    x="600" y="290"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-weight="900"
+    font-size="220"
+    letter-spacing="-10"
+    fill="url(#goldGrad)"
+    text-anchor="middle"
+    filter="url(#glow)"
+  >NYX</text>
+
+  <!-- COLLECTIVE -->
+  <text
+    x="600" y="368"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-weight="700"
+    font-size="62"
+    letter-spacing="22"
+    fill="url(#silverGrad)"
+    text-anchor="middle"
+  >COLLECTIVE</text>
+
+  <!-- Tagline -->
+  <text
+    x="600" y="440"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="20"
+    letter-spacing="5"
+    fill="#555555"
+    text-anchor="middle"
+  >DESIGNER SOFTWARE. TRANSPARENT PRICING.</text>
+
+  <!-- Products badge -->
+  <rect x="516" y="472" width="168" height="38" rx="19" fill="rgba(147,51,234,0.10)" stroke="rgba(147,51,234,0.28)" stroke-width="1"/>
+  <text
+    x="600" y="496"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="12"
+    font-weight="700"
+    letter-spacing="4"
+    fill="rgba(168,85,247,0.9)"
+    text-anchor="middle"
+  >17 PRODUCTS</text>
+
+  <!-- URL -->
+  <text
+    x="600" y="590"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="17"
+    letter-spacing="2"
+    fill="#2a2a2a"
+    text-anchor="middle"
+  >nyxcollectivellc.com</text>
+</svg>

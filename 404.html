@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <title>404 — Page Not Found | NyxCollective LLC</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Page not found. Return to NyxCollective LLC.">
+    <link rel="icon" type="image/png" href="nclogo%20nobg.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background: #000; }
+        .hero-text { font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+        .glass {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .glow {
+            filter: drop-shadow(0 0 60px rgba(168, 85, 247, 0.35));
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+        .float { animation: float 4s ease-in-out infinite; }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.6; }
+            50% { transform: scale(1.05); opacity: 0.2; }
+            100% { transform: scale(0.95); opacity: 0.6; }
+        }
+        .pulse-ring { animation: pulse-ring 3s ease-in-out infinite; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center text-white antialiased overflow-hidden relative">
+
+    <!-- Background grid -->
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:80px 80px;"></div>
+
+    <!-- Ambient glows -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none pulse-ring"></div>
+    <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-600/8 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 text-center px-6 max-w-2xl mx-auto">
+
+        <!-- Icon -->
+        <div class="float inline-flex items-center justify-center w-24 h-24 glass rounded-[2rem] border border-white/10 mb-10 glow">
+            <i data-lucide="compass-off" class="w-10 h-10 text-purple-400"></i>
+        </div>
+
+        <!-- 404 -->
+        <div class="hero-text text-[120px] md:text-[180px] leading-none mb-2" style="background:linear-gradient(135deg,#fff 40%,rgba(168,85,247,0.5));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">404</div>
+
+        <!-- Headline -->
+        <h1 class="text-2xl md:text-3xl font-bold mb-4 text-white">Page Not Found</h1>
+        <p class="text-gray-500 text-base md:text-lg leading-relaxed mb-10">
+            This page doesn't exist or was moved.<br>
+            Head back and explore what we've built.
+        </p>
+
+        <!-- CTA -->
+        <a href="https://nyxcollectivellc.com" class="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-black uppercase tracking-widest text-xs rounded-full hover:bg-purple-500 hover:text-white transition-all duration-300">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            Return Home
+        </a>
+
+        <!-- Social -->
+        <div class="flex gap-3 justify-center mt-10">
+            <a href="https://www.facebook.com/profile.php?id=61587137968082" target="_blank" rel="noopener" aria-label="Facebook" class="w-9 h-9 glass rounded-full flex items-center justify-center border border-white/10 hover:border-purple-500/40 hover:bg-purple-500/10 transition group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500 group-hover:text-purple-400 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/nyxcollectivellc" target="_blank" rel="noopener" aria-label="Instagram" class="w-9 h-9 glass rounded-full flex items-center justify-center border border-white/10 hover:border-purple-500/40 hover:bg-purple-500/10 transition group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500 group-hover:text-purple-400 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/nyxcollectivellc" target="_blank" rel="noopener" aria-label="LinkedIn" class="w-9 h-9 glass rounded-full flex items-center justify-center border border-white/10 hover:border-purple-500/40 hover:bg-purple-500/10 transition group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500 group-hover:text-purple-400 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+        </div>
+
+        <!-- Wordmark -->
+        <div class="mt-10 flex items-center justify-center gap-4 opacity-40">
+            <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-gray-500">Nyx Collective LLC</span>
+            <span class="text-gray-700">|</span>
+            <a href="https://nyxcollectivellc.com/privacy.html" class="text-[10px] font-bold tracking-[0.4em] uppercase text-gray-500 hover:text-gray-300 transition">Privacy</a>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>
