@@ -445,7 +445,7 @@
             const grid = document.getElementById('products-grid');
             const errorEl = document.getElementById('products-error');
             try {
-                const res = await fetch('/.netlify/functions/products');
+                const res = await fetch('https://clinquant-sfogliatella-3ed802.netlify.app/.netlify/functions/products');
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 const products = await res.json();
                 if (!Array.isArray(products) || products.length === 0) throw new Error('No products');
