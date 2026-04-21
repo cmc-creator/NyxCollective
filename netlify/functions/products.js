@@ -64,7 +64,11 @@ exports.handler = async () => {
 function respond(statusCode, body, extra = {}) {
   return {
     statusCode,
-    headers: { 'Content-Type': 'application/json', ...extra },
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      ...extra
+    },
     body: JSON.stringify(body)
   };
 }
