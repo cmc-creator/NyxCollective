@@ -1,5 +1,4 @@
 {
-  "cleanUrls": true,
   "headers": [
     {
       "source": "/(.*)",
@@ -12,5 +11,10 @@
       ]
     }
   ],
-  "rewrites": []
+  "rewrites": [
+    { "source": "/merch", "destination": "/merch.html" },
+    { "source": "/pricing", "destination": "/pricing.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/product", "destination": "/product.html" }
+  ]
 }
