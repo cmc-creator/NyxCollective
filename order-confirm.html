@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | NyxCollective</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="nclogo nobg.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRQHNQY6QH"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MRQHNQY6QH');</script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600;700;800;900&display=swap">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        html, body { background: #0d0d0d; color: #e2e8f0; overflow-x: hidden; margin: 0; padding: 0; }
+        .hero-text { font-weight: 900; letter-spacing: -0.04em; }
+        @keyframes pop { 0% { transform: scale(0.5); opacity: 0; } 80% { transform: scale(1.08); } 100% { transform: scale(1); opacity: 1; } }
+        .pop { animation: pop 0.45s cubic-bezier(.34,1.56,.64,1) forwards; }
+    </style>
+</head>
+<body class="text-white antialiased min-h-screen">
+
+    <div aria-hidden="true" style="position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(147,51,234,0.07) 0%,transparent 70%);pointer-events:none;"></div>
+
+    <!-- Nav -->
+    <nav class="px-6 py-5 flex items-center justify-between border-b border-white/5" style="background:rgba(0,0,0,0.6);backdrop-filter:blur(20px);">
+        <a href="index.html">
+            <img src="nclogo nobg.png" alt="NyxCollective" class="h-10 w-auto" style="filter:drop-shadow(0 0 6px rgba(220,220,230,0.4))">
+        </a>
+    </nav>
+
+    <main class="flex flex-col items-center justify-center min-h-[80vh] text-center px-6">
+        <div class="pop mb-8 w-24 h-24 rounded-full bg-purple-600/10 border border-purple-500/30 flex items-center justify-center mx-auto">
+            <i data-lucide="check" class="w-10 h-10 text-purple-400"></i>
+        </div>
+
+        <h1 class="text-4xl md:text-5xl hero-text text-white mb-4" id="confirm-heading">Order confirmed!</h1>
+        <p class="text-gray-500 text-base max-w-md mb-10" id="confirm-sub">
+            Thanks — your order is on its way to production.<br>You'll receive a shipping notification by email once it ships.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="merch.html" class="px-8 py-4 bg-purple-600 text-white font-black text-xs tracking-widest uppercase rounded-full hover:bg-purple-500 transition">
+                Keep Shopping
+            </a>
+            <a href="index.html" class="px-8 py-4 border border-white/10 text-white font-black text-xs tracking-widest uppercase rounded-full hover:bg-white/5 transition">
+                Back to Home
+            </a>
+        </div>
+    </main>
+
+    <footer class="py-10 px-6 text-center border-t border-white/5">
+        <p class="text-gray-700 text-xs">&copy; <span id="year"></span> NyxCollective LLC &mdash; Surprise, Arizona</p>
+    </footer>
+
+    <script>
+        const name = new URLSearchParams(window.location.search).get('name');
+        if (name) {
+            document.getElementById('confirm-heading').textContent = 'Thanks, ' + name + '!';
+        }
+        document.getElementById('year').textContent = new Date().getFullYear();
+        lucide.createIcons();
+    </script>
+</body>
+</html>

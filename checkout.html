@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | NyxCollective</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="nclogo nobg.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRQHNQY6QH"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MRQHNQY6QH');</script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600;700;800;900&display=swap">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        html, body { background: #0d0d0d; color: #e2e8f0; overflow-x: hidden; margin: 0; padding: 0; }
+        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .hero-text { font-weight: 900; letter-spacing: -0.04em; }
+        .field { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: #e2e8f0; border-radius: 0.75rem; padding: 0.75rem 1rem; font-size: 0.875rem; width: 100%; outline: none; transition: border-color 0.2s; }
+        .field:focus { border-color: rgba(147,51,234,0.5); }
+        .field::placeholder { color: #4a4a5a; }
+        .step { display: none; }
+        .step.active { display: block; }
+        .step-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.1); transition: background 0.3s; }
+        .step-dot.done { background: #9333ea; }
+        .step-dot.active { background: #ffffff; }
+        #card-element { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 0.75rem; padding: 0.875rem 1rem; transition: border-color 0.2s; }
+        #card-element.focused { border-color: rgba(147,51,234,0.5); }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.2); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; }
+    </style>
+</head>
+<body class="text-white antialiased min-h-screen">
+
+    <div aria-hidden="true" style="position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(147,51,234,0.06) 0%,transparent 70%);pointer-events:none;"></div>
+
+    <!-- Nav -->
+    <nav class="px-6 py-5 flex items-center justify-between border-b border-white/5" style="background:rgba(0,0,0,0.6);backdrop-filter:blur(20px);">
+        <a href="index.html">
+            <img src="nclogo nobg.png" alt="NyxCollective" class="h-10 w-auto" style="filter:drop-shadow(0 0 6px rgba(220,220,230,0.4))">
+        </a>
+        <div class="flex items-center gap-2 text-[10px] font-black tracking-widest uppercase text-gray-500">
+            <i data-lucide="lock" class="w-3 h-3"></i> Secure Checkout
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <main class="max-w-5xl mx-auto px-6 py-12">
+        <div class="flex flex-col lg:flex-row gap-12">
+
+            <!-- Left — form -->
+            <div class="flex-1">
+
+                <!-- Step indicators -->
+                <div class="flex items-center gap-3 mb-10">
+                    <div class="step-dot active" id="dot-1"></div>
+                    <div class="h-px flex-1 bg-white/10"></div>
+                    <div class="step-dot" id="dot-2"></div>
+                    <div class="h-px flex-1 bg-white/10"></div>
+                    <div class="step-dot" id="dot-3"></div>
+                </div>
+
+                <!-- Step 1: Address -->
+                <div class="step active" id="step-1">
+                    <h2 class="text-2xl hero-text text-white mb-1">Shipping address</h2>
+                    <p class="text-gray-600 text-sm mb-8">Where should we send your order?</p>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-2">First name *</label>
+                                <input id="a-first" class="field" type="text" autocomplete="given-name" placeholder="Jane">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-2">Last name *</label>
+                                <input id="a-last" class="field" type="text" autocomplete="family-name" placeholder="Smith">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-2">Email *</label>
+                            <input id="a-email" class="field" type="email" autocomplete="email" placeholder="jane@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-2">Address *</label>
+                            <input id="a-address1" class="field" type="text" autocomplete="address-line1" placeholder="123 Main St">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-2">Apt / Suite</label>
+                            <input id="a-address2" class="field" type="text" autocomplete="address-line2" placeholder="Apt 4B">
+                        </div>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="col-span-2">
+                                <label class="block text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-2">City *</label>
+                                <input id="a-city" class="field" type="text" autocomplete="address-level2" placeholder="Surprise">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-2">ZIP *</label>
+                                <input id="a-zip" class="field" type="text" autocomplete="postal-code" placeholder="85388" maxlength="10">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-2">State</label>
+                                <input id="a-state" class="field" type="text" autocomplete="address-level1" placeholder="AZ" maxlength="2">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-2">Country</label>
+                                <select id="a-country" class="field" autocomplete="country">
+                                    <option value="US">United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="GB">United Kingdom</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="FR">France</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <p id="step1-error" class="text-red-400 text-sm mt-4 hidden"></p>
+                    <button id="btn-to-shipping" class="mt-8 w-full py-4 bg-purple-600 text-white font-black text-xs tracking-widest uppercase rounded-full hover:bg-purple-500 transition flex items-center justify-center gap-2">
+                        Continue to Shipping <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Step 2: Shipping -->
+                <div class="step" id="step-2">
+                    <h2 class="text-2xl hero-text text-white mb-1">Shipping method</h2>
+                    <p class="text-gray-600 text-sm mb-8">Select how you'd like your order delivered.</p>
+                    <div id="shipping-rates" class="space-y-3">
+                        <div class="text-gray-600 text-sm flex items-center gap-3"><span class="spinner"></span> Loading rates…</div>
+                    </div>
+                    <p id="step2-error" class="text-red-400 text-sm mt-4 hidden"></p>
+                    <button id="btn-to-payment" class="mt-8 w-full py-4 bg-purple-600 text-white font-black text-xs tracking-widest uppercase rounded-full hover:bg-purple-500 transition flex items-center justify-center gap-2" disabled>
+                        Continue to Payment <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                    <button id="btn-back-1" class="mt-3 w-full py-3 text-gray-600 text-xs font-bold tracking-widest uppercase hover:text-white transition">← Back</button>
+                </div>
+
+                <!-- Step 3: Payment -->
+                <div class="step" id="step-3">
+                    <h2 class="text-2xl hero-text text-white mb-1">Payment</h2>
+                    <p class="text-gray-600 text-sm mb-8">Your card is charged only once your order is confirmed.</p>
+                    <label class="block text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-2">Card details</label>
+                    <div id="card-element"></div>
+                    <p id="card-error" class="text-red-400 text-sm mt-3 hidden"></p>
+                    <button id="btn-pay" class="mt-8 w-full py-4 bg-purple-600 text-white font-black text-xs tracking-widest uppercase rounded-full hover:bg-purple-500 transition flex items-center justify-center gap-2">
+                        <span id="pay-label">Pay <span id="pay-amount"></span></span>
+                        <span id="pay-spinner" class="hidden spinner"></span>
+                    </button>
+                    <button id="btn-back-2" class="mt-3 w-full py-3 text-gray-600 text-xs font-bold tracking-widest uppercase hover:text-white transition">← Back</button>
+                    <div class="mt-6 flex items-center justify-center gap-2 text-gray-700 text-xs">
+                        <i data-lucide="lock" class="w-3 h-3"></i> Secured by Stripe. We never store card data.
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right — order summary -->
+            <div class="lg:w-80 shrink-0">
+                <div class="glass rounded-3xl border border-white/5 p-6 sticky top-8">
+                    <h3 class="text-[10px] font-black tracking-widest uppercase text-gray-600 mb-5">Order Summary</h3>
+
+                    <div class="flex gap-4 items-center mb-6">
+                        <div id="summary-img" class="w-16 h-16 rounded-2xl overflow-hidden bg-black/40 border border-white/5 flex items-center justify-center shrink-0">
+                            <i data-lucide="shirt" class="w-7 h-7 text-white/10"></i>
+                        </div>
+                        <div>
+                            <div id="summary-name" class="text-white font-bold text-sm leading-snug"></div>
+                            <div id="summary-variant" class="text-gray-600 text-xs mt-1"></div>
+                            <div id="summary-qty" class="text-gray-600 text-xs"></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 border-t border-white/5 pt-4">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Subtotal</span>
+                            <span id="summary-subtotal" class="text-white font-bold"></span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Shipping</span>
+                            <span id="summary-shipping" class="text-white font-bold">—</span>
+                        </div>
+                        <div class="flex justify-between text-sm border-t border-white/5 pt-2 mt-2">
+                            <span class="text-white font-black uppercase tracking-widest text-[10px]">Total</span>
+                            <span id="summary-total" class="text-white font-black text-base"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="py-10 px-6 text-center border-t border-white/5 mt-12">
+        <p class="text-gray-700 text-xs">&copy; <span id="year"></span> NyxCollective LLC &mdash; Surprise, Arizona</p>
+    </footer>
+
+    <script>
+        const NETLIFY = 'https://clinquant-sfogliatella-3ed802.netlify.app/.netlify/functions';
+        const STRIPE_PK = 'REPLACE_WITH_STRIPE_PUBLISHABLE_KEY';
+
+        const params = new URLSearchParams(window.location.search);
+        const productId = parseInt(params.get('id'), 10);
+        const variantId = parseInt(params.get('variantId'), 10);
+        const qty = parseInt(params.get('qty'), 10) || 1;
+
+        let product = null;
+        let selectedVariant = null;
+        let selectedShipping = null;
+        let stripe = null;
+        let cardElement = null;
+        let clientSecret = null;
+
+        // Step management
+        let currentStep = 1;
+        function goToStep(n) {
+            document.querySelectorAll('.step').forEach((el, i) => el.classList.toggle('active', i + 1 === n));
+            [1, 2, 3].forEach(i => {
+                const dot = document.getElementById('dot-' + i);
+                dot.classList.toggle('active', i === n);
+                dot.classList.toggle('done', i < n);
+            });
+            currentStep = n;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+        function fmt(n) { return '$' + parseFloat(n).toFixed(2); }
+
+        async function loadProduct() {
+            if (!productId || !variantId) { window.location.href = 'merch.html'; return; }
+            try {
+                const res = await fetch(NETLIFY + '/products');
+                const products = await res.json();
+                product = products.find(p => p.id === productId);
+                if (!product) { window.location.href = 'merch.html'; return; }
+                selectedVariant = product.variantDetails?.find(v => v.id === variantId) || product.variantDetails?.[0];
+                if (!selectedVariant) { window.location.href = 'merch.html'; return; }
+                renderSummary();
+            } catch {
+                window.location.href = 'merch.html';
+            }
+        }
+
+        function renderSummary() {
+            document.getElementById('summary-name').textContent = product.name;
+            document.getElementById('summary-variant').textContent = selectedVariant.name;
+            document.getElementById('summary-qty').textContent = 'Qty: ' + qty;
+            const subtotal = parseFloat(selectedVariant.price) * qty;
+            document.getElementById('summary-subtotal').textContent = fmt(subtotal);
+            updateTotal();
+            if (product.thumbnail) {
+                document.getElementById('summary-img').innerHTML = '<img src="' + esc(product.thumbnail) + '" class="w-full h-full object-cover">';
+            }
+        }
+
+        function updateTotal() {
+            if (!selectedVariant) return;
+            const subtotal = parseFloat(selectedVariant.price) * qty;
+            const shipping = selectedShipping ? parseFloat(selectedShipping.rate) : 0;
+            const total = subtotal + shipping;
+            document.getElementById('summary-shipping').textContent = selectedShipping ? fmt(shipping) : '—';
+            document.getElementById('summary-total').textContent = fmt(total);
+            document.getElementById('pay-amount').textContent = fmt(total);
+        }
+
+        // Step 1 → 2
+        document.getElementById('btn-to-shipping').addEventListener('click', async () => {
+            const errEl = document.getElementById('step1-error');
+            errEl.classList.add('hidden');
+            const first = document.getElementById('a-first').value.trim();
+            const last = document.getElementById('a-last').value.trim();
+            const email = document.getElementById('a-email').value.trim();
+            const address1 = document.getElementById('a-address1').value.trim();
+            const city = document.getElementById('a-city').value.trim();
+            const zip = document.getElementById('a-zip').value.trim();
+            if (!first || !last || !email || !address1 || !city || !zip) {
+                errEl.textContent = 'Please fill in all required fields.';
+                errEl.classList.remove('hidden');
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                errEl.textContent = 'Please enter a valid email address.';
+                errEl.classList.remove('hidden');
+                return;
+            }
+            goToStep(2);
+            await loadShippingRates();
+        });
+
+        async function loadShippingRates() {
+            const ratesEl = document.getElementById('shipping-rates');
+            const btn = document.getElementById('btn-to-payment');
+            ratesEl.innerHTML = '<div class="text-gray-600 text-sm flex items-center gap-3"><span class="spinner"></span> Loading rates…</div>';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(NETLIFY + '/get-shipping', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        variantId: variantId,
+                        quantity: qty,
+                        address: {
+                            address1: document.getElementById('a-address1').value.trim(),
+                            city: document.getElementById('a-city').value.trim(),
+                            state_code: document.getElementById('a-state').value.trim().toUpperCase(),
+                            country_code: document.getElementById('a-country').value,
+                            zip: document.getElementById('a-zip').value.trim()
+                        }
+                    })
+                });
+
+                const rates = await res.json();
+                if (!res.ok || !Array.isArray(rates) || rates.length === 0) {
+                    ratesEl.innerHTML = '<p class="text-red-400 text-sm">Unable to get shipping rates for this address. Please check your address and try again.</p>';
+                    return;
+                }
+
+                ratesEl.innerHTML = '';
+                rates.forEach((r, i) => {
+                    const id = 'rate-' + i;
+                    const div = document.createElement('label');
+                    div.htmlFor = id;
+                    div.className = 'flex items-center justify-between glass border border-white/5 p-4 rounded-2xl cursor-pointer hover:border-purple-500/30 transition';
+                    div.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <input type="radio" name="shipping-rate" id="${id}" value="${i}" class="accent-purple-500" ${i === 0 ? 'checked' : ''}>
+                            <div>
+                                <div class="text-sm font-bold text-white">${esc(r.name)}</div>
+                                <div class="text-xs text-gray-600">${r.minDeliveryDays ? r.minDeliveryDays + '–' + r.maxDeliveryDays + ' business days' : ''}</div>
+                            </div>
+                        </div>
+                        <span class="text-white font-black">${fmt(r.rate)}</span>`;
+                    ratesEl.appendChild(div);
+                });
+
+                // Select first by default
+                selectedShipping = rates[0];
+                updateTotal();
+                btn.disabled = false;
+
+                ratesEl.querySelectorAll('input[name="shipping-rate"]').forEach(input => {
+                    input.addEventListener('change', () => {
+                        selectedShipping = rates[parseInt(input.value, 10)];
+                        updateTotal();
+                    });
+                });
+
+            } catch {
+                ratesEl.innerHTML = '<p class="text-red-400 text-sm">Error loading shipping rates. Please go back and try again.</p>';
+            }
+        }
+
+        // Step 2 → 3
+        document.getElementById('btn-to-payment').addEventListener('click', async () => {
+            goToStep(3);
+            await setupStripe();
+        });
+
+        document.getElementById('btn-back-1').addEventListener('click', () => goToStep(1));
+        document.getElementById('btn-back-2').addEventListener('click', () => goToStep(2));
+
+        async function setupStripe() {
+            if (stripe) return; // already initialized
+            stripe = Stripe(STRIPE_PK);
+            const elements = stripe.elements({ appearance: { theme: 'night', variables: { colorPrimary: '#9333ea', borderRadius: '12px', fontFamily: 'Inter, sans-serif' } } });
+            cardElement = elements.create('card', { style: { base: { fontSize: '14px', color: '#e2e8f0' } } });
+            cardElement.mount('#card-element');
+            cardElement.on('focus', () => document.getElementById('card-element').classList.add('focused'));
+            cardElement.on('blur', () => document.getElementById('card-element').classList.remove('focused'));
+            cardElement.on('change', e => {
+                const errEl = document.getElementById('card-error');
+                if (e.error) { errEl.textContent = e.error.message; errEl.classList.remove('hidden'); }
+                else { errEl.classList.add('hidden'); }
+            });
+
+            // Create PaymentIntent
+            const subtotal = parseFloat(selectedVariant.price) * qty;
+            const shipping = selectedShipping ? parseFloat(selectedShipping.rate) : 0;
+            const total = subtotal + shipping;
+
+            try {
+                const res = await fetch(NETLIFY + '/create-payment-intent', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        amount: total.toFixed(2),
+                        variantId: variantId,
+                        qty: qty,
+                        shippingId: selectedShipping?.id || '',
+                        recipient: {
+                            name: document.getElementById('a-first').value.trim() + ' ' + document.getElementById('a-last').value.trim(),
+                            email: document.getElementById('a-email').value.trim(),
+                            address1: document.getElementById('a-address1').value.trim(),
+                            city: document.getElementById('a-city').value.trim(),
+                            state_code: document.getElementById('a-state').value.trim().toUpperCase(),
+                            country_code: document.getElementById('a-country').value,
+                            zip: document.getElementById('a-zip').value.trim()
+                        }
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok || !data.clientSecret) throw new Error(data.error || 'Setup failed');
+                clientSecret = data.clientSecret;
+            } catch (e) {
+                document.getElementById('card-error').textContent = e.message;
+                document.getElementById('card-error').classList.remove('hidden');
+            }
+        }
+
+        // Pay
+        document.getElementById('btn-pay').addEventListener('click', async () => {
+            if (!stripe || !cardElement || !clientSecret) return;
+            const btn = document.getElementById('btn-pay');
+            const label = document.getElementById('pay-label');
+            const spinner = document.getElementById('pay-spinner');
+            const errEl = document.getElementById('card-error');
+            errEl.classList.add('hidden');
+            btn.disabled = true;
+            label.classList.add('hidden');
+            spinner.classList.remove('hidden');
+
+            const { error } = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: cardElement,
+                    billing_details: {
+                        name: document.getElementById('a-first').value.trim() + ' ' + document.getElementById('a-last').value.trim(),
+                        email: document.getElementById('a-email').value.trim()
+                    }
+                }
+            });
+
+            if (error) {
+                errEl.textContent = error.message;
+                errEl.classList.remove('hidden');
+                btn.disabled = false;
+                label.classList.remove('hidden');
+                spinner.classList.add('hidden');
+            } else {
+                window.location.href = 'order-confirm.html?name=' + encodeURIComponent(document.getElementById('a-first').value.trim());
+            }
+        });
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+        lucide.createIcons();
+        loadProduct();
+    </script>
+</body>
+</html>

@@ -16,6 +16,8 @@
     { "source": "/merch-product", "destination": "/merch-product.html" },
     { "source": "/pricing", "destination": "/pricing.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/product", "destination": "/product.html" }
+    { "source": "/product", "destination": "/product.html" },
+    { "source": "/checkout", "destination": "/checkout.html" },
+    { "source": "/order-confirm", "destination": "/order-confirm.html" }
   ]
 }

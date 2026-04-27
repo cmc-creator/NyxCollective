@@ -42,7 +42,7 @@ exports.handler = async () => {
             variants: p.variants,
             minPrice: prices.length ? Math.min(...prices).toFixed(2) : null,
             maxPrice: prices.length ? Math.max(...prices).toFixed(2) : null,
-            variantDetails: variants.map(v => ({ name: v.name, price: v.retail_price }))
+            variantDetails: variants.map(v => ({ id: v.id, name: v.name, price: v.retail_price }))
           };
         } catch {
           return {

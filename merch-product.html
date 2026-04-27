@@ -124,33 +124,34 @@
                     <h1 id="product-name" class="text-4xl md:text-5xl hero-text text-white mb-3"></h1>
                     <p id="product-price" class="text-2xl font-black text-white mb-8"></p>
 
-                    <!-- Variants table -->
-                    <div id="variants-section" class="mb-10 hidden">
-                        <h2 class="text-[10px] font-bold tracking-[0.3em] uppercase text-purple-400 mb-4">Available Options</h2>
-                        <div class="glass rounded-2xl border border-white/5 overflow-hidden">
-                            <table class="w-full text-sm">
-                                <thead>
-                                    <tr class="border-b border-white/5">
-                                        <th class="text-left px-5 py-3 text-[10px] font-black tracking-widest uppercase text-gray-600">Variant</th>
-                                        <th class="text-right px-5 py-3 text-[10px] font-black tracking-widest uppercase text-gray-600">Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="variants-tbody"></tbody>
-                            </table>
+                    <!-- Variant selector -->
+                    <div id="variant-selector-section" class="mb-6 hidden">
+                        <label class="block text-[10px] font-bold tracking-[0.3em] uppercase text-purple-400 mb-3">Select Option</label>
+                        <select id="variant-select" class="w-full bg-white/5 border border-white/10 text-white px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-purple-500/60 cursor-pointer appearance-none">
+                        </select>
+                    </div>
+
+                    <!-- Qty selector -->
+                    <div id="qty-selector-section" class="mb-8 hidden">
+                        <label class="block text-[10px] font-bold tracking-[0.3em] uppercase text-purple-400 mb-3">Quantity</label>
+                        <div class="flex items-center gap-3">
+                            <button id="qty-minus" class="w-10 h-10 glass border border-white/10 rounded-xl flex items-center justify-center text-white hover:border-purple-500/40 transition text-xl font-bold">&minus;</button>
+                            <span id="qty-value" class="text-white font-black text-lg w-8 text-center">1</span>
+                            <button id="qty-plus" class="w-10 h-10 glass border border-white/10 rounded-xl flex items-center justify-center text-white hover:border-purple-500/40 transition text-xl font-bold">+</button>
                         </div>
                     </div>
 
                     <!-- CTA -->
                     <div class="flex flex-wrap gap-4">
-                        <a href="index.html#contact" class="inline-flex items-center gap-2 px-8 py-4 bg-purple-600 text-white font-black text-xs tracking-widest uppercase rounded-full hover:bg-purple-500 transition">
-                            Order Now <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </a>
+                        <button id="buy-now-btn" class="inline-flex items-center gap-2 px-8 py-4 bg-purple-600 text-white font-black text-xs tracking-widest uppercase rounded-full hover:bg-purple-500 transition">
+                            Buy Now <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
                         <a href="merch.html" class="inline-flex items-center gap-2 px-8 py-4 glass border border-white/10 text-white font-black text-xs tracking-widest uppercase rounded-full hover:border-white/30 transition">
                             <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Merch
                         </a>
                     </div>
 
-                    <p class="text-gray-600 text-xs mt-6 leading-relaxed">All items are print-on-demand via Printful. Reach out to place an order and we'll get you set up.</p>
+                    <p class="text-gray-600 text-xs mt-6 leading-relaxed">Secure checkout via Stripe. Fulfilled automatically by Printful.</p>
                 </div>
             </div>
         </section>
@@ -233,20 +234,37 @@
                 priceEl.className = 'text-lg text-gray-500 mb-8';
             }
 
-            // Variants table
+            // Variant selector
             if (p.variantDetails && p.variantDetails.length) {
-                const tbody = document.getElementById('variants-tbody');
-                p.variantDetails.forEach((v, i) => {
-                    const tr = document.createElement('tr');
-                    tr.className = (i < p.variantDetails.length - 1 ? 'border-b border-white/5' : '') + ' hover:bg-white/2 transition';
-                    tr.innerHTML = '<td class="px-5 py-3 text-gray-300">' + esc(v.name) + '</td>'
-                        + '<td class="px-5 py-3 text-right font-black text-white">'
-                        + (v.price ? '$' + parseFloat(v.price).toFixed(2) : '—')
-                        + '</td>';
-                    tbody.appendChild(tr);
+                const sel = document.getElementById('variant-select');
+                // Pre-select variant from URL if provided
+                const preselect = parseInt(new URLSearchParams(window.location.search).get('variantId'), 10);
+                p.variantDetails.forEach(v => {
+                    const opt = document.createElement('option');
+                    opt.value = String(v.id);
+                    opt.textContent = v.name + (v.price ? ' — $' + parseFloat(v.price).toFixed(2) : '');
+                    if (preselect && v.id === preselect) opt.selected = true;
+                    sel.appendChild(opt);
                 });
-                document.getElementById('variants-section').classList.remove('hidden');
+                document.getElementById('variant-selector-section').classList.remove('hidden');
             }
+
+            // Qty controls + Buy Now
+            document.getElementById('qty-selector-section').classList.remove('hidden');
+            let qty = parseInt(new URLSearchParams(window.location.search).get('qty'), 10) || 1;
+            const qtyEl = document.getElementById('qty-value');
+            qtyEl.textContent = qty;
+            document.getElementById('qty-minus').addEventListener('click', () => {
+                if (qty > 1) { qty--; qtyEl.textContent = qty; }
+            });
+            document.getElementById('qty-plus').addEventListener('click', () => {
+                if (qty < 10) { qty++; qtyEl.textContent = qty; }
+            });
+            document.getElementById('buy-now-btn').addEventListener('click', () => {
+                const sel = document.getElementById('variant-select');
+                const variantId = sel ? sel.value : (p.variantDetails?.[0]?.id || '');
+                window.location.href = 'checkout.html?id=' + p.id + '&variantId=' + variantId + '&qty=' + qty;
+            });
 
             // Sticky nav
             const nav = document.getElementById('navbar');
