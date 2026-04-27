@@ -40,7 +40,9 @@ exports.handler = async () => {
             name: p.name,
             thumbnail: p.thumbnail_url || null,
             variants: p.variants,
-            minPrice: prices.length ? Math.min(...prices).toFixed(2) : null
+            minPrice: prices.length ? Math.min(...prices).toFixed(2) : null,
+            maxPrice: prices.length ? Math.max(...prices).toFixed(2) : null,
+            variantDetails: variants.map(v => ({ name: v.name, price: v.retail_price }))
           };
         } catch {
           return {
@@ -48,7 +50,9 @@ exports.handler = async () => {
             name: p.name,
             thumbnail: p.thumbnail_url || null,
             variants: p.variants,
-            minPrice: null
+            minPrice: null,
+            maxPrice: null,
+            variantDetails: []
           };
         }
       })

@@ -13,6 +13,7 @@
   ],
   "rewrites": [
     { "source": "/merch", "destination": "/merch.html" },
+    { "source": "/merch-product", "destination": "/merch-product.html" },
     { "source": "/pricing", "destination": "/pricing.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/product", "destination": "/product.html" }

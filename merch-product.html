@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <title id="page-title">NyxCollective | Merch</title>
+    <meta id="meta-desc" name="description" content="NyxCollective LLC merchandise.">
+    <link rel="icon" type="image/png" href="nclogo nobg.png">
+    <link id="canonical" rel="canonical" href="https://nyxcollectivellc.com/merch-product">
+    <meta id="og-title" property="og:title" content="NyxCollective Merch">
+    <meta id="og-desc" property="og:description" content="Official NyxCollective LLC merchandise.">
+    <meta property="og:image" content="https://nyxcollectivellc.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta id="og-url" property="og:url" content="https://nyxcollectivellc.com/merch-product">
+    <meta property="og:type" content="product">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta id="tw-title" name="twitter:title" content="NyxCollective Merch">
+    <meta id="tw-desc" name="twitter:description" content="Official NyxCollective LLC merchandise.">
+    <meta name="twitter:image" content="https://nyxcollectivellc.com/og-image.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRQHNQY6QH"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MRQHNQY6QH');</script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        html, body { background: #0d0d0d; color: #e2e8f0; overflow-x: hidden; margin: 0; padding: 0; scroll-behavior: smooth; }
+        .hero-text { font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+        .chrome-text {
+            background: linear-gradient(to bottom, #ffffff 10%, #666666 50%, #ffffff 90%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.9));
+        }
+        .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+        .floating { animation: float 4s ease-in-out infinite; }
+        @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+        .skeleton { background: linear-gradient(90deg,#1a1a1a 25%,#2a2a2a 50%,#1a1a1a 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 0.5rem; }
+    </style>
+</head>
+<body class="text-white antialiased min-h-screen">
+
+    <!-- Ambient background -->
+    <div aria-hidden="true" style="position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(147,51,234,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+    <div aria-hidden="true" style="position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,0.7) 100%);pointer-events:none;"></div>
+
+    <!-- Nav -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 px-6 py-5 flex items-center justify-between transition-all duration-300" style="background:rgba(0,0,0,0.01);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.04);">
+        <a href="index.html" class="flex items-center gap-3 no-underline">
+            <img src="nclogo nobg.png" alt="NyxCollective" class="h-12 md:h-16 w-auto" style="filter:drop-shadow(0 0 8px rgba(220,220,230,0.5)) drop-shadow(0 0 20px rgba(200,210,220,0.25))">
+        </a>
+        <div class="flex items-center gap-4">
+            <a href="merch.html" class="hidden sm:flex items-center gap-2 text-[10px] font-black tracking-widest uppercase text-gray-400 hover:text-white transition">
+                <i data-lucide="arrow-left" class="w-3 h-3"></i> All Merch
+            </a>
+            <a href="index.html#contact" class="px-5 py-2.5 glass rounded-full text-[10px] font-black tracking-widest hover:bg-white hover:text-black transition uppercase border border-white/10">Order Now</a>
+        </div>
+    </nav>
+
+    <!-- Loading state -->
+    <div id="state-loading" class="min-h-screen flex items-center justify-center pt-32">
+        <div class="max-w-5xl w-full px-6 mx-auto">
+            <div class="skeleton h-4 w-48 mb-12"></div>
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="skeleton w-full md:w-[420px] aspect-square rounded-3xl shrink-0"></div>
+                <div class="flex-1 pt-4 space-y-4">
+                    <div class="skeleton h-3 w-24 rounded-full"></div>
+                    <div class="skeleton h-12 w-3/4"></div>
+                    <div class="skeleton h-5 w-1/3"></div>
+                    <div class="skeleton h-4 w-full mt-6"></div>
+                    <div class="skeleton h-4 w-5/6"></div>
+                    <div class="skeleton h-12 w-40 mt-8 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Not found state -->
+    <div id="state-notfound" class="hidden min-h-screen flex flex-col items-center justify-center text-center px-6 pt-32">
+        <div class="floating w-20 h-20 glass rounded-[2rem] border border-white/10 flex items-center justify-center mb-8">
+            <i data-lucide="compass-off" class="w-8 h-8 text-purple-400"></i>
+        </div>
+        <h1 class="text-5xl hero-text chrome-text mb-4">Product Not Found</h1>
+        <p class="text-gray-500 mb-8">That item doesn't exist in our merch collection.</p>
+        <a href="merch.html" class="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-black font-black text-xs tracking-widest uppercase rounded-full hover:bg-purple-500 hover:text-white transition">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Browse Merch
+        </a>
+    </div>
+
+    <!-- Main product content -->
+    <main id="state-content" class="hidden pt-36 pb-24">
+
+        <!-- Breadcrumb -->
+        <div class="max-w-5xl mx-auto px-6 mb-10">
+            <nav class="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-gray-600" aria-label="Breadcrumb">
+                <a href="index.html" class="hover:text-gray-400 transition">Home</a>
+                <span>/</span>
+                <a href="merch.html" class="hover:text-gray-400 transition">Merch</a>
+                <span>/</span>
+                <span id="breadcrumb-name" class="text-white"></span>
+            </nav>
+        </div>
+
+        <!-- Product hero -->
+        <section class="max-w-5xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row gap-12 items-start">
+
+                <!-- Image -->
+                <div class="w-full md:w-[420px] shrink-0">
+                    <div id="product-image-wrap" class="aspect-square rounded-3xl overflow-hidden border border-white/5 bg-black/40 flex items-center justify-center">
+                        <i data-lucide="shirt" class="w-24 h-24 text-white/10" id="product-icon-placeholder"></i>
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div class="flex-1 pt-2">
+                    <span class="text-[10px] font-black tracking-widest uppercase px-3 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 mb-4 inline-block">Live</span>
+                    <h1 id="product-name" class="text-4xl md:text-5xl hero-text text-white mb-3"></h1>
+                    <p id="product-price" class="text-2xl font-black text-white mb-8"></p>
+
+                    <!-- Variants table -->
+                    <div id="variants-section" class="mb-10 hidden">
+                        <h2 class="text-[10px] font-bold tracking-[0.3em] uppercase text-purple-400 mb-4">Available Options</h2>
+                        <div class="glass rounded-2xl border border-white/5 overflow-hidden">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-white/5">
+                                        <th class="text-left px-5 py-3 text-[10px] font-black tracking-widest uppercase text-gray-600">Variant</th>
+                                        <th class="text-right px-5 py-3 text-[10px] font-black tracking-widest uppercase text-gray-600">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="variants-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- CTA -->
+                    <div class="flex flex-wrap gap-4">
+                        <a href="index.html#contact" class="inline-flex items-center gap-2 px-8 py-4 bg-purple-600 text-white font-black text-xs tracking-widest uppercase rounded-full hover:bg-purple-500 transition">
+                            Order Now <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                        <a href="merch.html" class="inline-flex items-center gap-2 px-8 py-4 glass border border-white/10 text-white font-black text-xs tracking-widest uppercase rounded-full hover:border-white/30 transition">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Merch
+                        </a>
+                    </div>
+
+                    <p class="text-gray-600 text-xs mt-6 leading-relaxed">All items are print-on-demand via Printful. Reach out to place an order and we'll get you set up.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-14 px-6 border-t border-white/5 text-center">
+        <div class="flex flex-wrap justify-center gap-8 text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-6">
+            <a href="index.html" class="hover:text-gray-400 transition">Home</a>
+            <a href="merch.html" class="hover:text-gray-400 transition">Merch</a>
+            <a href="index.html#contact" class="hover:text-gray-400 transition">Contact</a>
+            <a href="privacy.html" class="hover:text-gray-400 transition">Privacy</a>
+        </div>
+        <p class="text-gray-700 text-xs">&copy; <span id="year"></span> NyxCollective LLC &mdash; Surprise, Arizona</p>
+    </footer>
+
+    <script>
+        const FUNCTION_URL = 'https://clinquant-sfogliatella-3ed802.netlify.app/.netlify/functions/products';
+
+        function esc(str) {
+            return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+
+        function show(id) {
+            ['state-loading','state-notfound','state-content'].forEach(s => {
+                const el = document.getElementById(s);
+                if (el) { el.classList.add('hidden'); el.style.display = ''; }
+            });
+            const target = document.getElementById(id);
+            if (target) { target.classList.remove('hidden'); target.style.display = id === 'state-content' ? 'block' : 'flex'; }
+        }
+
+        async function init() {
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get('id'), 10);
+
+            if (!id) { show('state-notfound'); lucide.createIcons(); return; }
+
+            try {
+                const res = await fetch(FUNCTION_URL);
+                if (!res.ok) throw new Error('fetch failed');
+                const products = await res.json();
+                const p = products.find(x => x.id === id);
+                if (!p) { show('state-notfound'); lucide.createIcons(); return; }
+                render(p, id);
+            } catch {
+                show('state-notfound'); lucide.createIcons();
+            }
+        }
+
+        function render(p, id) {
+            // Meta
+            document.getElementById('page-title').textContent = esc(p.name) + ' | NyxCollective Merch';
+            document.getElementById('meta-desc').content = 'Shop ' + p.name + ' — official NyxCollective LLC merchandise. ' + (p.minPrice ? 'From $' + p.minPrice + '.' : '');
+            document.getElementById('canonical').href = 'https://nyxcollectivellc.com/merch-product?id=' + id;
+            document.getElementById('og-title').content = p.name + ' | NyxCollective Merch';
+            document.getElementById('og-desc').content = 'Shop ' + p.name + ' — official NyxCollective LLC merchandise.';
+            document.getElementById('og-url').content = 'https://nyxcollectivellc.com/merch-product?id=' + id;
+            document.getElementById('tw-title').content = p.name + ' | NyxCollective Merch';
+            document.getElementById('tw-desc').content = 'Shop ' + p.name + ' — official NyxCollective LLC merchandise.';
+            if (p.thumbnail) { document.querySelector('meta[property="og:image"]').content = p.thumbnail; document.querySelector('meta[name="twitter:image"]').content = p.thumbnail; }
+
+            // Breadcrumb
+            document.getElementById('breadcrumb-name').textContent = p.name;
+
+            // Image
+            const imgWrap = document.getElementById('product-image-wrap');
+            if (p.thumbnail) {
+                imgWrap.innerHTML = '<img src="' + esc(p.thumbnail) + '" alt="' + esc(p.name) + '" class="w-full h-full object-cover">';
+            }
+
+            // Name & price
+            document.getElementById('product-name').textContent = p.name;
+            const priceEl = document.getElementById('product-price');
+            if (p.minPrice) {
+                priceEl.textContent = p.minPrice === p.maxPrice ? '$' + p.minPrice : 'From $' + p.minPrice;
+            } else {
+                priceEl.textContent = 'Contact for pricing';
+                priceEl.className = 'text-lg text-gray-500 mb-8';
+            }
+
+            // Variants table
+            if (p.variantDetails && p.variantDetails.length) {
+                const tbody = document.getElementById('variants-tbody');
+                p.variantDetails.forEach((v, i) => {
+                    const tr = document.createElement('tr');
+                    tr.className = (i < p.variantDetails.length - 1 ? 'border-b border-white/5' : '') + ' hover:bg-white/2 transition';
+                    tr.innerHTML = '<td class="px-5 py-3 text-gray-300">' + esc(v.name) + '</td>'
+                        + '<td class="px-5 py-3 text-right font-black text-white">'
+                        + (v.price ? '$' + parseFloat(v.price).toFixed(2) : '—')
+                        + '</td>';
+                    tbody.appendChild(tr);
+                });
+                document.getElementById('variants-section').classList.remove('hidden');
+            }
+
+            // Sticky nav
+            const nav = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                nav.style.background = window.scrollY > 100 ? 'rgba(0,0,0,0.97)' : 'rgba(0,0,0,0.01)';
+            });
+
+            show('state-content');
+            lucide.createIcons();
+        }
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
