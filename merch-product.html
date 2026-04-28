@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#000000">
     <title id="page-title">NyxCollective | Merch</title>
     <meta id="meta-desc" name="description" content="NyxCollective LLC merchandise.">
-    <link rel="icon" type="image/png" href="nclogo nobg.png">
+    <link rel="icon" type="image/png" href="nclogo%20nobg.png">
     <link id="canonical" rel="canonical" href="https://nyxcollectivellc.com/merch-product">
     <meta id="og-title" property="og:title" content="NyxCollective Merch">
     <meta id="og-desc" property="og:description" content="Official NyxCollective LLC merchandise.">
@@ -325,7 +325,8 @@
                                     : c.name,
                                 price: c.price,
                                 qty: c.qty,
-                                thumbnail: c.thumbnail || null
+                                thumbnail: c.thumbnail || null,
+                                variantId: c.variantId || null
                             };
                         })
                     })
@@ -368,6 +369,7 @@
             if (!variant) return;
             addToCart({
                 productId: currentProduct.id,
+                variantId: variant.variantId || null,
                 variantName: variant.name || 'Default',
                 price: parseFloat(variant.price) || 0,
                 name: currentProduct.name,

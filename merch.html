@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
     <title>Merch | NyxCollective LLC</title>
     <meta name="description" content="Official NyxCollective LLC merchandise. Wear the brand. Premium apparel and accessories powered by Printful.">
-    <link rel="icon" type="image/png" href="nclogo nobg.png">
+    <link rel="icon" type="image/png" href="nclogo%20nobg.png">
     <meta property="og:title" content="Merch | NyxCollective LLC">
     <meta property="og:description" content="Official NyxCollective LLC merchandise. Wear the brand.">
     <meta property="og:url" content="https://nyxcollectivellc.com/merch">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://nyxcollectivellc.com/nclogo%20nobg.png">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Merch | NyxCollective LLC">
+    <meta name="twitter:description" content="Official NyxCollective LLC merchandise. Wear the brand.">
     <meta name="twitter:image" content="https://nyxcollectivellc.com/og-image.png">
     <link rel="canonical" href="https://nyxcollectivellc.com/merch">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRQHNQY6QH"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MRQHNQY6QH');</script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -542,7 +547,8 @@
                                     : c.name,
                                 price: c.price,
                                 qty: c.qty,
-                                thumbnail: c.thumbnail || null
+                                thumbnail: c.thumbnail || null,
+                                variantId: c.variantId || null
                             };
                         })
                     })

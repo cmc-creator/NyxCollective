@@ -38,6 +38,15 @@ exports.handler = async (event) => {
   params.append('cancel_url', 'https://nyxcollectivellc.com/merch');
   params.append('payment_method_types[0]', 'card');
 
+  // Embed fulfillment data in metadata so the webhook can auto-create the Printful order
+  params.append('metadata[item_count]', String(items.length));
+  items.forEach((item, i) => {
+    params.append(`metadata[item_${i}]`, JSON.stringify({
+      variantId: item.variantId || null,
+      qty: item.qty,
+    }));
+  });
+
   // Collect shipping address at checkout
   const countries = ['US', 'CA', 'GB', 'AU', 'NZ', 'DE', 'FR', 'NL', 'SE', 'NO', 'DK', 'FI', 'JP'];
   countries.forEach((c, i) => {
