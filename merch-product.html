@@ -333,7 +333,6 @@
                 });
                 var data = await res.json();
                 if (data.url) {
-                    localStorage.removeItem(CART_KEY);
                     window.location.href = data.url;
                 } else {
                     throw new Error(data.error || 'No checkout URL returned');
