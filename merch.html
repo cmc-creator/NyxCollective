@@ -585,10 +585,10 @@
                 const priceHtml = p.minPrice ? 'From $' + esc(String(p.minPrice)) : 'Contact for pricing';
                 const variantText = p.variants + ' variant' + (p.variants !== 1 ? 's' : '') + ' available';
                 return '<div class="product-card glass rounded-[2.5rem] border border-white/5 bg-black/20 overflow-hidden">'
-                    + '<div class="product-img-wrap relative aspect-square">'
+                    + '<a href="merch-product.html?id=' + p.id + '" class="product-img-wrap relative aspect-square block" aria-label="View ' + esc(p.name) + '">'
                     + imgHtml
                     + '<span class="absolute top-4 left-4 text-[8px] font-black tracking-widest uppercase px-2.5 py-1 rounded-full bg-purple-500 text-white">Live</span>'
-                    + '</div>'
+                    + '</a>'
                     + '<div class="p-6">'
                     + '<h3 class="text-base font-bold text-gray-100 mb-1 leading-snug">' + esc(p.name) + '</h3>'
                     + '<p class="text-gray-600 text-xs mb-4">' + variantText + '</p>'
