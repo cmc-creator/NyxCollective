@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <title>The Diamond Mine | NyxCollective Members</title>
+    <meta name="description" content="Sign in to The Diamond Mine — the exclusive NyxCollective members portal. Access order history, subscription management, and members-only content.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="nclogo%20nobg.png">
+    <link rel="canonical" href="https://nyxcollectivellc.com/login">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRQHNQY6QH"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MRQHNQY6QH');</script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Firebase config ── Replace these with your Firebase project values.
+           Firebase Console → Project Settings → Your apps → Web app config       */
+        :root {
+            --dm-gold:       #C9A84C;
+            --dm-gold-light: #F0C97A;
+            --dm-gold-pale:  #F5E6C8;
+            --dm-gold-dark:  #8B6914;
+            --dm-bg:         #060608;
+            --dm-card:       rgba(201,168,76,0.03);
+            --dm-border:     rgba(201,168,76,0.18);
+            --dm-text:       #E8DCC8;
+            --dm-muted:      rgba(232,220,200,0.45);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html, body {
+            margin: 0; padding: 0;
+            background: var(--dm-bg);
+            color: var(--dm-text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── Background ambient glow ── */
+        .page-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 60% 40% at 20% 20%, rgba(201,168,76,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 35% at 80% 80%, rgba(147,51,234,0.04) 0%, transparent 70%),
+                #060608;
+        }
+
+        /* ── Gold shimmer text ── */
+        .gold-text {
+            background: linear-gradient(135deg, var(--dm-gold-dark) 0%, var(--dm-gold-pale) 40%, var(--dm-gold) 60%, var(--dm-gold-pale) 80%, var(--dm-gold-dark) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: goldShimmer 5s linear infinite;
+        }
+
+        @keyframes goldShimmer {
+            0%   { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* ── Diamond icon ── */
+        .diamond-icon {
+            width: 48px;
+            height: 48px;
+            position: relative;
+            margin: 0 auto;
+        }
+        .diamond-icon svg { width: 100%; height: 100%; }
+
+        /* ── Auth card ── */
+        .auth-card {
+            background: rgba(10,8,6,0.85);
+            border: 1px solid var(--dm-border);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 16px;
+            box-shadow: 0 0 60px rgba(201,168,76,0.06), 0 32px 80px rgba(0,0,0,0.8);
+            transition: box-shadow 0.4s ease;
+        }
+        .auth-card:hover {
+            box-shadow: 0 0 80px rgba(201,168,76,0.10), 0 32px 80px rgba(0,0,0,0.8);
+        }
+
+        /* ── Inputs ── */
+        .dm-input {
+            width: 100%;
+            background: rgba(201,168,76,0.04);
+            border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: var(--dm-text);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .dm-input:focus {
+            border-color: var(--dm-gold);
+            box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+        }
+        .dm-input::placeholder { color: rgba(232,220,200,0.3); }
+
+        /* ── Primary button ── */
+        .dm-btn {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, var(--dm-gold-dark) 0%, var(--dm-gold) 50%, var(--dm-gold-light) 100%);
+            background-size: 200% auto;
+            color: #000;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-position 0.4s ease, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(201,168,76,0.25);
+        }
+        .dm-btn:hover {
+            background-position: right center;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 30px rgba(201,168,76,0.4);
+        }
+        .dm-btn:active { transform: translateY(0); }
+        .dm-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ── Google button ── */
+        .google-btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: var(--dm-text);
+            font-size: 13px;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .google-btn:hover {
+            background: rgba(255,255,255,0.07);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        /* ── Tabs ── */
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: var(--dm-muted);
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .tab-btn.active {
+            color: var(--dm-gold);
+            border-bottom-color: var(--dm-gold);
+        }
+
+        /* ── Divider ── */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dm-muted);
+            font-size: 11px;
+            letter-spacing: 0.08em;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(201,168,76,0.12);
+        }
+
+        /* ── Error / success messages ── */
+        .msg-error {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.25);
+            color: #fca5a5;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            display: none;
+        }
+        .msg-error.show { display: block; }
+
+        /* ── Link text ── */
+        .dm-link {
+            color: var(--dm-gold);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .dm-link:hover { color: var(--dm-gold-light); }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.2); border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<div class="page-bg"></div>
+
+<!-- Back to site link -->
+<div class="relative z-10 p-6">
+    <a href="index.html" class="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[rgba(232,220,200,0.4)] hover:text-[#C9A84C] transition">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to NyxCollective
+    </a>
+</div>
+
+<!-- Centered auth container -->
+<main class="relative z-10 min-h-[calc(100vh-80px)] flex items-center justify-center px-4 pb-16">
+    <div class="w-full max-w-md">
+
+        <!-- Branding -->
+        <div class="text-center mb-10">
+            <!-- Diamond icon -->
+            <div class="diamond-icon mb-5">
+                <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="dg1" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#8B6914"/>
+                            <stop offset="40%" stop-color="#F5E6C8"/>
+                            <stop offset="70%" stop-color="#C9A84C"/>
+                            <stop offset="100%" stop-color="#8B6914"/>
+                        </linearGradient>
+                        <linearGradient id="dg2" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#F0C97A" stop-opacity="0.9"/>
+                            <stop offset="100%" stop-color="#8B6914" stop-opacity="0.6"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Diamond facets -->
+                    <polygon points="50,4 96,38 72,116 28,116 4,38" fill="url(#dg1)" opacity="0.25" stroke="url(#dg1)" stroke-width="1.5"/>
+                    <polygon points="50,4 96,38 50,56" fill="url(#dg2)" opacity="0.5"/>
+                    <polygon points="4,38 50,56 50,4" fill="url(#dg1)" opacity="0.35"/>
+                    <polygon points="50,56 96,38 72,116" fill="url(#dg1)" opacity="0.45"/>
+                    <polygon points="4,38 50,56 28,116" fill="url(#dg2)" opacity="0.3"/>
+                    <polygon points="28,116 50,56 72,116" fill="url(#dg1)" opacity="0.6"/>
+                    <line x1="50" y1="4" x2="50" y2="56" stroke="url(#dg1)" stroke-width="0.5" opacity="0.6"/>
+                    <line x1="4" y1="38" x2="96" y2="38" stroke="url(#dg1)" stroke-width="0.5" opacity="0.4"/>
+                </svg>
+            </div>
+
+            <p class="text-[10px] font-bold tracking-[0.35em] uppercase text-[rgba(201,168,76,0.6)] mb-2">NyxCollective</p>
+            <h1 class="gold-text text-4xl font-bold mb-2" style="font-family:'Playfair Display',serif;letter-spacing:0.04em">The Diamond Mine</h1>
+            <p class="text-[11px] tracking-[0.25em] uppercase" style="color:rgba(232,220,200,0.4)">Members Only</p>
+        </div>
+
+        <!-- Auth Card -->
+        <div class="auth-card p-8">
+
+            <!-- Tabs -->
+            <div class="flex border-b border-[rgba(201,168,76,0.12)] mb-8">
+                <button class="tab-btn active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
+                <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">Create Account</button>
+            </div>
+
+            <!-- Error message -->
+            <div class="msg-error mb-5" id="error-msg"></div>
+
+            <!-- ── Sign In Form ── -->
+            <form id="signin-form" onsubmit="handleSignIn(event)" novalidate>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-[11px] font-bold tracking-widest uppercase mb-2" style="color:rgba(201,168,76,0.7)">Email</label>
+                        <input type="email" id="signin-email" class="dm-input" placeholder="your@email.com" autocomplete="email" required>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="block text-[11px] font-bold tracking-widest uppercase" style="color:rgba(201,168,76,0.7)">Password</label>
+                            <button type="button" onclick="handleForgotPassword()" class="text-[11px] dm-link">Forgot password?</button>
+                        </div>
+                        <input type="password" id="signin-password" class="dm-input" placeholder="••••••••" autocomplete="current-password" required>
+                    </div>
+                    <button type="submit" class="dm-btn mt-2" id="signin-btn">Sign In</button>
+                </div>
+
+                <div class="divider my-6">or continue with</div>
+
+                <button type="button" class="google-btn" onclick="handleGoogle()">
+                    <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+                        <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.909-2.259c-.806.54-1.837.86-3.047.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
+                        <path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+                        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+                    </svg>
+                    Continue with Google
+                </button>
+
+                <p class="text-center text-[12px] mt-6" style="color:rgba(232,220,200,0.4)">
+                    No account yet?
+                    <button type="button" onclick="switchTab('signup')" class="dm-link">Create one</button>
+                </p>
+            </form>
+
+            <!-- ── Sign Up Form ── -->
+            <form id="signup-form" onsubmit="handleSignUp(event)" novalidate style="display:none">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-[11px] font-bold tracking-widest uppercase mb-2" style="color:rgba(201,168,76,0.7)">Display Name</label>
+                        <input type="text" id="signup-name" class="dm-input" placeholder="Your name" autocomplete="name" required minlength="2" maxlength="60">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold tracking-widest uppercase mb-2" style="color:rgba(201,168,76,0.7)">Email</label>
+                        <input type="email" id="signup-email" class="dm-input" placeholder="your@email.com" autocomplete="email" required>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold tracking-widest uppercase mb-2" style="color:rgba(201,168,76,0.7)">Password</label>
+                        <input type="password" id="signup-password" class="dm-input" placeholder="At least 8 characters" autocomplete="new-password" required minlength="8">
+                    </div>
+                    <button type="submit" class="dm-btn mt-2" id="signup-btn">Create Account</button>
+                </div>
+
+                <div class="divider my-6">or continue with</div>
+
+                <button type="button" class="google-btn" onclick="handleGoogle()">
+                    <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+                        <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.909-2.259c-.806.54-1.837.86-3.047.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
+                        <path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+                        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+                    </svg>
+                    Continue with Google
+                </button>
+
+                <p class="text-center text-[12px] mt-6" style="color:rgba(232,220,200,0.4)">
+                    Already a member?
+                    <button type="button" onclick="switchTab('signin')" class="dm-link">Sign in</button>
+                </p>
+            </form>
+
+        </div><!-- /auth-card -->
+
+        <p class="text-center text-[10px] tracking-widest uppercase mt-8" style="color:rgba(232,220,200,0.25)">
+            Your gateway to exclusive NyxCollective content
+        </p>
+
+    </div>
+</main>
+
+<script>
+    // =========================================================================
+    // FIREBASE CONFIGURATION
+    // Replace the placeholder values below with your Firebase project config.
+    // Firebase Console → Project Settings → Your apps → Web app
+    // After pasting your config, commit the file.
+    // =========================================================================
+    const FIREBASE_CONFIG = {
+        apiKey:            "REPLACE_WITH_FIREBASE_API_KEY",
+        authDomain:        "REPLACE_WITH_PROJECT_ID.firebaseapp.com",
+        projectId:         "REPLACE_WITH_PROJECT_ID",
+        storageBucket:     "REPLACE_WITH_PROJECT_ID.appspot.com",
+        messagingSenderId: "REPLACE_WITH_MESSAGING_SENDER_ID",
+        appId:             "REPLACE_WITH_APP_ID"
+    };
+
+    firebase.initializeApp(FIREBASE_CONFIG);
+    const auth = firebase.auth();
+
+    // If already signed in, redirect straight to the portal
+    auth.onAuthStateChanged(user => {
+        if (user) window.location.replace('members.html');
+    });
+
+    // ── Tab switching ────────────────────────────────────────────────────────
+    function switchTab(tab) {
+        const isSignin = tab === 'signin';
+        document.getElementById('signin-form').style.display = isSignin ? '' : 'none';
+        document.getElementById('signup-form').style.display = isSignin ? 'none' : '';
+        document.getElementById('tab-signin').classList.toggle('active', isSignin);
+        document.getElementById('tab-signup').classList.toggle('active', !isSignin);
+        clearError();
+    }
+
+    // ── Error display ────────────────────────────────────────────────────────
+    function showError(msg) {
+        const el = document.getElementById('error-msg');
+        el.textContent = msg;
+        el.classList.add('show');
+    }
+    function clearError() {
+        const el = document.getElementById('error-msg');
+        el.textContent = '';
+        el.classList.remove('show');
+    }
+
+    function friendlyError(code) {
+        const map = {
+            'auth/user-not-found':        'No account found with that email.',
+            'auth/wrong-password':        'Incorrect password. Please try again.',
+            'auth/invalid-email':         'Please enter a valid email address.',
+            'auth/email-already-in-use':  'An account with that email already exists.',
+            'auth/weak-password':         'Password must be at least 8 characters.',
+            'auth/invalid-credential':    'Incorrect email or password.',
+            'auth/too-many-requests':     'Too many attempts. Please wait a moment and try again.',
+            'auth/network-request-failed':'Network error. Check your connection.',
+            'auth/popup-closed-by-user':  'Sign-in popup was closed. Please try again.',
+            'auth/cancelled-popup-request': '',
+        };
+        return map[code] || 'Something went wrong. Please try again.';
+    }
+
+    function setLoading(btnId, loading) {
+        const btn = document.getElementById(btnId);
+        if (!btn) return;
+        btn.disabled = loading;
+        btn.textContent = loading ? 'Please wait...' : (btnId === 'signin-btn' ? 'Sign In' : 'Create Account');
+    }
+
+    // ── Sign In ──────────────────────────────────────────────────────────────
+    async function handleSignIn(e) {
+        e.preventDefault();
+        clearError();
+        const email    = document.getElementById('signin-email').value.trim();
+        const password = document.getElementById('signin-password').value;
+        if (!email || !password) { showError('Please enter your email and password.'); return; }
+        setLoading('signin-btn', true);
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            // onAuthStateChanged will redirect
+        } catch (err) {
+            showError(friendlyError(err.code));
+            setLoading('signin-btn', false);
+        }
+    }
+
+    // ── Sign Up ──────────────────────────────────────────────────────────────
+    async function handleSignUp(e) {
+        e.preventDefault();
+        clearError();
+        const name     = document.getElementById('signup-name').value.trim();
+        const email    = document.getElementById('signup-email').value.trim();
+        const password = document.getElementById('signup-password').value;
+
+        if (!name || name.length < 2)    { showError('Please enter your display name (at least 2 characters).'); return; }
+        if (!email)                       { showError('Please enter your email address.'); return; }
+        if (password.length < 8)         { showError('Password must be at least 8 characters.'); return; }
+
+        setLoading('signup-btn', true);
+        try {
+            const cred = await auth.createUserWithEmailAndPassword(email, password);
+            await cred.user.updateProfile({ displayName: name });
+            // onAuthStateChanged will redirect
+        } catch (err) {
+            showError(friendlyError(err.code));
+            setLoading('signup-btn', false);
+        }
+    }
+
+    // ── Google Sign-In ───────────────────────────────────────────────────────
+    async function handleGoogle() {
+        clearError();
+        const provider = new firebase.auth.GoogleAuthProvider();
+        try {
+            await auth.signInWithPopup(provider);
+            // onAuthStateChanged will redirect
+        } catch (err) {
+            const msg = friendlyError(err.code);
+            if (msg) showError(msg);
+        }
+    }
+
+    // ── Forgot Password ──────────────────────────────────────────────────────
+    async function handleForgotPassword() {
+        clearError();
+        const email = document.getElementById('signin-email').value.trim();
+        if (!email) { showError('Enter your email above, then click "Forgot password?" again.'); return; }
+        try {
+            await auth.sendPasswordResetEmail(email);
+            showError('');
+            const el = document.getElementById('error-msg');
+            el.style.background = 'rgba(34,197,94,0.1)';
+            el.style.borderColor = 'rgba(34,197,94,0.25)';
+            el.style.color = '#86efac';
+            el.textContent = 'Password reset email sent. Check your inbox.';
+            el.classList.add('show');
+        } catch (err) {
+            showError(friendlyError(err.code));
+        }
+    }
+</script>
+</body>
+</html>

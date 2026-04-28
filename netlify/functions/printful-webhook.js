@@ -1,5 +1,91 @@
 const crypto = require('crypto');
 
+// ---------------------------------------------------------------------------
+// Firestore helper — writes order data using the REST API + service account JWT.
+// Requires Netlify env vars: FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY
+// If these are not set the write is silently skipped so the webhook keeps working.
+// ---------------------------------------------------------------------------
+async function getFirestoreToken() {
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+  const rawKey = process.env.FIREBASE_PRIVATE_KEY;
+  if (!clientEmail || !rawKey) return null;
+
+  const privateKey = rawKey.replace(/\\n/g, '\n');
+  const now = Math.floor(Date.now() / 1000);
+  const header = Buffer.from(JSON.stringify({ alg: 'RS256', typ: 'JWT' })).toString('base64url');
+  const payload = Buffer.from(JSON.stringify({
+    iss: clientEmail,
+    sub: clientEmail,
+    aud: 'https://oauth2.googleapis.com/token',
+    iat: now,
+    exp: now + 3600,
+    scope: 'https://www.googleapis.com/auth/datastore',
+  })).toString('base64url');
+
+  const unsigned = `${header}.${payload}`;
+  const sign = crypto.createSign('RSA-SHA256');
+  sign.update(unsigned);
+  const sig = sign.sign(privateKey, 'base64url');
+  const jwt = `${unsigned}.${sig}`;
+
+  const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`,
+  });
+  const tokenData = await tokenRes.json();
+  if (!tokenData.access_token) {
+    console.error('Failed to get Firestore token:', JSON.stringify(tokenData));
+    return null;
+  }
+  return tokenData.access_token;
+}
+
+async function writeOrderToFirestore(sessionId, orderData) {
+  const token = await getFirestoreToken();
+  if (!token) return; // Firebase not configured — skip silently
+
+  const projectId = process.env.FIREBASE_PROJECT_ID;
+  const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/orders/${sessionId}`;
+
+  const fields = {
+    customerEmail:  { stringValue: orderData.customerEmail || '' },
+    sessionId:      { stringValue: sessionId },
+    amountTotal:    { integerValue: String(orderData.amountTotal || 0) },
+    currency:       { stringValue: orderData.currency || 'usd' },
+    createdAt:      { timestampValue: new Date().toISOString() },
+    items: {
+      arrayValue: {
+        values: (orderData.items || []).map(item => ({
+          mapValue: {
+            fields: {
+              name:        { stringValue: item.name || '' },
+              variantName: { stringValue: item.variantName || '' },
+              qty:         { integerValue: String(item.qty || 1) },
+              price:       { doubleValue: item.price || 0 },
+            },
+          },
+        })),
+      },
+    },
+  };
+
+  const res = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ fields }),
+  });
+
+  if (!res.ok) {
+    console.error('Firestore write failed:', await res.text());
+  } else {
+    console.log('Order written to Firestore:', sessionId);
+  }
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method not allowed' };
@@ -48,6 +134,7 @@ exports.handler = async (event) => {
   }
 
   const items = [];
+  const orderItems = []; // for Firestore order history
   for (let i = 0; i < itemCount; i++) {
     try {
       const item = JSON.parse(meta['item_' + i] || 'null');
@@ -55,6 +142,14 @@ exports.handler = async (event) => {
         items.push({ sync_variant_id: item.variantId, quantity: item.qty });
       } else {
         console.warn('item_' + i + ' missing variantId or qty — skipped');
+      }
+      if (item) {
+        orderItems.push({
+          name: item.name || '',
+          variantName: item.variantName || '',
+          qty: item.qty || 1,
+          price: item.price || 0,
+        });
       }
     } catch {
       console.error('Failed to parse metadata item_' + i);
@@ -99,6 +194,16 @@ exports.handler = async (event) => {
     }
 
     console.log('Printful order created and confirmed:', data.result?.id);
+
+    // Write order to Firestore for Diamond Mine order history
+    const customerEmail = session.customer_details?.email || session.customer_email || '';
+    await writeOrderToFirestore(session.id, {
+      customerEmail,
+      amountTotal: session.amount_total || 0,
+      currency: session.currency || 'usd',
+      items: orderItems,
+    });
+
     return { statusCode: 200, body: 'OK' };
   } catch (err) {
     console.error('Printful fetch error:', err.message);

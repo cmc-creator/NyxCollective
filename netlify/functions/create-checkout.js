@@ -38,12 +38,15 @@ exports.handler = async (event) => {
   params.append('cancel_url', 'https://nyxcollectivellc.com/merch');
   params.append('payment_method_types[0]', 'card');
 
-  // Embed fulfillment data in metadata so the webhook can auto-create the Printful order
+  // Embed fulfillment + order history data in metadata
   params.append('metadata[item_count]', String(items.length));
   items.forEach((item, i) => {
     params.append(`metadata[item_${i}]`, JSON.stringify({
       variantId: item.variantId || null,
       qty: item.qty,
+      name: (item.name || '').trim().slice(0, 80),
+      variantName: typeof item.variantName === 'string' ? item.variantName.slice(0, 60) : '',
+      price: typeof item.price === 'number' ? item.price : 0,
     }));
   });
 
