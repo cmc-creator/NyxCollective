@@ -59,7 +59,10 @@
             <a href="merch.html" class="hidden sm:flex items-center gap-2 text-[10px] font-black tracking-widest uppercase text-gray-400 hover:text-white transition">
                 <i data-lucide="arrow-left" class="w-3 h-3"></i> All Merch
             </a>
-            <a href="index.html#contact" class="px-5 py-2.5 glass rounded-full text-[10px] font-black tracking-widest hover:bg-white hover:text-black transition uppercase border border-white/10">Order Now</a>
+            <button onclick="openCart()" class="relative p-2 text-gray-400 hover:text-white transition" aria-label="View cart">
+                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                <span id="cart-badge" class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-purple-600 rounded-full text-[9px] font-black text-white items-center justify-center" style="display:none">0</span>
+            </button>
         </div>
     </nav>
 
@@ -124,38 +127,68 @@
                     <h1 id="product-name" class="text-4xl md:text-5xl hero-text text-white mb-3"></h1>
                     <p id="product-price" class="text-2xl font-black text-white mb-8"></p>
 
-                    <!-- Variants table -->
-                    <div id="variants-section" class="mb-10 hidden">
-                        <h2 class="text-[10px] font-bold tracking-[0.3em] uppercase text-purple-400 mb-4">Available Options</h2>
-                        <div class="glass rounded-2xl border border-white/5 overflow-hidden">
-                            <table class="w-full text-sm">
-                                <thead>
-                                    <tr class="border-b border-white/5">
-                                        <th class="text-left px-5 py-3 text-[10px] font-black tracking-widest uppercase text-gray-600">Variant</th>
-                                        <th class="text-right px-5 py-3 text-[10px] font-black tracking-widest uppercase text-gray-600">Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="variants-tbody"></tbody>
-                            </table>
+                    <!-- Variant selector -->
+                    <div id="variants-section" class="mb-6 hidden">
+                        <label for="variant-select" class="text-[10px] font-bold tracking-[0.3em] uppercase text-purple-400 mb-3 block">Select Option</label>
+                        <select id="variant-select" onchange="onVariantChange()"
+                            class="w-full px-4 py-3 rounded-2xl border border-white/10 text-white text-sm font-medium focus:outline-none focus:border-purple-500/50 transition cursor-pointer"
+                            style="background:rgba(0,0,0,0.6);backdrop-filter:blur(10px)">
+                        </select>
+                    </div>
+
+                    <!-- Quantity stepper -->
+                    <div id="qty-section" class="flex items-center gap-4 mb-8 hidden">
+                        <span class="text-[10px] font-bold tracking-widest uppercase text-gray-500">Qty</span>
+                        <div class="flex items-center gap-3">
+                            <button onclick="changeQtyInput(-1)" class="w-9 h-9 glass rounded-full border border-white/10 text-white flex items-center justify-center hover:bg-white/10 transition text-xl leading-none" aria-label="Decrease quantity">−</button>
+                            <span id="qty-display" class="text-white font-black text-lg w-8 text-center select-none">1</span>
+                            <button onclick="changeQtyInput(1)" class="w-9 h-9 glass rounded-full border border-white/10 text-white flex items-center justify-center hover:bg-white/10 transition text-xl leading-none" aria-label="Increase quantity">+</button>
                         </div>
                     </div>
 
                     <!-- CTA -->
                     <div class="flex flex-wrap gap-4">
-                        <a href="index.html#contact" class="inline-flex items-center gap-2 px-8 py-4 bg-purple-600 text-white font-black text-xs tracking-widest uppercase rounded-full hover:bg-purple-500 transition">
-                            Order Now <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </a>
+                        <button id="add-to-cart-btn" onclick="addProductToCart()"
+                            class="inline-flex items-center gap-2 px-8 py-4 bg-purple-600 text-white font-black text-xs tracking-widest uppercase rounded-full hover:bg-purple-500 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                            disabled>
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i> Add to Cart
+                        </button>
                         <a href="merch.html" class="inline-flex items-center gap-2 px-8 py-4 glass border border-white/10 text-white font-black text-xs tracking-widest uppercase rounded-full hover:border-white/30 transition">
                             <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Merch
                         </a>
                     </div>
 
-                    <p class="text-gray-600 text-xs mt-6 leading-relaxed">All items are print-on-demand via Printful. Reach out to place an order and we'll get you set up.</p>
+                    <p class="text-gray-600 text-xs mt-6 leading-relaxed">Print-on-demand via Printful &mdash; secure checkout via Stripe.</p>
                 </div>
             </div>
         </section>
 
     </main>
+
+    <!-- Cart Overlay -->
+    <div id="cart-overlay" class="fixed inset-0 z-[60] bg-black/60" style="display:none" onclick="closeCart()"></div>
+
+    <!-- Cart Drawer -->
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:max-w-sm z-[70] flex flex-col"
+        style="background:rgba(6,6,6,0.98);backdrop-filter:blur(30px);border-left:1px solid rgba(255,255,255,0.06);transform:translateX(100%);transition:transform 0.3s ease;">
+        <div class="flex items-center justify-between px-6 py-5 border-b border-white/5 shrink-0">
+            <h2 class="text-[11px] font-black tracking-widest uppercase text-white">Cart (<span id="cart-count-label">0</span>)</h2>
+            <button onclick="closeCart()" class="text-gray-500 hover:text-white transition" aria-label="Close cart">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto px-6 py-2"></div>
+        <div class="px-6 pb-8 pt-4 border-t border-white/5 shrink-0">
+            <div class="flex justify-between items-center mb-5">
+                <span class="text-[10px] tracking-widest uppercase text-gray-500 font-bold">Subtotal</span>
+                <span id="cart-total" class="text-white font-black text-lg">$0.00</span>
+            </div>
+            <button id="checkout-btn" onclick="doCheckout()"
+                class="w-full py-4 bg-purple-600 text-white font-black rounded-2xl hover:bg-purple-500 transition uppercase tracking-widest text-xs disabled:opacity-40 disabled:cursor-not-allowed"
+                disabled>Checkout &rarr;</button>
+            <p class="text-gray-700 text-[10px] text-center mt-3 font-medium">Secure checkout via Stripe</p>
+        </div>
+    </aside>
 
     <!-- Footer -->
     <footer class="py-14 px-6 border-t border-white/5 text-center">
@@ -170,6 +203,182 @@
 
     <script>
         const FUNCTION_URL = 'https://clinquant-sfogliatella-3ed802.netlify.app/.netlify/functions/products';
+        const CHECKOUT_URL = 'https://clinquant-sfogliatella-3ed802.netlify.app/.netlify/functions/create-checkout';
+        const CART_KEY = 'nyx_cart';
+
+        // ── Cart helpers ────────────────────────────────────────────
+        function getCart() {
+            try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch { return []; }
+        }
+        function saveCart(cart) {
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+            updateBadge();
+            renderCartItems();
+        }
+        function itemKey(productId, variantName) { return productId + '::' + variantName; }
+        function addToCart(item) {
+            const cart = getCart();
+            const key = itemKey(item.productId, item.variantName);
+            const existing = cart.find(c => itemKey(c.productId, c.variantName) === key);
+            if (existing) {
+                existing.qty = Math.min(99, existing.qty + item.qty);
+            } else {
+                cart.push(Object.assign({}, item));
+            }
+            saveCart(cart);
+        }
+        function removeItem(key) {
+            saveCart(getCart().filter(c => itemKey(c.productId, c.variantName) !== key));
+        }
+        function changeQty(key, delta) {
+            const cart = getCart();
+            const item = cart.find(c => itemKey(c.productId, c.variantName) === key);
+            if (!item) return;
+            item.qty = Math.max(1, Math.min(99, item.qty + delta));
+            saveCart(cart);
+        }
+        function cartCount() { return getCart().reduce(function(s, c) { return s + c.qty; }, 0); }
+        function cartTotal() { return getCart().reduce(function(s, c) { return s + c.price * c.qty; }, 0); }
+        function updateBadge() {
+            const count = cartCount();
+            const badge = document.getElementById('cart-badge');
+            const label = document.getElementById('cart-count-label');
+            if (badge) { badge.textContent = count > 9 ? '9+' : String(count); badge.style.display = count > 0 ? 'flex' : 'none'; }
+            if (label) label.textContent = count;
+        }
+        function renderCartItems() {
+            const el = document.getElementById('cart-items');
+            const btn = document.getElementById('checkout-btn');
+            const totalEl = document.getElementById('cart-total');
+            if (!el) return;
+            const cart = getCart();
+            if (cart.length === 0) {
+                el.innerHTML = '<div class="flex flex-col items-center justify-center py-16 text-center">'
+                    + '<i data-lucide="shopping-bag" class="w-10 h-10 text-white/10 mb-4"></i>'
+                    + '<p class="text-gray-600 text-sm">Your cart is empty.</p>'
+                    + '<a href="merch.html" class="mt-4 text-purple-400 text-xs hover:text-purple-300 transition">Browse Merch &rarr;</a>'
+                    + '</div>';
+                lucide.createIcons();
+                if (totalEl) totalEl.textContent = '$0.00';
+                if (btn) btn.disabled = true;
+                return;
+            }
+            if (btn) btn.disabled = false;
+            if (totalEl) totalEl.textContent = '$' + cartTotal().toFixed(2);
+            el.innerHTML = cart.map(function(item) {
+                var key = itemKey(item.productId, item.variantName);
+                var safeKey = key.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                var itemTotal = (item.price * item.qty).toFixed(2);
+                var imgHtml = item.thumbnail
+                    ? '<img src="' + esc(item.thumbnail) + '" alt="' + esc(item.name) + '" class="w-16 h-16 rounded-xl object-cover shrink-0 bg-black/40">'
+                    : '<div class="w-16 h-16 rounded-xl bg-black/40 shrink-0 flex items-center justify-center"><i data-lucide="shirt" class="w-6 h-6 text-white/20"></i></div>';
+                return '<div class="flex gap-4 py-4 border-b border-white/5">'
+                    + imgHtml
+                    + '<div class="flex-1 min-w-0">'
+                    + '<p class="text-white text-xs font-bold leading-snug mb-0.5 truncate">' + esc(item.name) + '</p>'
+                    + '<p class="text-gray-500 text-[10px] mb-3">' + esc(item.variantName) + '</p>'
+                    + '<div class="flex items-center justify-between">'
+                    + '<div class="flex items-center gap-2">'
+                    + '<button onclick="changeQty(\'' + safeKey + '\', -1)" class="w-6 h-6 rounded-full glass border border-white/10 text-white flex items-center justify-center hover:bg-white/10 transition text-sm leading-none" aria-label="Decrease">\u2212</button>'
+                    + '<span class="text-white text-xs font-black w-5 text-center">' + item.qty + '</span>'
+                    + '<button onclick="changeQty(\'' + safeKey + '\', 1)" class="w-6 h-6 rounded-full glass border border-white/10 text-white flex items-center justify-center hover:bg-white/10 transition text-sm leading-none" aria-label="Increase">+</button>'
+                    + '</div>'
+                    + '<div class="flex items-center gap-3">'
+                    + '<span class="text-white text-xs font-black">$' + itemTotal + '</span>'
+                    + '<button onclick="removeItem(\'' + safeKey + '\')" class="text-gray-600 hover:text-red-400 transition" aria-label="Remove">'
+                    + '<i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>'
+                    + '</div></div></div></div>';
+            }).join('');
+            lucide.createIcons();
+        }
+        function openCart() {
+            var drawer = document.getElementById('cart-drawer');
+            var overlay = document.getElementById('cart-overlay');
+            if (!drawer) return;
+            overlay.style.display = 'block';
+            drawer.style.transform = 'translateX(0)';
+            document.body.style.overflow = 'hidden';
+            renderCartItems();
+        }
+        function closeCart() {
+            var drawer = document.getElementById('cart-drawer');
+            var overlay = document.getElementById('cart-overlay');
+            if (!drawer) return;
+            overlay.style.display = 'none';
+            drawer.style.transform = 'translateX(100%)';
+            document.body.style.overflow = '';
+        }
+        async function doCheckout() {
+            var cart = getCart();
+            if (cart.length === 0) return;
+            var btn = document.getElementById('checkout-btn');
+            if (btn) { btn.disabled = true; btn.textContent = 'Redirecting\u2026'; }
+            try {
+                var res = await fetch(CHECKOUT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        items: cart.map(function(c) {
+                            return {
+                                name: c.variantName && c.variantName !== 'Default'
+                                    ? c.name + ' \u2013 ' + c.variantName
+                                    : c.name,
+                                price: c.price,
+                                qty: c.qty,
+                                thumbnail: c.thumbnail || null
+                            };
+                        })
+                    })
+                });
+                var data = await res.json();
+                if (data.url) {
+                    localStorage.removeItem(CART_KEY);
+                    window.location.href = data.url;
+                } else {
+                    throw new Error(data.error || 'No checkout URL returned');
+                }
+            } catch (err) {
+                if (btn) { btn.disabled = false; btn.textContent = 'Checkout \u2192'; }
+                alert('Checkout failed: ' + err.message + '. Please try again or contact us.');
+            }
+        }
+
+        // ── Product page state ──────────────────────────────────────
+        var currentProduct = null;
+        var itemQty = 1;
+        function changeQtyInput(delta) {
+            itemQty = Math.max(1, Math.min(99, itemQty + delta));
+            var el = document.getElementById('qty-display');
+            if (el) el.textContent = itemQty;
+        }
+        function onVariantChange() {
+            var select = document.getElementById('variant-select');
+            if (!select || !currentProduct) return;
+            var idx = parseInt(select.value, 10);
+            var variant = currentProduct.variantDetails[idx];
+            if (!variant) return;
+            var priceEl = document.getElementById('product-price');
+            if (priceEl && variant.price) priceEl.textContent = '$' + parseFloat(variant.price).toFixed(2);
+        }
+        function addProductToCart() {
+            if (!currentProduct) return;
+            var select = document.getElementById('variant-select');
+            var idx = select ? parseInt(select.value, 10) : 0;
+            var variant = currentProduct.variantDetails && currentProduct.variantDetails[idx];
+            if (!variant) return;
+            addToCart({
+                productId: currentProduct.id,
+                variantName: variant.name || 'Default',
+                price: parseFloat(variant.price) || 0,
+                name: currentProduct.name,
+                thumbnail: currentProduct.thumbnail || null,
+                qty: itemQty
+            });
+            itemQty = 1;
+            var qd = document.getElementById('qty-display');
+            if (qd) qd.textContent = '1';
+            openCart();
+        }
 
         function esc(str) {
             return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -233,19 +442,35 @@
                 priceEl.className = 'text-lg text-gray-500 mb-8';
             }
 
-            // Variants table
+            // Store product globally for add-to-cart
+            currentProduct = p;
+
+            // Populate variant selector
             if (p.variantDetails && p.variantDetails.length) {
-                const tbody = document.getElementById('variants-tbody');
-                p.variantDetails.forEach((v, i) => {
-                    const tr = document.createElement('tr');
-                    tr.className = (i < p.variantDetails.length - 1 ? 'border-b border-white/5' : '') + ' hover:bg-white/2 transition';
-                    tr.innerHTML = '<td class="px-5 py-3 text-gray-300">' + esc(v.name) + '</td>'
-                        + '<td class="px-5 py-3 text-right font-black text-white">'
-                        + (v.price ? '$' + parseFloat(v.price).toFixed(2) : '—')
-                        + '</td>';
-                    tbody.appendChild(tr);
-                });
+                const select = document.getElementById('variant-select');
+                select.innerHTML = p.variantDetails.map((v, i) => {
+                    const label = v.price
+                        ? esc(v.name) + ' \u2013 $' + parseFloat(v.price).toFixed(2)
+                        : esc(v.name);
+                    return '<option value="' + i + '">' + label + '</option>';
+                }).join('');
                 document.getElementById('variants-section').classList.remove('hidden');
+                document.getElementById('qty-section').classList.remove('hidden');
+                document.getElementById('add-to-cart-btn').disabled = false;
+                // Set initial price to first variant
+                if (p.variantDetails[0] && p.variantDetails[0].price) {
+                    document.getElementById('product-price').textContent = '$' + parseFloat(p.variantDetails[0].price).toFixed(2);
+                }
+            } else {
+                // No variants - still allow add to cart with minPrice
+                document.getElementById('qty-section').classList.remove('hidden');
+                var btn = document.getElementById('add-to-cart-btn');
+                if (p.minPrice) {
+                    btn.disabled = false;
+                    currentProduct.variantDetails = [{ name: 'Default', price: p.minPrice }];
+                    var sel = document.getElementById('variant-select');
+                    if (sel) sel.innerHTML = '<option value="0">Default</option>';
+                }
             }
 
             // Sticky nav
@@ -259,7 +484,10 @@
         }
 
         document.getElementById('year').textContent = new Date().getFullYear();
-        window.addEventListener('DOMContentLoaded', init);
+        window.addEventListener('DOMContentLoaded', function() {
+            updateBadge();
+            init();
+        });
     </script>
 </body>
 </html>
