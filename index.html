@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#000000">
     <title>NyxCollective LLC | Designer Software. Transparent Pricing.</title>
-    <meta name="description" content="NyxCollective LLC is a luxury modular software company offering 17 elite digital products you can license as-is or receive a fully customized white-label build. Pulse, Shift, Titan, Grid, Aegis, Codex, Citadel, Strata, HICSlab, Arete, Ledger, Scribe, Herald, Haven, Forge, Anchor, Portal. Transparent pricing. Zero bloat.">
+    <meta name="description" content="NyxCollective LLC is a luxury modular software company offering 18 elite digital products you can license as-is or receive a fully customized white-label build. Pulse, Shift, Titan, Grid, Aegis, Codex, Citadel, Strata, HICSlab, Arete, Ledger, Scribe, Herald, Haven, Forge, Anchor, Portal, Ethos. Transparent pricing. Zero bloat.">
     <link rel="icon" type="image/png" href="nclogo%20nobg.png">
     <link rel="canonical" href="https://nyxcollectivellc.com/">
     <meta property="og:title" content="NyxCollective LLC | Designer Software. Transparent Pricing.">
-    <meta property="og:description" content="A luxury modular software company. 17 elite digital products available to license as-is or receive a fully customized white-label build. Transparent pricing. Zero bloat.">
+    <meta property="og:description" content="A luxury modular software company. 18 elite digital products available to license as-is or receive a fully customized white-label build. Transparent pricing. Zero bloat.">
     <meta property="og:url" content="https://nyxcollectivellc.com/">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://nyxcollectivellc.com/og-image.png">
@@ -17,7 +17,7 @@
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="NyxCollective LLC | Designer Software. Transparent Pricing.">
-    <meta name="twitter:description" content="A luxury modular software company. 17 elite digital products available to license as-is or receive a fully customized white-label build. Transparent pricing. Zero bloat.">
+    <meta name="twitter:description" content="A luxury modular software company. 18 elite digital products available to license as-is or receive a fully customized white-label build. Transparent pricing. Zero bloat.">
     <meta name="twitter:image" content="https://nyxcollectivellc.com/og-image.png">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRQHNQY6QH"></script>
@@ -35,7 +35,7 @@
         "url": "https://nyxcollectivellc.com",
         "logo": "https://nyxcollectivellc.com/nclogo%20nobg.png",
         "image": "https://nyxcollectivellc.com/nclogo%20nobg.png",
-        "description": "NyxCollective LLC is a luxury modular software company offering 17 elite digital products available to license as-is or receive a fully customized white-label build.",
+        "description": "NyxCollective LLC is a luxury modular software company offering 18 elite digital products available to license as-is or receive a fully customized white-label build.",
         "address": {
             "@type": "PostalAddress",
             "addressLocality": "Surprise",
@@ -954,6 +954,23 @@
                         <button type="submit" class="px-3 py-2 rounded-xl bg-fuchsia-500/10 border border-fuchsia-500/20 text-fuchsia-400 text-xs font-black hover:bg-fuchsia-500/20 transition whitespace-nowrap">→</button>
                     </form>
                     <p class="notify-thanks text-[10px] text-fuchsia-400 mt-2 hidden">You're on the list.</p>
+                </div>
+
+                <!-- NyxEthos -->
+                <div class="product-card glass p-10 rounded-[3rem] border border-white/5 bg-black/20 group cursor-pointer" onclick="openModal('ethos')">
+                    <div class="w-14 h-14 rounded-2xl bg-pink-500/10 flex items-center justify-center border border-pink-500/20 mb-8 group-hover:bg-pink-500/20 transition">
+                        <i data-lucide="briefcase" class="text-pink-400 w-7 h-7"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-gray-100">Ethos</h3>
+                        <span class="text-[8px] font-black tracking-widest uppercase px-2 py-1 rounded-full bg-pink-500/10 text-pink-400 border border-pink-500/20">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">A powerhouse HR platform built for organisations that take people seriously. Onboarding, performance, compliance, and culture — unified, automated, and built to scale.</p>
+                    <form class="flex gap-2 mt-auto" onclick="event.stopPropagation()" onsubmit="notifySubmit(event, this, 'NyxEthos')">
+                        <input type="email" placeholder="Get notified" required class="flex-1 bg-black border border-pink-500/20 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-pink-500 transition placeholder-gray-600">
+                        <button type="submit" class="px-3 py-2 rounded-xl bg-pink-500/10 border border-pink-500/20 text-pink-400 text-xs font-black hover:bg-pink-500/20 transition whitespace-nowrap">→</button>
+                    </form>
+                    <p class="notify-thanks text-[10px] text-pink-400 mt-2 hidden">You're on the list.</p>
                 </div>
 
                 <!-- Portal -->
@@ -1880,6 +1897,15 @@
                 tagline: 'One place. Every relationship. Total clarity.',
                 description: 'Portal is a white-label client portal that gives your customers a single, branded place to log in and see everything relevant to your relationship - active projects, outstanding invoices, signed documents, support tickets, and communications. Built to tie together Aegis, Ledger, Scribe, Haven, and Forge into one clean client-facing view.',
                 features: ['Branded Client Login', 'Project and Milestone View', 'Invoice and Payment Status', 'Document and Signature Access', 'Support Ticket Visibility', 'Full NyxCollective Suite Integration']
+            },
+            ethos: {
+                name: 'Ethos',
+                color: 'pink',
+                icon: 'briefcase',
+                tag: 'HR Platform',
+                tagline: 'People-first infrastructure. Built to perform.',
+                description: 'Ethos is NyxCollective\'s powerhouse HR platform — purpose-built for organisations that recognise people as their most critical infrastructure. From hire to exit, Ethos unifies onboarding, employee records, performance cycles, compliance workflows, policy acknowledgements, and culture metrics into one seamless system. No more patched-together tools. No more spreadsheets. Just one intelligent platform that runs your people operations the way your business deserves.',
+                features: ['Smart Onboarding Workflows', 'Employee Records and Document Vault', 'Performance Review Cycles', 'Compliance and Policy Acknowledgement Tracking', 'Time-Off and Absence Management', 'Culture and Engagement Metrics', 'Role-Based Access and Org Chart', 'Offboarding and Exit Management']
             }
         };
 
@@ -1900,7 +1926,8 @@
             cyan:    { text: 'text-cyan-400',    bg: 'bg-cyan-500/10',    border: 'border-cyan-500/20',    btn: 'bg-cyan-600 hover:bg-cyan-500' },
             indigo:  { text: 'text-indigo-400',  bg: 'bg-indigo-500/10',  border: 'border-indigo-500/20',  btn: 'bg-indigo-600 hover:bg-indigo-500' },
             fuchsia: { text: 'text-fuchsia-400', bg: 'bg-fuchsia-500/10', border: 'border-fuchsia-500/20', btn: 'bg-fuchsia-600 hover:bg-fuchsia-500' },
-            stone:   { text: 'text-stone-400',   bg: 'bg-stone-500/10',   border: 'border-stone-500/20',   btn: 'bg-stone-600 hover:bg-stone-500' }
+            stone:   { text: 'text-stone-400',   bg: 'bg-stone-500/10',   border: 'border-stone-500/20',   btn: 'bg-stone-600 hover:bg-stone-500' },
+            pink:    { text: 'text-pink-400',    bg: 'bg-pink-500/10',    border: 'border-pink-500/20',    btn: 'bg-pink-600 hover:bg-pink-500' }
         };
 
         function openModal(key) {
