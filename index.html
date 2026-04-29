@@ -280,6 +280,68 @@
         .nav-logo:hover {
             filter: drop-shadow(0 0 12px rgba(220,220,230,0.85)) drop-shadow(0 0 32px rgba(200,210,220,0.45));
         }
+        @keyframes dm-tracer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes dm-shimmer {
+            0% { transform: translateX(-100%) skewX(-15deg); }
+            60%, 100% { transform: translateX(250%) skewX(-15deg); }
+        }
+        @keyframes dm-sparkle {
+            0%,100% { opacity:0; transform:scale(0.4) rotate(0deg); }
+            50% { opacity:1; transform:scale(1) rotate(180deg); }
+        }
+        @keyframes dm-pulse-gold {
+            0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
+            50% { box-shadow: 0 0 28px 6px rgba(201,168,76,0.22), 0 0 60px 12px rgba(240,201,122,0.10); }
+        }
+        @keyframes dm-float-gem {
+            0%,100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(12deg); }
+        }
+        .dm-tracer-btn {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(270deg,#8B6914,#F0C97A,#C9A84C,#fff8dc,#C9A84C,#F0C97A,#8B6914);
+            background-size: 400% 400%;
+            animation: dm-tracer 3s ease infinite, dm-pulse-gold 3s ease infinite;
+            color: #060608 !important;
+            border: none !important;
+        }
+        .dm-tracer-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+            animation: dm-shimmer 2.8s ease infinite;
+        }
+        .dm-tracer-btn:hover { opacity: 0.92; }
+        .dm-ghost-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .dm-ghost-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: linear-gradient(270deg,#8B6914,#F0C97A,#C9A84C,#8B6914);
+            background-size: 300% 300%;
+            animation: dm-tracer 3s ease infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+        .dm-sparkle { animation: dm-sparkle 2.2s ease infinite; }
+        .dm-sparkle-2 { animation: dm-sparkle 2.2s ease 0.7s infinite; }
+        .dm-sparkle-3 { animation: dm-sparkle 2.2s ease 1.4s infinite; }
+        .dm-gem-float { animation: dm-float-gem 3.5s ease-in-out infinite; }
     </style>
 </head>
 <body class="cosmic-bg">
@@ -320,7 +382,7 @@
                 <a href="#faq" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">FAQ</a>
                 <a href="merch.html" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Merch</a>
                 <a href="#contact" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Contact</a>
-                <a href="login.html" class="dm-ghost-btn font-black tracking-widest uppercase px-4 py-2 rounded-full transition" style="color:#C9A84C;background:rgba(201,168,76,0.06)">&#9670; Diamond Mine</a>
+                <a href="login.html" class="dm-tracer-btn font-black tracking-widest uppercase px-4 py-2 rounded-full transition text-[11px]">&#9670; Diamond Mine</a>
             </div>
 
             <div class="flex items-center gap-4">
@@ -346,7 +408,7 @@
                 <a href="#faq" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">FAQ</a>
                 <a href="merch.html" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Merch</a>
                 <a href="#contact" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Contact</a>
-                <a href="login.html" class="dm-ghost-btn font-black tracking-widest uppercase text-center py-3 rounded-full transition" style="color:#C9A84C;background:rgba(201,168,76,0.06)" onclick="closeMobileMenu()">&#9670; Diamond Mine</a>
+                <a href="login.html" class="dm-tracer-btn font-black tracking-widest uppercase text-center py-3 rounded-full transition text-[11px]" onclick="closeMobileMenu()">&#9670; Diamond Mine</a>
                 <a href="#contact" class="w-full text-center py-3 glass rounded-full hover:bg-white hover:text-black transition border border-white/10" onclick="closeMobileMenu()">Start A Project</a>
             </div>
         </div>
@@ -1270,70 +1332,6 @@
     </section>
 
     <!-- Diamond Mine -->
-    <style>
-        @keyframes dm-tracer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        @keyframes dm-shimmer {
-            0% { transform: translateX(-100%) skewX(-15deg); }
-            60%, 100% { transform: translateX(250%) skewX(-15deg); }
-        }
-        @keyframes dm-sparkle {
-            0%,100% { opacity:0; transform:scale(0.4) rotate(0deg); }
-            50% { opacity:1; transform:scale(1) rotate(180deg); }
-        }
-        @keyframes dm-pulse-gold {
-            0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
-            50% { box-shadow: 0 0 28px 6px rgba(201,168,76,0.22), 0 0 60px 12px rgba(240,201,122,0.10); }
-        }
-        @keyframes dm-float-gem {
-            0%,100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(12deg); }
-        }
-        .dm-tracer-btn {
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(270deg,#8B6914,#F0C97A,#C9A84C,#fff8dc,#C9A84C,#F0C97A,#8B6914);
-            background-size: 400% 400%;
-            animation: dm-tracer 3s ease infinite, dm-pulse-gold 3s ease infinite;
-            color: #060608 !important;
-            border: none !important;
-        }
-        .dm-tracer-btn::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 40%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
-            animation: dm-shimmer 2.8s ease infinite;
-        }
-        .dm-tracer-btn:hover { opacity: 0.92; }
-        .dm-ghost-btn {
-            position: relative;
-            overflow: hidden;
-        }
-        .dm-ghost-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1.5px;
-            background: linear-gradient(270deg,#8B6914,#F0C97A,#C9A84C,#8B6914);
-            background-size: 300% 300%;
-            animation: dm-tracer 3s ease infinite;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
-        .dm-sparkle { animation: dm-sparkle 2.2s ease infinite; }
-        .dm-sparkle-2 { animation: dm-sparkle 2.2s ease 0.7s infinite; }
-        .dm-sparkle-3 { animation: dm-sparkle 2.2s ease 1.4s infinite; }
-        .dm-gem-float { animation: dm-float-gem 3.5s ease-in-out infinite; }
-    </style>
 
     <section id="diamond-mine" class="py-32 px-6 border-t border-white/5 relative overflow-hidden" style="background:linear-gradient(180deg,transparent 0%,rgba(201,168,76,0.05) 35%,rgba(201,168,76,0.09) 60%,transparent 100%)">
         <!-- Ambient gold rays -->
