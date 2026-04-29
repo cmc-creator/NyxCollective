@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
     <title>Merch | NyxCollective LLC</title>
     <meta name="description" content="Official NyxCollective LLC merchandise. Wear the brand. Premium apparel and accessories powered by Printful.">
-    <link rel="icon" type="image/png" href="nclogo nobg.png">
+    <link rel="icon" type="image/png" href="nclogo%20nobg.png">
     <meta property="og:title" content="Merch | NyxCollective LLC">
     <meta property="og:description" content="Official NyxCollective LLC merchandise. Wear the brand.">
     <meta property="og:url" content="https://nyxcollectivellc.com/merch">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://nyxcollectivellc.com/nclogo%20nobg.png">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Merch | NyxCollective LLC">
+    <meta name="twitter:description" content="Official NyxCollective LLC merchandise. Wear the brand.">
     <meta name="twitter:image" content="https://nyxcollectivellc.com/og-image.png">
     <link rel="canonical" href="https://nyxcollectivellc.com/merch">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRQHNQY6QH"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MRQHNQY6QH');</script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -206,12 +211,17 @@
                 <a href="index.html#blog" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Blog</a>
                 <a href="merch.html" class="text-purple-400 hover:opacity-100 transition">Merch</a>
                 <a href="index.html#contact" class="opacity-50 hover:opacity-100 hover:text-purple-400 transition">Contact</a>
+                <a href="members.html" class="flex items-center gap-1.5 font-bold transition" style="color:#C9A84C;opacity:0.9" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">&#9670; The Diamond Mine</a>
             </div>
 
             <div class="flex items-center gap-4">
                 <a href="#products" class="hidden sm:block px-6 py-2.5 glass rounded-full text-[10px] font-black tracking-widest hover:bg-white hover:text-black transition uppercase cursor-pointer border border-white/10">
                     View Collection
                 </a>
+                <button onclick="openCart()" class="relative p-2 text-gray-400 hover:text-white transition" aria-label="View cart">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span id="cart-badge" class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-purple-600 rounded-full text-[9px] font-black text-white items-center justify-center" style="display:none">0</span>
+                </button>
                 <button id="hamburger" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
                     <span class="block w-5 h-px bg-white/60 transition-all"></span>
                     <span class="block w-5 h-px bg-white/60 transition-all"></span>
@@ -229,10 +239,17 @@
                 <a href="index.html#blog" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Blog</a>
                 <a href="merch.html" class="text-purple-400 hover:opacity-100" onclick="closeMobileMenu()">Merch</a>
                 <a href="index.html#contact" class="hover:text-purple-400 transition opacity-60 hover:opacity-100" onclick="closeMobileMenu()">Contact</a>
+                <a href="members.html" class="font-bold" style="color:#C9A84C" onclick="closeMobileMenu()">&#9670; The Diamond Mine</a>
                 <a href="#products" class="w-full text-center py-3 glass rounded-full hover:bg-white hover:text-black transition border border-white/10" onclick="closeMobileMenu()">View Collection</a>
             </div>
         </div>
     </nav>
+
+    <!-- Success Banner -->
+    <div id="success-banner" class="hidden fixed top-0 left-0 right-0 z-[80] px-6 py-4 text-center text-sm font-bold text-white" style="background:rgba(22,163,74,0.95);backdrop-filter:blur(10px)">
+        Order placed! Check your email for confirmation. Thank you for supporting NyxCollective.
+        <button onclick="document.getElementById('success-banner').classList.add('hidden')" class="ml-4 opacity-60 hover:opacity-100 transition text-xs" aria-label="Dismiss">&times;</button>
+    </div>
 
     <!-- Hero -->
     <section class="relative min-h-[60vh] flex flex-col justify-center items-center px-6 pt-40 pb-24 text-center">
@@ -387,6 +404,31 @@
         </div>
     </footer>
 
+    <!-- Cart Overlay -->
+    <div id="cart-overlay" class="fixed inset-0 z-[60] bg-black/60" style="display:none" onclick="closeCart()"></div>
+
+    <!-- Cart Drawer -->
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:max-w-sm z-[70] flex flex-col"
+        style="background:rgba(6,6,6,0.98);backdrop-filter:blur(30px);border-left:1px solid rgba(255,255,255,0.06);transform:translateX(100%);transition:transform 0.3s ease;">
+        <div class="flex items-center justify-between px-6 py-5 border-b border-white/5 shrink-0">
+            <h2 class="text-[11px] font-black tracking-widest uppercase text-white">Cart (<span id="cart-count-label">0</span>)</h2>
+            <button onclick="closeCart()" class="text-gray-500 hover:text-white transition" aria-label="Close cart">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto px-6 py-2"></div>
+        <div class="px-6 pb-8 pt-4 border-t border-white/5 shrink-0">
+            <div class="flex justify-between items-center mb-5">
+                <span class="text-[10px] tracking-widest uppercase text-gray-500 font-bold">Subtotal</span>
+                <span id="cart-total" class="text-white font-black text-lg">$0.00</span>
+            </div>
+            <button id="checkout-btn" onclick="doCheckout()"
+                class="w-full py-4 bg-purple-600 text-white font-black rounded-2xl hover:bg-purple-500 transition uppercase tracking-widest text-xs disabled:opacity-40 disabled:cursor-not-allowed"
+                disabled>Checkout &rarr;</button>
+            <p class="text-gray-700 text-[10px] text-center mt-3 font-medium">Secure checkout via Stripe</p>
+        </div>
+    </aside>
+
     <!-- Sticky Mobile CTA -->
     <div class="sticky-cta sm:hidden">
         <a href="#products"
@@ -396,6 +438,135 @@
     </div>
 
     <script>
+        const CHECKOUT_URL = 'https://clinquant-sfogliatella-3ed802.netlify.app/.netlify/functions/create-checkout';
+        const CART_KEY = 'nyx_cart';
+
+        // ── Cart helpers ────────────────────────────────────────────
+        function getCart() {
+            try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch { return []; }
+        }
+        function saveCart(cart) {
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+            updateBadge();
+            renderCartItems();
+        }
+        function itemKey(productId, variantName) { return productId + '::' + variantName; }
+        function removeItem(key) {
+            saveCart(getCart().filter(function(c) { return itemKey(c.productId, c.variantName) !== key; }));
+        }
+        function changeQty(key, delta) {
+            var cart = getCart();
+            var item = cart.find(function(c) { return itemKey(c.productId, c.variantName) === key; });
+            if (!item) return;
+            item.qty = Math.max(1, Math.min(99, item.qty + delta));
+            saveCart(cart);
+        }
+        function cartCount() { return getCart().reduce(function(s, c) { return s + c.qty; }, 0); }
+        function cartTotal() { return getCart().reduce(function(s, c) { return s + c.price * c.qty; }, 0); }
+        function updateBadge() {
+            var count = cartCount();
+            var badge = document.getElementById('cart-badge');
+            var label = document.getElementById('cart-count-label');
+            if (badge) { badge.textContent = count > 9 ? '9+' : String(count); badge.style.display = count > 0 ? 'flex' : 'none'; }
+            if (label) label.textContent = count;
+        }
+        function renderCartItems() {
+            var el = document.getElementById('cart-items');
+            var btn = document.getElementById('checkout-btn');
+            var totalEl = document.getElementById('cart-total');
+            if (!el) return;
+            var cart = getCart();
+            if (cart.length === 0) {
+                el.innerHTML = '<div class="flex flex-col items-center justify-center py-16 text-center">'
+                    + '<i data-lucide="shopping-bag" class="w-10 h-10 text-white/10 mb-4"></i>'
+                    + '<p class="text-gray-600 text-sm">Your cart is empty.</p>'
+                    + '<p class="text-gray-700 text-xs mt-2">Browse products below and click Details to select options.</p>'
+                    + '</div>';
+                lucide.createIcons();
+                if (totalEl) totalEl.textContent = '$0.00';
+                if (btn) btn.disabled = true;
+                return;
+            }
+            if (btn) btn.disabled = false;
+            if (totalEl) totalEl.textContent = '$' + cartTotal().toFixed(2);
+            el.innerHTML = cart.map(function(item) {
+                var key = itemKey(item.productId, item.variantName);
+                var safeKey = key.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                var itemTotal = (item.price * item.qty).toFixed(2);
+                var imgHtml = item.thumbnail
+                    ? '<img src="' + esc(item.thumbnail) + '" alt="' + esc(item.name) + '" class="w-16 h-16 rounded-xl object-cover shrink-0 bg-black/40">'
+                    : '<div class="w-16 h-16 rounded-xl bg-black/40 shrink-0 flex items-center justify-center"><i data-lucide="shirt" class="w-6 h-6 text-white/20"></i></div>';
+                return '<div class="flex gap-4 py-4 border-b border-white/5">'
+                    + imgHtml
+                    + '<div class="flex-1 min-w-0">'
+                    + '<p class="text-white text-xs font-bold leading-snug mb-0.5 truncate">' + esc(item.name) + '</p>'
+                    + '<p class="text-gray-500 text-[10px] mb-3">' + esc(item.variantName) + '</p>'
+                    + '<div class="flex items-center justify-between">'
+                    + '<div class="flex items-center gap-2">'
+                    + '<button onclick="changeQty(\'' + safeKey + '\', -1)" class="w-6 h-6 rounded-full glass border border-white/10 text-white flex items-center justify-center hover:bg-white/10 transition text-sm leading-none" aria-label="Decrease">\u2212</button>'
+                    + '<span class="text-white text-xs font-black w-5 text-center">' + item.qty + '</span>'
+                    + '<button onclick="changeQty(\'' + safeKey + '\', 1)" class="w-6 h-6 rounded-full glass border border-white/10 text-white flex items-center justify-center hover:bg-white/10 transition text-sm leading-none" aria-label="Increase">+</button>'
+                    + '</div>'
+                    + '<div class="flex items-center gap-3">'
+                    + '<span class="text-white text-xs font-black">$' + itemTotal + '</span>'
+                    + '<button onclick="removeItem(\'' + safeKey + '\')" class="text-gray-600 hover:text-red-400 transition" aria-label="Remove">'
+                    + '<i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>'
+                    + '</div></div></div></div>';
+            }).join('');
+            lucide.createIcons();
+        }
+        function openCart() {
+            var drawer = document.getElementById('cart-drawer');
+            var overlay = document.getElementById('cart-overlay');
+            if (!drawer) return;
+            overlay.style.display = 'block';
+            drawer.style.transform = 'translateX(0)';
+            document.body.style.overflow = 'hidden';
+            renderCartItems();
+        }
+        function closeCart() {
+            var drawer = document.getElementById('cart-drawer');
+            var overlay = document.getElementById('cart-overlay');
+            if (!drawer) return;
+            overlay.style.display = 'none';
+            drawer.style.transform = 'translateX(100%)';
+            document.body.style.overflow = '';
+        }
+        async function doCheckout() {
+            var cart = getCart();
+            if (cart.length === 0) return;
+            var btn = document.getElementById('checkout-btn');
+            if (btn) { btn.disabled = true; btn.textContent = 'Redirecting\u2026'; }
+            try {
+                var res = await fetch(CHECKOUT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        items: cart.map(function(c) {
+                            return {
+                                name: c.variantName && c.variantName !== 'Default'
+                                    ? c.name + ' \u2013 ' + c.variantName
+                                    : c.name,
+                                price: c.price,
+                                qty: c.qty,
+                                thumbnail: c.thumbnail || null,
+                                variantId: c.variantId || null
+                            };
+                        })
+                    })
+                });
+                var data = await res.json();
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    throw new Error(data.error || 'No checkout URL returned');
+                }
+            } catch (err) {
+                if (btn) { btn.disabled = false; btn.textContent = 'Checkout \u2192'; }
+                alert('Checkout failed: ' + err.message + '. Please try again or contact us.');
+            }
+        }
+
         // XSS-safe text helper
         function esc(s) {
             const d = document.createElement('div');
@@ -421,10 +592,10 @@
                 const priceHtml = p.minPrice ? 'From $' + esc(String(p.minPrice)) : 'Contact for pricing';
                 const variantText = p.variants + ' variant' + (p.variants !== 1 ? 's' : '') + ' available';
                 return '<div class="product-card glass rounded-[2.5rem] border border-white/5 bg-black/20 overflow-hidden">'
-                    + '<div class="product-img-wrap relative aspect-square">'
+                    + '<a href="merch-product.html?id=' + p.id + '" class="product-img-wrap relative aspect-square block" aria-label="View ' + esc(p.name) + '">'
                     + imgHtml
                     + '<span class="absolute top-4 left-4 text-[8px] font-black tracking-widest uppercase px-2.5 py-1 rounded-full bg-purple-500 text-white">Live</span>'
-                    + '</div>'
+                    + '</a>'
                     + '<div class="p-6">'
                     + '<h3 class="text-base font-bold text-gray-100 mb-1 leading-snug">' + esc(p.name) + '</h3>'
                     + '<p class="text-gray-600 text-xs mb-4">' + variantText + '</p>'
@@ -469,6 +640,18 @@
 
         lucide.createIcons();
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Show success banner if redirected from Stripe
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            if (params.get('success') === 'true') {
+                localStorage.removeItem(CART_KEY);
+                document.getElementById('success-banner').classList.remove('hidden');
+                // Clean the URL without reloading
+                history.replaceState(null, '', window.location.pathname);
+            }
+            updateBadge();
+        })();
 
         // Sticky nav shrink
         const nav = document.getElementById('navbar');

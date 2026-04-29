@@ -18,6 +18,8 @@
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/product", "destination": "/product.html" },
     { "source": "/checkout", "destination": "/checkout.html" },
-    { "source": "/order-confirm", "destination": "/order-confirm.html" }
+    { "source": "/order-confirm", "destination": "/order-confirm.html" },
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/members", "destination": "/members.html" }
   ]
 }
