@@ -523,7 +523,7 @@
                         <p class="text-xs text-[rgba(232,220,200,0.5)] mb-3">Full architecture playbooks, white-label project starter kits, and your complimentary quarterly strategy call booking.</p>
                         <div class="flex flex-wrap items-center gap-4">
                             <a href="#" onclick="handleVaultDownload(event, 'playbooks')" class="text-[11px] font-bold tracking-widest uppercase text-[#F0C97A] hover:text-[#F5E6C8] transition">Download &#8594;</a>
-                            <a href="index.html#contact" class="text-[11px] font-bold tracking-widest uppercase text-[#F0C97A] hover:text-[#F5E6C8] transition">Book Strategy Call &#8594;</a>
+                            <a href="index.html#contact" class="text-[11px] font-bold tracking-widest uppercase text-[#F0C97A] hover:text-[#F5E6C8] transition" onclick="openStrategyCallModal(event)">Book Strategy Call &#8594;</a>
                         </div>
                     </div>
                 </div>
@@ -842,11 +842,40 @@
         }
     }
 
-    // ── Vault downloads (placeholder) ─────────────────────────────────────
+    // ── Vault downloads ────────────────────────────────────────────────────
+    const VAULT_URLS = {
+        'newsletter':   '',   // e.g. 'https://drive.google.com/...'
+        'templates':    '',
+        'build-guides': '',
+        'playbooks':    ''
+    };
+
+    const VAULT_LABELS = {
+        'newsletter':   'Insider Newsletter',
+        'templates':    'Premium Templates & SOPs',
+        'build-guides': 'Build Guides & Case Studies',
+        'playbooks':    'Architecture Playbooks & White-Label Kits'
+    };
+
     function handleVaultDownload(e, item) {
         e.preventDefault();
-        // Add your actual download links or content URLs here
-        showToast(`${item} — Coming soon! Check back shortly.`);
+        const url = VAULT_URLS[item];
+        if (url) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        } else {
+            openVaultComingSoon(VAULT_LABELS[item] || item);
+        }
+    }
+
+    function openVaultComingSoon(label) {
+        document.getElementById('vault-modal-title').textContent = label;
+        document.getElementById('vault-modal').classList.remove('hidden');
+        document.getElementById('vault-modal').classList.add('flex');
+    }
+
+    function closeVaultModal() {
+        document.getElementById('vault-modal').classList.add('hidden');
+        document.getElementById('vault-modal').classList.remove('flex');
     }
 
     // ── Sign out ──────────────────────────────────────────────────────────
@@ -875,6 +904,80 @@
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => t.classList.remove('show'), 4000);
     }
+
+    // ── Strategy call modal ────────────────────────────────────────────────
+    function openStrategyCallModal(e) {
+        if (e) e.preventDefault();
+        document.getElementById('strategy-modal').classList.remove('hidden');
+        document.getElementById('strategy-modal').classList.add('flex');
+    }
+
+    function closeStrategyModal() {
+        document.getElementById('strategy-modal').classList.add('hidden');
+        document.getElementById('strategy-modal').classList.remove('flex');
+    }
+
+    async function submitStrategyCall(e) {
+        e.preventDefault();
+        const btn = document.getElementById('strategy-submit-btn');
+        const name = document.getElementById('strategy-name').value.trim();
+        const email = document.getElementById('strategy-email').value.trim();
+        const msg = document.getElementById('strategy-message').value.trim();
+        if (!name || !email) return;
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        try {
+            const res = await fetch(`${FN_BASE}/contact`, {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({ name, email, message: `[STRATEGY CALL REQUEST]\n\n${msg}`, subject: 'Diamond Strategy Call Request' })
+            });
+            if (res.ok) {
+                document.getElementById('strategy-form').innerHTML = '<p class="text-center py-8" style="color:#F0C97A;font-weight:700;letter-spacing:0.1em;">Request sent. We\'ll be in touch within 48 hours.</p>';
+            } else {
+                throw new Error();
+            }
+        } catch {
+            btn.disabled = false;
+            btn.textContent = 'Send Request';
+            showToast('Could not send request. Please email us directly.');
+        }
+    }
 </script>
+
+    <!-- Vault Coming Soon Modal -->
+    <div id="vault-modal" class="hidden fixed inset-0 z-50 items-center justify-center px-4" style="background:rgba(0,0,0,0.75);backdrop-filter:blur(6px)" onclick="if(event.target===this)closeVaultModal()">
+        <div class="max-w-md w-full rounded-3xl p-10 text-center" style="background:linear-gradient(135deg,rgba(201,168,76,0.1) 0%,rgba(6,6,8,0.98) 100%);border:1px solid rgba(201,168,76,0.25)">
+            <div class="text-4xl mb-6">&#9670;</div>
+            <div class="text-[10px] font-black tracking-[0.3em] uppercase mb-2" style="color:#C9A84C">Content in Preparation</div>
+            <h3 id="vault-modal-title" class="text-xl font-black text-white mb-4"></h3>
+            <p class="text-sm leading-relaxed mb-8" style="color:rgba(232,220,200,0.6)">This resource is currently being finalized. You'll receive an email notification as soon as it's available in your Vault.</p>
+            <div class="flex flex-col gap-3">
+                <a href="mailto:hello@nyxcollectivellc.com?subject=Vault%20Content%20Update" class="block py-3 rounded-full text-[11px] font-black tracking-widest uppercase transition" style="background:linear-gradient(135deg,#C9A84C,#F0C97A);color:#060608">Notify Me by Email</a>
+                <button onclick="closeVaultModal()" class="py-3 rounded-full text-[11px] font-black tracking-widest uppercase transition" style="color:rgba(201,168,76,0.6);border:1px solid rgba(201,168,76,0.15)">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy Call Modal -->
+    <div id="strategy-modal" class="hidden fixed inset-0 z-50 items-center justify-center px-4" style="background:rgba(0,0,0,0.75);backdrop-filter:blur(6px)" onclick="if(event.target===this)closeStrategyModal()">
+        <div class="max-w-md w-full rounded-3xl p-10" style="background:linear-gradient(135deg,rgba(201,168,76,0.1) 0%,rgba(6,6,8,0.98) 100%);border:1px solid rgba(201,168,76,0.25)">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <div class="text-[10px] font-black tracking-[0.3em] uppercase mb-1" style="color:#C9A84C">Diamond Benefit</div>
+                    <h3 class="text-xl font-black text-white">Book Your Strategy Call</h3>
+                </div>
+                <button onclick="closeStrategyModal()" class="text-gray-600 hover:text-white transition text-xl leading-none">&times;</button>
+            </div>
+            <p class="text-sm mb-6" style="color:rgba(232,220,200,0.5)">One complimentary 60-minute strategy call per quarter. We'll reach out within 48 hours to confirm a time.</p>
+            <form id="strategy-form" onsubmit="submitStrategyCall(event)" class="space-y-4">
+                <input id="strategy-name" type="text" placeholder="Your name" maxlength="80" required class="w-full rounded-xl px-4 py-3 text-sm outline-none" style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:#E8DCC8" onfocus="this.style.borderColor='rgba(201,168,76,0.5)'" onblur="this.style.borderColor='rgba(201,168,76,0.2)'">
+                <input id="strategy-email" type="email" placeholder="Email address" maxlength="120" required class="w-full rounded-xl px-4 py-3 text-sm outline-none" style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:#E8DCC8" onfocus="this.style.borderColor='rgba(201,168,76,0.5)'" onblur="this.style.borderColor='rgba(201,168,76,0.2)'">
+                <textarea id="strategy-message" placeholder="What would you like to cover? (optional)" rows="3" maxlength="500" class="w-full rounded-xl px-4 py-3 text-sm outline-none resize-none" style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:#E8DCC8" onfocus="this.style.borderColor='rgba(201,168,76,0.5)'" onblur="this.style.borderColor='rgba(201,168,76,0.2)'"></textarea>
+                <button id="strategy-submit-btn" type="submit" class="w-full py-3 rounded-full text-[11px] font-black tracking-widest uppercase transition" style="background:linear-gradient(135deg,#C9A84C,#F0C97A);color:#060608">Send Request</button>
+            </form>
+        </div>
+    </div>
+
 </body>
 </html>
