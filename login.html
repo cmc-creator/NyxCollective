@@ -472,7 +472,7 @@
             const cred = await auth.createUserWithEmailAndPassword(email, password);
             await cred.user.updateProfile({ displayName: name });
             // Fire-and-forget welcome email (non-blocking)
-            fetch('https://clinquant-sfogliatella-3ed802.netlify.app/.netlify/functions/send-welcome-email', {
+            fetch('/api/send-welcome-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, displayName: name })
