@@ -1603,7 +1603,7 @@
                 <h4 class="text-2xl font-bold mb-2 text-white uppercase tracking-tighter">Start the Conversation</h4>
                 <p class="text-gray-400 text-sm mb-8">Tell us about your project and we will be in touch within 24 hours.</p>
 
-                <form id="contact-form" class="space-y-5" method="POST" action="https://formspree.io/f/xqeydzrb" novalidate>
+                <form id="contact-form" class="space-y-5" method="POST" action="/api/contact" novalidate>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <input type="text" id="form-name" name="name" placeholder="Name" required
@@ -2188,31 +2188,30 @@
             }
         }
 
-        // Contact form - Formspree submission
-        // IMPORTANT: Replace YOUR_FORM_ID in the form action with your Formspree ID.
-        // Sign up free at formspree.io, create a form, and paste the ID.
+        // Contact form — /api/contact
         const form = document.getElementById('contact-form');
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             let valid = true;
 
-            const name = document.getElementById('form-name');
-            const email = document.getElementById('form-email');
-            const message = document.getElementById('form-message');
+            const nameEl    = document.getElementById('form-name');
+            const emailEl   = document.getElementById('form-email');
+            const messageEl = document.getElementById('form-message');
+            const serviceEl = document.getElementById('form-service');
 
             ['name', 'email', 'message'].forEach(f => {
                 document.getElementById('error-' + f).classList.add('hidden');
             });
 
-            if (!name.value.trim()) {
+            if (!nameEl.value.trim()) {
                 document.getElementById('error-name').classList.remove('hidden');
                 valid = false;
             }
-            if (!email.value.trim() || !email.checkValidity()) {
+            if (!emailEl.value.trim() || !emailEl.checkValidity()) {
                 document.getElementById('error-email').classList.remove('hidden');
                 valid = false;
             }
-            if (!message.value.trim()) {
+            if (!messageEl.value.trim()) {
                 document.getElementById('error-message').classList.remove('hidden');
                 valid = false;
             }
@@ -2224,15 +2223,23 @@
             btn.disabled = true;
 
             try {
-                const response = await fetch(form.action, {
+                const response = await fetch('/api/contact', {
                     method: 'POST',
-                    body: new FormData(form),
-                    headers: { 'Accept': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name:    nameEl.value.trim(),
+                        email:   emailEl.value.trim(),
+                        subject: serviceEl.value ? serviceEl.options[serviceEl.selectedIndex].text : 'Contact Form Submission',
+                        message: messageEl.value.trim()
+                    })
                 });
                 if (response.ok) {
                     form.reset();
                     document.getElementById('form-success').classList.remove('hidden');
                     setTimeout(() => document.getElementById('form-success').classList.add('hidden'), 6000);
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'generate_lead', { event_category: 'contact', event_label: serviceEl.value || 'other' });
+                    }
                 } else {
                     btn.textContent = 'Error. Please Try Again';
                 }
@@ -2256,6 +2263,9 @@
                 if (res.ok) {
                     form.reset();
                     document.getElementById('newsletter-thanks').classList.remove('hidden');
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'subscribe', { event_category: 'newsletter' });
+                    }
                 } else {
                     btn.textContent = 'Error. Try Again.';
                     btn.disabled = false;
