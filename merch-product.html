@@ -310,6 +310,13 @@
             if (cart.length === 0) return;
             var btn = document.getElementById('checkout-btn');
             if (btn) { btn.disabled = true; btn.textContent = 'Redirecting\u2026'; }
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'begin_checkout', {
+                    currency: 'USD',
+                    value: cart.reduce(function(s, c) { return s + c.price * c.qty; }, 0),
+                    items: cart.map(function(c) { return { item_name: c.name, price: c.price, quantity: c.qty }; })
+                });
+            }
             try {
                 var res = await fetch(CHECKOUT_URL, {
                     method: 'POST',
@@ -372,6 +379,13 @@
                 thumbnail: currentProduct.thumbnail || null,
                 qty: itemQty
             });
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'add_to_cart', {
+                    currency: 'USD',
+                    value: (parseFloat(variant.price) || 0) * itemQty,
+                    items: [{ item_name: currentProduct.name, item_variant: variant.name || 'Default', price: parseFloat(variant.price) || 0, quantity: itemQty }]
+                });
+            }
             itemQty = 1;
             var qd = document.getElementById('qty-display');
             if (qd) qd.textContent = '1';

@@ -623,6 +623,9 @@
         if (params.get('subscribed') === 'true') {
             document.getElementById('subscribed-banner').classList.remove('hidden');
             history.replaceState(null, '', window.location.pathname);
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'purchase', { event_category: 'subscription', event_label: 'diamond_mine' });
+            }
         }
 
         // Load in parallel

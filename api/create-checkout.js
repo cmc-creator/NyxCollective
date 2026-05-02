@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
 
   const params = new URLSearchParams();
   params.append('mode', 'payment');
-  params.append('success_url', 'https://nyxcollectivellc.com/merch?success=true');
+  params.append('success_url', 'https://nyxcollectivellc.com/order-confirm');
   params.append('cancel_url', 'https://nyxcollectivellc.com/merch');
   params.append('payment_method_types[0]', 'card');
 

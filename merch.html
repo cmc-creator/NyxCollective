@@ -537,6 +537,13 @@
             if (cart.length === 0) return;
             var btn = document.getElementById('checkout-btn');
             if (btn) { btn.disabled = true; btn.textContent = 'Redirecting\u2026'; }
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'begin_checkout', {
+                    currency: 'USD',
+                    value: cartTotal(),
+                    items: cart.map(function(c) { return { item_name: c.name, price: c.price, quantity: c.qty }; })
+                });
+            }
             try {
                 var res = await fetch(CHECKOUT_URL, {
                     method: 'POST',
