@@ -11,10 +11,6 @@ module.exports = async (req, res) => {
 
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) return res.status(500).json({ error: 'Server configuration error' });
-  const shippingRateCents = Number(process.env.MERCH_SHIPPING_RATE_CENTS);
-  if (!Number.isInteger(shippingRateCents) || shippingRateCents < 0) {
-    return res.status(503).json({ error: 'Merch shipping rate is not configured' });
-  }
 
   const { items } = req.body || {};
   if (!Array.isArray(items) || items.length === 0) {
@@ -68,10 +64,6 @@ module.exports = async (req, res) => {
   countries.forEach((c, i) => {
     params.append(`shipping_address_collection[allowed_countries][${i}]`, c);
   });
-  params.append('shipping_options[0][shipping_rate_data][type]', 'fixed_amount');
-  params.append('shipping_options[0][shipping_rate_data][fixed_amount][amount]', String(shippingRateCents));
-  params.append('shipping_options[0][shipping_rate_data][fixed_amount][currency]', 'usd');
-  params.append('shipping_options[0][shipping_rate_data][display_name]', 'Standard shipping');
 
   pricedItems.forEach((item, i) => {
     params.append(`line_items[${i}][quantity]`, String(item.qty));
