@@ -14,6 +14,14 @@ module.exports = async (req, res) => {
   if (!variantId || !address?.city || !address?.zip) {
     return res.status(400).json({ error: 'Missing required fields: variantId, address.city, address.zip' });
   }
+  const countryCode = String(address.country_code || 'US').toUpperCase();
+  const stateCode = String(address.state_code || '').trim().toUpperCase();
+  if (!Number.isInteger(Number(variantId)) || Number(variantId) < 1 ||
+      !Number.isInteger(Number(quantity)) || Number(quantity) < 1 || Number(quantity) > 10 ||
+      !['US', 'CA', 'GB', 'AU', 'NZ', 'DE', 'FR', 'NL', 'SE', 'NO', 'DK', 'FI', 'JP'].includes(countryCode) ||
+      (['US', 'CA', 'AU'].includes(countryCode) && !stateCode)) {
+    return res.status(400).json({ error: 'Invalid product or shipping address' });
+  }
 
   try {
     const pfRes = await fetch('https://api.printful.com/shipping/rates', {
@@ -24,10 +32,12 @@ module.exports = async (req, res) => {
           address1: address.address1 || '',
           city: address.city,
           state_code: address.state_code || '',
-          country_code: address.country_code || 'US',
+          country_code: countryCode,
+          state_code: stateCode,
           zip: address.zip,
         },
-        items: [{ sync_variant_id: parseInt(variantId, 10), quantity: parseInt(quantity, 10) || 1 }],
+        items: [{ sync_variant_id: Number(variantId), quantity: Number(quantity) }],
+        currency: 'USD',
       }),
     });
 

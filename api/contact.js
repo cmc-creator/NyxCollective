@@ -28,6 +28,9 @@ module.exports = async (req, res) => {
   const safeEmail   = String(email).trim().slice(0, 200);
   const safeSubject = String(subject || 'Contact Form Submission').trim().slice(0, 300);
   const safeMessage = String(message).trim().slice(0, 5000);
+  const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[char]));
 
   const transporter = nodemailer.createTransport({
     host: SMTP_HOST,
@@ -43,7 +46,7 @@ module.exports = async (req, res) => {
       replyTo: safeEmail,
       subject: safeSubject,
       text: `From: ${safeName} <${safeEmail}>\n\n${safeMessage}`,
-      html: `<p><strong>From:</strong> ${safeName} &lt;${safeEmail}&gt;</p><p>${safeMessage.replace(/\n/g, '<br>')}</p>`,
+      html: `<p><strong>From:</strong> ${escapeHtml(safeName)} &lt;${escapeHtml(safeEmail)}&gt;</p><p>${escapeHtml(safeMessage).replace(/\n/g, '<br>')}</p>`,
     });
     return res.status(200).json({ ok: true });
   } catch (err) {

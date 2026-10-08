@@ -3,6 +3,7 @@
 // POST { email: string, displayName?: string }
 
 const nodemailer = require('nodemailer');
+const { emailMatches, verifyFirebaseIdToken } = require('../lib/firebase-auth');
 
 module.exports = async (req, res) => {
   setCors(res);
@@ -13,6 +14,10 @@ module.exports = async (req, res) => {
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ error: 'Valid email required' });
   }
+  const user = await verifyFirebaseIdToken(req);
+  if (!user) return res.status(401).json({ error: 'Authentication required' });
+  if (!user.emailVerified) return res.status(403).json({ error: 'Verify your email before requesting account email' });
+  if (!emailMatches(user, email)) return res.status(403).json({ error: 'Account email mismatch' });
 
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = process.env;
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
@@ -21,6 +26,9 @@ module.exports = async (req, res) => {
   }
 
   const greeting = displayName ? displayName.split(' ')[0] : 'there';
+  const safeGreeting = greeting.replace(/[&<>"']/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[char]));
 
   const transporter = nodemailer.createTransport({
     host: SMTP_HOST,
@@ -50,7 +58,7 @@ module.exports = async (req, res) => {
           </tr>
           <tr>
             <td style="padding:32px 48px;">
-              <p style="margin:0 0 16px;font-size:15px;line-height:1.7;color:#E8DCC8;">Hey ${greeting},</p>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.7;color:#E8DCC8;">Hey ${safeGreeting},</p>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.7;color:rgba(232,220,200,0.75);">Your account is live. You're in — and you're starting with <strong style="color:#E8DCC8;">Quartz access</strong>, which includes the Insider Newsletter and all community announcements.</p>
               <p style="margin:0 0 32px;font-size:15px;line-height:1.7;color:rgba(232,220,200,0.75);">Upgrade anytime from your member portal to unlock templates, playbooks, case studies, licensing discounts, and quarterly strategy calls.</p>
               <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 32px;">

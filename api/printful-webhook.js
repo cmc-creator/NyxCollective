@@ -1,87 +1,9 @@
 // printful-webhook.js — Vercel API route
-// Handles Stripe checkout.session.completed → submits order to Printful + writes to Firestore.
+// Handles Stripe checkout and payment-intent events with idempotent fulfillment.
 // Raw body required for signature verification — bodyParser is disabled below.
 
 const crypto = require('crypto');
-
-// Firestore helper — writes order data using REST API + service account JWT.
-async function getFirestoreToken() {
-  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-  const rawKey = process.env.FIREBASE_PRIVATE_KEY;
-  if (!clientEmail || !rawKey) return null;
-
-  const privateKey = rawKey.replace(/\\n/g, '\n');
-  const now = Math.floor(Date.now() / 1000);
-  const header = Buffer.from(JSON.stringify({ alg: 'RS256', typ: 'JWT' })).toString('base64url');
-  const payload = Buffer.from(JSON.stringify({
-    iss: clientEmail,
-    sub: clientEmail,
-    aud: 'https://oauth2.googleapis.com/token',
-    iat: now,
-    exp: now + 3600,
-    scope: 'https://www.googleapis.com/auth/datastore',
-  })).toString('base64url');
-
-  const unsigned = `${header}.${payload}`;
-  const sign = crypto.createSign('RSA-SHA256');
-  sign.update(unsigned);
-  const sig = sign.sign(privateKey, 'base64url');
-  const jwt = `${unsigned}.${sig}`;
-
-  const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`,
-  });
-  const tokenData = await tokenRes.json();
-  if (!tokenData.access_token) {
-    console.error('Failed to get Firestore token:', JSON.stringify(tokenData));
-    return null;
-  }
-  return tokenData.access_token;
-}
-
-async function writeOrderToFirestore(sessionId, orderData) {
-  const token = await getFirestoreToken();
-  if (!token) return;
-
-  const projectId = process.env.FIREBASE_PROJECT_ID;
-  const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/orders/${sessionId}`;
-
-  const fields = {
-    customerEmail:  { stringValue: orderData.customerEmail || '' },
-    sessionId:      { stringValue: sessionId },
-    amountTotal:    { integerValue: String(orderData.amountTotal || 0) },
-    currency:       { stringValue: orderData.currency || 'usd' },
-    createdAt:      { timestampValue: new Date().toISOString() },
-    items: {
-      arrayValue: {
-        values: (orderData.items || []).map(item => ({
-          mapValue: {
-            fields: {
-              name:        { stringValue: item.name || '' },
-              variantName: { stringValue: item.variantName || '' },
-              qty:         { integerValue: String(item.qty || 1) },
-              price:       { doubleValue: item.price || 0 },
-            },
-          },
-        })),
-      },
-    },
-  };
-
-  const pfRes = await fetch(url, {
-    method: 'PATCH',
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ fields }),
-  });
-
-  if (!pfRes.ok) {
-    console.error('Firestore write failed:', await pfRes.text());
-  } else {
-    console.log('Order written to Firestore:', sessionId);
-  }
-}
+const { saveOrder } = require('../lib/firestore-orders');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).end('Method not allowed');
@@ -89,8 +11,8 @@ module.exports = async (req, res) => {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   const printfulToken = process.env.PRINTFUL_TOKEN;
 
-  if (!webhookSecret || !printfulToken) {
-    console.error('Missing env: STRIPE_WEBHOOK_SECRET or PRINTFUL_TOKEN');
+  if (!webhookSecret || !printfulToken || !process.env.FIREBASE_PROJECT_ID) {
+    console.error('Missing env: STRIPE_WEBHOOK_SECRET, PRINTFUL_TOKEN, or FIREBASE_PROJECT_ID');
     return res.status(500).end('Server configuration error');
   }
 
@@ -102,18 +24,50 @@ module.exports = async (req, res) => {
     return res.status(401).end('Invalid signature');
   }
 
-  let session;
+  let order;
   try {
     const payload = JSON.parse(rawBody);
-    if (payload.type !== 'checkout.session.completed') {
+    if (payload.type === 'checkout.session.completed') {
+      order = payload.data.object;
+    } else if (payload.type === 'payment_intent.succeeded') {
+      const payment = payload.data.object;
+      const metadata = payment.metadata || {};
+      order = {
+        id: payment.id,
+        payment_status: 'paid',
+        amount_total: payment.amount || 0,
+        currency: payment.currency || 'usd',
+        customer_email: metadata.email || '',
+        shipping_details: {
+          name: metadata.name || '',
+          address: {
+            line1: metadata.address1 || '',
+            city: metadata.city || '',
+            state: metadata.state || '',
+            country: metadata.country || 'US',
+            postal_code: metadata.zip || '',
+          },
+        },
+        metadata: {
+          item_count: '1',
+          shipping_id: metadata.shipping_id || '',
+          item_0: JSON.stringify({
+            variantId: metadata.variant_id,
+            qty: Number(metadata.qty) || 1,
+            name: metadata.product_name || 'Merchandise',
+            variantName: metadata.variant_name || '',
+            price: Number(metadata.product_price) || 0,
+          }),
+        },
+      };
+    } else {
       return res.status(200).end('OK');
     }
-    session = payload.data.object;
   } catch {
     return res.status(400).end('Invalid JSON');
   }
 
-  const meta = session.metadata || {};
+  const meta = order.metadata || {};
   const itemCount = parseInt(meta.item_count, 10);
   if (!itemCount || itemCount < 1) {
     console.log('No fulfillment metadata — skipping Printful order');
@@ -125,8 +79,9 @@ module.exports = async (req, res) => {
   for (let i = 0; i < itemCount; i++) {
     try {
       const item = JSON.parse(meta['item_' + i] || 'null');
-      if (item && item.variantId && Number.isInteger(item.qty) && item.qty > 0) {
-        items.push({ sync_variant_id: item.variantId, quantity: item.qty });
+      const variantId = Number(item?.variantId);
+      if (item && Number.isInteger(variantId) && variantId > 0 && Number.isInteger(item.qty) && item.qty > 0) {
+        items.push({ sync_variant_id: variantId, quantity: item.qty });
       } else {
         console.warn('item_' + i + ' missing variantId or qty — skipped');
       }
@@ -148,45 +103,77 @@ module.exports = async (req, res) => {
     return res.status(200).end('OK - no fulfillable items');
   }
 
-  const shipping = session.shipping_details || session.shipping || {};
+  if (order.payment_status !== 'paid') {
+    console.log('Checkout session is not paid — skipping fulfillment');
+    return res.status(200).end('OK - payment not complete');
+  }
+
+  const shipping = order.shipping_details || order.shipping || {};
   const addr = shipping.address || {};
   const recipient = {
-    name: shipping.name || session.customer_details?.name || 'Customer',
+    name: shipping.name || order.customer_details?.name || 'Customer',
     address1: addr.line1 || '',
     address2: addr.line2 || '',
     city: addr.city || '',
     state_code: addr.state || '',
     country_code: addr.country || 'US',
     zip: addr.postal_code || '',
-    email: session.customer_details?.email || session.customer_email || '',
+    email: order.customer_details?.email || order.customer_email || '',
+  };
+
+  const customerEmail = order.customer_details?.email || order.customer_email || '';
+  const orderData = {
+    customerEmail,
+    amountTotal: order.amount_total || 0,
+    currency: order.currency || 'usd',
+    items: orderItems,
+    fulfillmentStatus: 'processing',
   };
 
   try {
+    const reservation = await saveOrder(order.id, orderData, true);
+    if (reservation.status === 409) {
+      console.log('Duplicate or previously reserved payment:', order.id);
+      return res.status(200).end('OK - already reserved');
+    }
+    if (!reservation.ok) {
+      console.error('Could not reserve payment:', order.id);
+      return res.status(500).end('Unable to reserve order');
+    }
+
     const pfRes = await fetch('https://api.printful.com/orders?confirm=true', {
       method: 'POST',
       headers: { Authorization: `Bearer ${printfulToken}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ recipient, items }),
+      body: JSON.stringify({ recipient, items, shipping: meta.shipping_id || 'STANDARD' }),
     });
 
     const data = await pfRes.json();
     if (!pfRes.ok) {
       console.error('Printful error:', JSON.stringify(data));
+      await saveOrder(order.id, {
+        ...orderData,
+        fulfillmentStatus: 'failed',
+        fulfillmentError: data.error?.message || 'Printful rejected the order',
+      });
       return res.status(502).end('Printful error: ' + (data.error?.message || 'unknown'));
     }
 
     console.log('Printful order created and confirmed:', data.result?.id);
-
-    const customerEmail = session.customer_details?.email || session.customer_email || '';
-    await writeOrderToFirestore(session.id, {
-      customerEmail,
-      amountTotal: session.amount_total || 0,
-      currency: session.currency || 'usd',
-      items: orderItems,
+    const savedOrder = await saveOrder(order.id, {
+      ...orderData,
+      fulfillmentStatus: 'submitted',
+      printfulOrderId: data.result?.id,
     });
+    if (!savedOrder.ok) return res.status(500).end('Fulfillment submitted; order status update failed');
 
     return res.status(200).end('OK');
   } catch (err) {
     console.error('Printful fetch error:', err.message);
+    await saveOrder(order.id, {
+      ...orderData,
+      fulfillmentStatus: 'review_required',
+      fulfillmentError: err.message,
+    }).catch(() => {});
     return res.status(500).end('Internal server error');
   }
 };

@@ -389,8 +389,27 @@
     const auth = firebase.auth();
 
     // If already signed in, redirect straight to the portal
-    auth.onAuthStateChanged(user => {
-        if (user) window.location.replace('members.html');
+    auth.onAuthStateChanged(async user => {
+        if (!user) return;
+        if (!user.emailVerified) {
+            showError('Verify your email before entering the member portal. Check your inbox for the verification link.');
+            return;
+        }
+        const welcomeKey = `nyx_welcome_sent_${user.uid}`;
+        if (!localStorage.getItem(welcomeKey)) {
+            try {
+                const response = await fetch('/api/send-welcome-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${await user.getIdToken()}`,
+                    },
+                    body: JSON.stringify({ email: user.email, displayName: user.displayName || '' }),
+                });
+                if (response.ok) localStorage.setItem(welcomeKey, 'true');
+            } catch {}
+        }
+        window.location.replace('members.html');
     });
 
     // ── Tab switching ────────────────────────────────────────────────────────
@@ -413,6 +432,10 @@
         const el = document.getElementById('error-msg');
         el.textContent = '';
         el.classList.remove('show');
+    }
+
+    if (new URLSearchParams(window.location.search).get('verification') === 'required') {
+        showError('Verify your email before entering the member portal. Check your inbox for the verification link.');
     }
 
     function friendlyError(code) {
@@ -448,6 +471,13 @@
         setLoading('signin-btn', true);
         try {
             await auth.signInWithEmailAndPassword(email, password);
+            await auth.currentUser.reload();
+            if (!auth.currentUser.emailVerified) {
+                await auth.currentUser.sendEmailVerification();
+                await auth.signOut();
+                showError('Your email is not verified yet. We sent another verification link.');
+                setLoading('signin-btn', false);
+            }
             // onAuthStateChanged will redirect
         } catch (err) {
             showError(friendlyError(err.code));
@@ -471,13 +501,10 @@
         try {
             const cred = await auth.createUserWithEmailAndPassword(email, password);
             await cred.user.updateProfile({ displayName: name });
-            // Fire-and-forget welcome email (non-blocking)
-            fetch('/api/send-welcome-email', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, displayName: name })
-            }).catch(() => {}); // swallow errors — login still succeeds
-            // onAuthStateChanged will redirect
+            await cred.user.sendEmailVerification();
+            await auth.signOut();
+            showError('Verification email sent. Verify your address, then sign in to open the member portal.');
+            setLoading('signup-btn', false);
         } catch (err) {
             showError(friendlyError(err.code));
             setLoading('signup-btn', false);

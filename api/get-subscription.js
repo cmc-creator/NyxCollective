@@ -2,6 +2,8 @@
 // Returns the active Stripe subscription tier for a member.
 // POST { email: string } → { tier, status, customerId, currentPeriodEnd, cancelAtPeriodEnd, subscription }
 
+const { emailMatches, verifyFirebaseIdToken } = require('../lib/firebase-auth');
+
 module.exports = async (req, res) => {
   setCors(res);
   if (req.method === 'OPTIONS') return res.status(204).end();
@@ -11,6 +13,10 @@ module.exports = async (req, res) => {
   if (!email || typeof email !== 'string' || !email.includes('@')) {
     return res.status(400).json({ error: 'Valid email required' });
   }
+  const user = await verifyFirebaseIdToken(req);
+  if (!user) return res.status(401).json({ error: 'Authentication required' });
+  if (!user.emailVerified) return res.status(403).json({ error: 'Verify your email before accessing billing' });
+  if (!emailMatches(user, email)) return res.status(403).json({ error: 'Account email mismatch' });
 
   const secretKey = process.env.STRIPE_SECRET_KEY;
   if (!secretKey) return res.status(500).json({ error: 'Server configuration error' });
